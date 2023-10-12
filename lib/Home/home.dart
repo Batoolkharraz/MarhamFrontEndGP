@@ -186,7 +186,7 @@ void navigateToNextPageWithCategory(String categoryId) {
               ),
               Container(
                 height: 130.0,
-                child: ListView.builder(
+                child: ListView.builder(physics: BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     itemCount: categories.length,
                     itemBuilder: (context, index) {
@@ -219,7 +219,7 @@ void navigateToNextPageWithCategory(String categoryId) {
               ),
               Container(
                 height: 335.0,
-                child: ListView.builder(
+                child: ListView.builder(physics: BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     itemCount: doctors.length,
                     itemBuilder: (context, index) {
