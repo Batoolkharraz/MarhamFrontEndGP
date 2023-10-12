@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/Login/login.dart';
 import 'package:flutter_application_4/Home/homePage.dart';
 import 'package:flutter_application_4/doctors/doctors.dart';
+import 'package:flutter_application_4/medicine/medicineSchedule.dart';
 import 'package:flutter_application_4/onboarding/introduction.dart';
 import 'package:flutter_application_4/profile/profile.dart';
 import 'package:flutter_application_4/splashScreen.dart';
@@ -16,8 +17,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,//عند الدراور
       // home:Login(),
       //home:splashScreen(),
-      home:homePage(),
-      //home:profile(),
+      //home:homePage(),
+      home:medicineSchedule(),
+      
     );
 }
 }
