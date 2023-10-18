@@ -49,20 +49,20 @@ class _homeState extends State<home> {
     responceBody = responceBody.trim();
     responceBody = responceBody.substring(11, responceBody.length - 1);
     var doc = jsonDecode(responceBody);
-    
+
     setState(() {
       //print(getCategory(doc[0]['categoryId']));
       doctors.addAll(doc);
     });
   }
 
-void navigateToNextPageWithCategory(String categoryId) {
-  Navigator.of(context).push(
-    MaterialPageRoute(
-      builder: (context) => DoctorsPage(categoryId: categoryId),
-    ),
-  );
-}
+  void navigateToNextPageWithCategory(String categoryId) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => DoctorsPage(categoryId: categoryId),
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -76,7 +76,7 @@ void navigateToNextPageWithCategory(String categoryId) {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       body:SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Container(
           child: Column(
             children: [
@@ -111,9 +111,18 @@ void navigateToNextPageWithCategory(String categoryId) {
                         children: [
                           FaIcon(FontAwesomeIcons.search, size: 30.0),
                           SizedBox(width: 20.0),
-                          FaIcon(
-                            FontAwesomeIcons.commentDots,
-                            size: 30.0,
+                          IconButton(
+                            icon: Icon(
+                              FontAwesomeIcons.commentDots,
+                              size: 30.0,
+                            ),
+                            onPressed: () {/*
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => MessagesScreen(),
+                                ),
+                              );*/
+                            },
                           ),
                         ],
                       ),
@@ -185,15 +194,17 @@ void navigateToNextPageWithCategory(String categoryId) {
               ),
               Container(
                 height: 130.0,
-                child: ListView.builder(physics: BouncingScrollPhysics(),
+                child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     itemCount: categories.length,
                     itemBuilder: (context, index) {
                       return category(
-                          icon: '${categories[index]['image']['secure_url']}',
-                          categoryName: '${categories[index]['name']}',
-                          onTap: () => navigateToNextPageWithCategory('${categories[index]['_id']}'),);
-                          
+                        icon: '${categories[index]['image']['secure_url']}',
+                        categoryName: '${categories[index]['name']}',
+                        onTap: () => navigateToNextPageWithCategory(
+                            '${categories[index]['_id']}'),
+                      );
                     }),
               ),
               SizedBox(
@@ -218,25 +229,27 @@ void navigateToNextPageWithCategory(String categoryId) {
               ),
               Container(
                 height: 335.0,
-                child: ListView.builder(physics: BouncingScrollPhysics(),
+                child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     itemCount: doctors.length,
                     itemBuilder: (context, index) {
                       return FutureBuilder(
-                      future: getCategory('${doctors[index]['categoryId']}'),
-                      builder: (context, categorySnapshot) {
-                        if (categorySnapshot.hasError) {
-                          return Text('Error: ${categorySnapshot.error}');
-                        } else {
-                          return doctor(
-                            doctorPic: '${doctors[index]['image']['secure_url']}',
-                            doctorRate: '${doctors[index]['rate']}',
-                            doctorName: '${doctors[index]['name']}',
-                            doctorCat: categorySnapshot.data.toString(),
-                          );
-                        }
-                      },
-                    );
+                        future: getCategory('${doctors[index]['categoryId']}'),
+                        builder: (context, categorySnapshot) {
+                          if (categorySnapshot.hasError) {
+                            return Text('Error: ${categorySnapshot.error}');
+                          } else {
+                            return doctor(
+                              doctorPic:
+                                  '${doctors[index]['image']['secure_url']}',
+                              doctorRate: '${doctors[index]['rate']}',
+                              doctorName: '${doctors[index]['name']}',
+                              doctorCat: categorySnapshot.data.toString(),
+                            );
+                          }
+                        },
+                      );
                     }),
               ),
             ],
