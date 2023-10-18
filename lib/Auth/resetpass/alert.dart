@@ -38,7 +38,7 @@ void showalertt(BuildContext context) {
                 ),
               ),
               onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
                               builder: (context) {
                                 return Login();
                               },

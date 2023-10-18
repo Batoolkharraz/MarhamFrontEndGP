@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/Login/ValidateForm.dart';
 import 'package:flutter_application_4/Auth/Login/login.dart';
 import 'package:flutter_application_4/Auth/resetpass/alert.dart';
+import 'package:flutter_application_4/Auth/resetpass/update.dart';
 class NewPassword extends StatefulWidget {
   NewPassword({Key? key}) : super(key: key);
 
@@ -135,8 +136,8 @@ class _NewPasswordState extends State<NewPassword> {
                           onPressed: () {
                             if (validateForm(formState)) {
                               // Process the form data (e.g., submit to a server)
-                             (context);
-                             showalertt(context);
+                             update(context,Password);
+                             
                             } else {
                               print('Invalid');
                             }

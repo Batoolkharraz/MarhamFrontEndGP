@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/Login/ValidateForm.dart';
 import 'package:flutter_application_4/Auth/Login/login.dart';
+import 'package:flutter_application_4/Auth/resetpass/checkemail.dart';
+import 'package:flutter_application_4/Auth/resetpass/onpressed.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ResetPassword extends StatefulWidget {
@@ -58,6 +60,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                   child: Column(
                     children: [
                       TextFormField(
+                        style: TextStyle(
+                            // Set the style for the entered text
+                            fontSize: 25,
+                            // Adjust the font size as per your preference
+                          ),
                         decoration: InputDecoration(
                             labelText: 'E-mail',
                             hintText: 'test@email.com',
@@ -96,13 +103,25 @@ class _ResetPasswordState extends State<ResetPassword> {
       ),
     ),
   ),
-              onPressed: () {
+              onPressed: ()  {
                 if (validateForm(formState)) {
                   // Process the form data (e.g., submit to a server)
-                  print('Email: $email');
+                 pressedButton(context, email);
                 }
                 else{
-                  print('Invalid');
+                  ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Somthing is wrong',
+            style: TextStyle(
+              fontSize: 25,
+              fontFamily: 'Helvetica',
+            ),
+          ),
+          backgroundColor: Color.fromARGB(221, 252, 57, 43),
+          duration: Duration(seconds: 3),
+        ),
+      );
                 }
               },
               child: Text('Confirm',
