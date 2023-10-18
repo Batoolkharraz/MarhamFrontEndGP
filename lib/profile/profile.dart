@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/medicine/medicineSchedule.dart';
 import 'package:flutter_application_4/profile/edit.dart';
@@ -12,11 +14,52 @@ class profile extends StatefulWidget {
 }
 
 class _profileState extends State<profile> {
+  List prescriptions = [];
+
+  Future getPrescription(String userId) async {
+    // var url =
+    //   "https://marham-backend.onrender.com/prescription/forUser/65109015e44c87b9397e2e19";
+    var url =
+        "https://marham-backend.onrender.com/prescription/forUser/${userId}";
+
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var responceBody = response.body.toString();
+      responceBody = responceBody.trim();
+      responceBody = responceBody.substring(17, responceBody.length - 1);
+      var pre = jsonDecode(responceBody);
+
+      setState(() {
+        prescriptions.addAll(pre);
+      });
+    }
+  }
+
+  Future<String> getDoctor(String docId) async {
+    // var url = "https://marham-backend.onrender.com/doctor/${docId}";
+    var url =
+        "https://marham-backend.onrender.com/doctor/651c58f32cd651e7a27ac12f";
+    var response = await http.get(Uri.parse(url));
+    var responceBody = response.body.toString();
+    responceBody = responceBody.trim();
+    responceBody = responceBody.substring(10, responceBody.length - 1);
+    var cat = jsonDecode(responceBody);
+
+    return cat['name'];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getPrescription('65109015e44c87b9397e2e19');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFE8EEFA),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
@@ -227,25 +270,34 @@ class _profileState extends State<profile> {
                     height: 10,
                   ),
 
-                  //medicine
                   ListView.builder(
                     shrinkWrap: true,
-                    itemCount: 1,
+                    itemCount: prescriptions.length,
                     itemBuilder: (context, index) {
-                      return Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: medicineList(
-                              diagnosis: 'diagnosis',
-                              from: 'from',
-                              to: 'to',
-                              writtenBy: 'writtenBy',
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => medicineSchedule(),
-                                  ),
-                                );
-                              }));
+                      return FutureBuilder(
+                        future:
+                            getDoctor('${prescriptions[index]['writtenBy']}'),
+                        builder: (context, categorySnapshot) {
+                          if (categorySnapshot.hasError) {
+                            return Text('Error: ${categorySnapshot.error}');
+                          } else {
+                            return Container(
+                              child: medicineList(
+                                  diagnosis: prescriptions[index]['diagnosis'],
+                                  from: prescriptions[index]['dateFrom'],
+                                  to: prescriptions[index]['dateTo'],
+                                  writtenBy: categorySnapshot.data.toString(),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>medicineSchedule(medicines: prescriptions[index]['medicines']),
+                                      ),
+                                    );
+                                  }),
+                            );
+                          }
+                        },
+                      );
                     },
                   ),
                 ],

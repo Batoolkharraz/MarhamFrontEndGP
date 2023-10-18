@@ -1,46 +1,61 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/profile/profile.dart';
-import 'package:flutter_application_4/unit/category.dart';
+import 'package:flutter_application_4/unit/dateList.dart';
+import 'package:flutter_application_4/unit/medicine.dart';
+import 'package:flutter_application_4/unit/time.dart';
 import 'package:http/http.dart' as http;
 
 class medicineSchedule extends StatefulWidget {
-  const medicineSchedule({super.key});
+  final List<dynamic> medicines;
+
+  medicineSchedule({required this.medicines});
 
   @override
   State<medicineSchedule> createState() => _medicineScheduleState();
 }
 
 class _medicineScheduleState extends State<medicineSchedule> {
-  List categories = [];
-
-  Future getCategories() async {
-    var url = "https://marham-backend.onrender.com/category/";
-    var response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      var responceBody = response.body.toString();
-      responceBody = responceBody.trim();
-      responceBody = responceBody.substring(14, responceBody.length - 1);
-      var cat = jsonDecode(responceBody);
-
-      setState(() {
-        categories.addAll(cat);
-      });
-    }
-  }
+  String selectedTime = ''; // Initialize with 'morning'
+  List<String> times = ['morning', 'noon', 'night'];
+  /*List<dynamic> medicines = [
+    {
+      'medicine': 'Medicine A',
+      'description': 'Take in the morning',
+      'time': ['morning', 'noon'],
+    },
+    {
+      'medicine': 'Medicine B',
+      'description': 'Take at night',
+      'time': ['night'],
+    },
+    {
+      'medicine': 'Medicine C',
+      'description': 'Take at noon',
+      'time': ['noon'],
+    },
+  ];*/ // Store all medicines here
 
   @override
   void initState() {
     super.initState();
-    getCategories();
   }
 
+  // Function to handle time tap
+  handleTapTime(String index) {
+    setState(() {
+      selectedTime = index;
+    });
+  }
+
+  late var filteredMedicines = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFE8EEFA),
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70.0),
+        preferredSize: Size.fromHeight(80.0),
         child: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Color(0xFF0561DD),
@@ -73,8 +88,80 @@ class _medicineScheduleState extends State<medicineSchedule> {
           ),
         ),
       ),
-      
-    
+      body: Padding(
+        padding: const EdgeInsets.only(top: 20, left: 20),
+        child: Column(children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Container(
+              child: Text(
+                'Time',
+                style: TextStyle(
+                    fontFamily: 'salsa',
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold),
+              ),
+              alignment: Alignment.centerLeft,
+            ),
+          ),
+          Container(
+            height: 100,
+            child: ListView.builder(
+              physics: BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              itemCount: times.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  child: timeList(
+                    time: times[index],
+                    isSelected: selectedTime == times[index],
+                    onTap: () {
+                      handleTapTime(times[index]);
+                      filteredMedicines = widget.medicines
+                          .where((med) => med['time'].contains(selectedTime))
+                          .toList();
+                    },
+                  ),
+                );
+              },
+            ),
+          ),
+          filteredMedicines == null || filteredMedicines.isEmpty
+              ? Padding(
+                padding: const EdgeInsets.only(top: 150),
+                child: Column(
+                  children: [
+                    Container(
+                      child: Image.asset('assets/med.png'),
+                    ),
+                    SizedBox(height: 20,),
+                    Text(
+                      'No medicine for YOU in this Time!',
+                      style: TextStyle(
+                        fontFamily: 'salsa',
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+              : Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemCount: filteredMedicines.length,
+                    itemBuilder: (context, index) {
+                      final med = filteredMedicines[index];
+                      return medicine(
+                        name: med['medicine'] ?? 'Unknown',
+                        des: med['description'] ?? 'No description',
+                      );
+                    },
+                  ),
+                )
+        ]),
+      ),
     );
   }
 }

@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
       // home:Login(),
       //home:splashScreen(),
       //home:homePage(),
-      home:medicineSchedule(),
+      //home:medicineSchedule(medicines: '652d42667d10bcbf901dd73f',),
+      home:profile(),
       
     );
 }
