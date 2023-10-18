@@ -3,7 +3,7 @@ import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 Future<String> addPOST(String username, String email, String phone, String password, String cpassword) async {
-  var url = Uri.parse("http://10.0.2.2:3001/route/signup");
+  var url = Uri.parse("http://10.0.2.2:8000/route/signup");
   var response = await http.post(url, headers: <String, String>{
     'Content-Type': 'application/json; charset=UTF-8',
   },
