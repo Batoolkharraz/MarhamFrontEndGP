@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/Login/ValidateForm.dart';
 import 'package:flutter_application_4/Auth/Login/onpresseButton.dart';
+import 'package:flutter_application_4/Auth/resetpass/reset.dart';
 import 'package:flutter_application_4/Auth/signup/signup.dart';
 import 'package:flutter_application_4/Home/homePage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -81,14 +82,12 @@ class _LoginState extends State<Login> {
                         children: [
                           TextFormField(
                             style: TextStyle(
-                        fontSize: 25,
+                              fontSize: 25,
                             ),
-                        
                             onSaved: (text) {
                               username = text;
                             },
                             decoration: InputDecoration(
-                              
                                 labelText: 'username',
                                 //hintText: 'test@email.com',
 
@@ -102,7 +101,7 @@ class _LoginState extends State<Login> {
                             },
                             obscureText: true,
                             style: TextStyle(
-                        fontSize: 25,
+                              fontSize: 25,
                             ),
                             decoration: InputDecoration(
                                 labelText: 'Password',
@@ -110,21 +109,41 @@ class _LoginState extends State<Login> {
                                 labelStyle: TextStyle(fontSize: 25),
                                 hintStyle: TextStyle(fontSize: 25)),
                           ),
-                          SizedBox(height: 50.0),
+                          SizedBox(height: 10),
+                          Container(
+                              child: InkWell(
+                            child: Text("Forgot your password?",
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'Salsa')),
+                            onTap: () => {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) {
+                                  return ResetPassword();
+                                },
+                              )) //
+                            },
+                          )),
+                          SizedBox(height: 30.0),
                           ElevatedButton(
-                           onPressed: () => {
-                             if (validateForm(formstate)) 
-                            {showDialog(context: context, 
-                            builder: (context){
-                              return Center(child: CircularProgressIndicator());
-                            }),
-                              onButtonPressed(context, username, password),
+                            onPressed: () => {
+                              if (validateForm(formstate))
+                                {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Center(
+                                            child: CircularProgressIndicator());
+                                      }),
+                                  onButtonPressed(context, username, password),
                                   Future.delayed(Duration(seconds: 2), () {
                                     Navigator.of(context)
                                         .pop(); // Close the loading dialog
                                     onButtonPressed(context, username,
                                         password); // Call your function
-                                    Navigator.of(context).push(
+                                    Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                         builder: (context) {
                                           return homePage(); // Navigate to the home page
@@ -133,9 +152,7 @@ class _LoginState extends State<Login> {
                                     );
                                   })
                                 }
-                              
-                            
-                            else
+                              else
                                 {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
@@ -151,9 +168,8 @@ class _LoginState extends State<Login> {
                                       duration: Duration(seconds: 3),
                                     ),
                                   )
-                            }
-                           
-                           },
+                                }
+                            },
                             child: Text(
                               "Sign In",
                               style: TextStyle(
