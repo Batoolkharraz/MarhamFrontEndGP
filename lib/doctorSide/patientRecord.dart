@@ -17,12 +17,35 @@ class patientRecord extends StatefulWidget {
 class _patientRecordState extends State<patientRecord> {
   final TextEditingController emailController = TextEditingController();
   List prescriptions = [];
+  String user = '';
 
-  Future<String> findPatient() async {
-    //to find id of the patient
-    print(emailController.text);
-    print('65109015e44c87b9397e2e19');
-    return '65109015e44c87b9397e2e19';
+  Future<void> findPatient() async {
+    try {
+      var url = 'https://marham-backend.onrender.com/giveme/userinformation';
+      var response = await http.post(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'email': emailController.text,
+        }),
+      );
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        // Replace 'id' with the actual key in the API response.
+
+        if (responseData != null) {
+          user = responseData;
+        } else {
+          print('User not found');
+        }
+      } else {
+        print('Error: Server returned status code ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 
   Future getPrescriptionById(String Id) async {
@@ -36,6 +59,7 @@ class _patientRecordState extends State<patientRecord> {
       var pre = jsonDecode(responceBody);
 
       setState(() {
+        prescriptions.clear();
         prescriptions.addAll(pre);
       });
     }
@@ -79,38 +103,148 @@ class _patientRecordState extends State<patientRecord> {
           ),
         ),
       ),
-      body: Container(
-        child: Column(
-          children: [
-            TextField(
-              controller: emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-            ),
-            ElevatedButton(
-              onPressed:findPatient,
-              child: Text('Send Prescription'),
-            ),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: prescriptions.length,
-              itemBuilder: (context, index) {
-                return FutureBuilder(
-                  future: getPrescriptionById(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else {
-                      print(snapshot.data);
-                      return Container(
-                        child: Text('data'),
-                        //  child: diagnosisList(),
-                      );
-                    }
-                  },
-                );
-              },
-            ),
-          ],
+      body: Padding(
+        padding: const EdgeInsets.only(left: 40, right: 25),
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 60,
+              ),
+              Text('Enter Your Patient Email here:',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'salsa',
+                      fontWeight: FontWeight.bold)),
+              SizedBox(
+                height: 10,
+              ),
+              TextField(
+                controller: emailController,
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  labelStyle: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'salsa',
+                      fontWeight: FontWeight.bold),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Color(
+                            0xFF0561DD)), // Change the border color when focused
+                  ),
+                  prefixIcon: Icon(Icons.email),
+                ),
+                style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: 'salsa',
+                    fontWeight: FontWeight
+                        .bold), // Add an icon to the left of the input
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  final enteredEmail = emailController.text;
+                  findPatient();
+                  getPrescriptionById(user);
+                },
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Color(0xFF0561DD)),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    'Find Patient Record',
+                    style: TextStyle(
+                        fontSize: 25,
+                        fontFamily: 'salsa',
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              prescriptions == null || prescriptions.isEmpty
+                  ? Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 100),
+                        child: Column(
+                          children: [
+                            Container(
+                              child: Image.asset('assets/patient_report.png'),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'No Patient Record Yet!',
+                              style: TextStyle(
+                                fontFamily: 'salsa',
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: prescriptions.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.date_range_outlined,
+                                color: Color(0xFF0561DD),
+                                size: 30,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                'at Date:',
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  fontFamily: 'salsa',
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                prescriptions[index]['dateFrom'],
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  fontFamily: 'salsa',
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 60,
+                              ),
+                              Text(
+                                prescriptions[index]['diagnosis'],
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontFamily: 'salsa',
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+            ],
+          ),
         ),
       ),
     );
