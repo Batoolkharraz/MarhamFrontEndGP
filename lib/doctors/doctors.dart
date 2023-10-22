@@ -49,7 +49,8 @@ class _DoctorsPageState extends State<DoctorsPage> {
   }
 
   Future<List<dynamic>> getDoctorsByCategory(String catId) async {
-    var url = "https://marham-backend.onrender.com/doctor/category/${catId}";
+    var url =
+        "https://marham-backend.onrender.com/doctor/doctorByCategory/${catId}";
     if (catId == '') {
       url = "https://marham-backend.onrender.com/doctor/";
     }
@@ -87,7 +88,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
     return Scaffold(
       backgroundColor: Color(0xFFE8EEFA),
       appBar: PreferredSize(
-      preferredSize: Size.fromHeight(70.0),
+        preferredSize: Size.fromHeight(70.0),
         child: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Color(0xFF0561DD),
@@ -183,39 +184,64 @@ class _DoctorsPageState extends State<DoctorsPage> {
             SizedBox(
               height: 15.0,
             ),
-
-            // doctors
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 15.0,
-                  childAspectRatio: 0.77,
-                ),
-                itemCount: doctors.length,
-                itemBuilder: (context, index) {
-                  return FutureBuilder(
-                    future: getCategory('${doctors[index]['categoryId']}'),
-                    builder: (context, categorySnapshot) {
-                      if (categorySnapshot.hasError) {
-                        return Text('Error: ${categorySnapshot.error}');
-                      } else {
-                        return Container(
-                          //height: 300, // Adjust the height as needed
-                          child: doctor(
-                            doctorPic:
-                                '${doctors[index]['image']['secure_url']}',
-                            doctorRate: '${doctors[index]['rate']}',
-                            doctorName: '${doctors[index]['name']}',
-                            doctorCat: categorySnapshot.data.toString(),
+            doctors == null || doctors.isEmpty
+                ? Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 150),
+                      child: Column(
+                        children: [
+                          Container(
+                            child: Image.asset('assets/doctor_category.png'),
                           ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'There is No Doctor Added Yet!',
+                            style: TextStyle(
+                              fontFamily: 'salsa',
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                :
+                // doctors
+                Expanded(
+                    child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 15.0,
+                        childAspectRatio: 0.77,
+                      ),
+                      itemCount: doctors.length,
+                      itemBuilder: (context, index) {
+                        return FutureBuilder(
+                          future:
+                              getCategory('${doctors[index]['categoryId']}'),
+                          builder: (context, categorySnapshot) {
+                            if (categorySnapshot.hasError) {
+                              return Text('Error: ${categorySnapshot.error}');
+                            } else {
+                              return Container(
+                                //height: 300, // Adjust the height as needed
+                                child: doctor(
+                                  doctorPic:
+                                      '${doctors[index]['image']['secure_url']}',
+                                  doctorRate: '${doctors[index]['rate']}',
+                                  doctorName: '${doctors[index]['name']}',
+                                  doctorCat: categorySnapshot.data.toString(),
+                                ),
+                              );
+                            }
+                          },
                         );
-                      }
-                    },
-                  );
-                },
-              ),
-            ),
+                      },
+                    ),
+                  ),
           ],
         ),
       ),

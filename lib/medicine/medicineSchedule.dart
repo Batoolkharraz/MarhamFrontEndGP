@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/Home/homePage.dart';
 import 'package:flutter_application_4/profile/profile.dart';
 import 'package:flutter_application_4/unit/dateList.dart';
 import 'package:flutter_application_4/unit/medicine.dart';
@@ -80,7 +81,7 @@ class _medicineScheduleState extends State<medicineSchedule> {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => profile(),
+                    builder: (context) => homePage(),
                   ),
                 );
               },
