@@ -5,6 +5,7 @@ import 'package:flutter_application_4/medicine/medicineSchedule.dart';
 import 'package:flutter_application_4/profile/edit.dart';
 import 'package:flutter_application_4/unit/appointmentList.dart';
 import 'package:flutter_application_4/unit/medicineList.dart';
+import 'package:intl/intl.dart';
 
 class profile extends StatefulWidget {
   const profile({super.key});
@@ -29,7 +30,28 @@ class _profileState extends State<profile> {
       responceBody = responceBody.substring(17, responceBody.length - 1);
       var pre = jsonDecode(responceBody);
 
+      // Convert date strings to DateTime and sort
+      pre.sort((a, b) {
+        DateTime dateA = DateFormat('MM/dd/yyyy').parse(a['dateFrom']);
+        DateTime dateB = DateFormat('MM/dd/yyyy').parse(b['dateFrom']);
+        return dateA.compareTo(dateB);
+      });
+
+      // Format the sorted date as dd/mm/yyyy
+      DateFormat fromFormat = DateFormat('dd/MM/yyyy');
+      for (var prescription in pre) {
+        prescription['dateFrom'] = fromFormat
+            .format(DateFormat('MM/dd/yyyy').parse(prescription['dateFrom']));
+      } 
+      // Format the sorted date as dd/mm/yyyy
+      DateFormat toFormat = DateFormat('dd/MM/yyyy');
+      for (var prescription in pre) {
+        prescription['dateTo'] = toFormat
+            .format(DateFormat('MM/dd/yyyy').parse(prescription['dateTo']));
+      }
+
       setState(() {
+        prescriptions.clear();
         prescriptions.addAll(pre);
       });
     }
@@ -51,7 +73,7 @@ class _profileState extends State<profile> {
   @override
   void initState() {
     super.initState();
-    getPrescription('65109015e44c87b9397e2e19');
+    getPrescription('652fcc8801bf376d7f722690');
   }
 
   @override

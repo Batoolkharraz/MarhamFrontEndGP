@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:flutter_application_4/unit/patientRec.dart';
+//import 'package:flutter/scheduler.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:intl/intl.dart';
 import '../unit/diagnosisList.dart';
 import 'doctorHome.dart';
 
@@ -57,6 +58,20 @@ class _patientRecordState extends State<patientRecord> {
       responceBody = responceBody.trim();
       responceBody = responceBody.substring(17, responceBody.length - 1);
       var pre = jsonDecode(responceBody);
+
+      // Convert date strings to DateTime and sort
+      pre.sort((a, b) {
+        DateTime dateA = DateFormat('MM/dd/yyyy').parse(a['dateFrom']);
+        DateTime dateB = DateFormat('MM/dd/yyyy').parse(b['dateFrom']);
+        return dateA.compareTo(dateB);
+      });
+
+      // Format the sorted date as dd/mm/yyyy
+      DateFormat outputFormat = DateFormat('dd/MM/yyyy');
+      for (var prescription in pre) {
+        prescription['dateFrom'] = outputFormat
+            .format(DateFormat('MM/dd/yyyy').parse(prescription['dateFrom']));
+      }
 
       setState(() {
         prescriptions.clear();
@@ -197,50 +212,9 @@ class _patientRecordState extends State<patientRecord> {
                       shrinkWrap: true,
                       itemCount: prescriptions.length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.date_range_outlined,
-                                color: Color(0xFF0561DD),
-                                size: 30,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                'at Date:',
-                                style: TextStyle(
-                                  fontSize: 25,
-                                  fontFamily: 'salsa',
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                prescriptions[index]['dateFrom'],
-                                style: TextStyle(
-                                  fontSize: 25,
-                                  fontFamily: 'salsa',
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 60,
-                              ),
-                              Text(
-                                prescriptions[index]['diagnosis'],
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  fontFamily: 'salsa',
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
+                        return patientRec(
+                            diagnosis: prescriptions[index]['diagnosis'],
+                            from: prescriptions[index]['dateFrom']);
                       },
                     ),
             ],
