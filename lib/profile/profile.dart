@@ -1,8 +1,11 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/medicine/medicineSchedule.dart';
 import 'package:flutter_application_4/profile/edit.dart';
 import 'package:flutter_application_4/unit/appointmentList.dart';
 import 'package:flutter_application_4/unit/medicineList.dart';
+import 'package:intl/intl.dart';
 
 class profile extends StatefulWidget {
   const profile({super.key});
@@ -12,11 +15,73 @@ class profile extends StatefulWidget {
 }
 
 class _profileState extends State<profile> {
+  List prescriptions = [];
+
+  Future getPrescription(String userId) async {
+    // var url =
+    //   "https://marham-backend.onrender.com/prescription/forUser/65109015e44c87b9397e2e19";
+    var url =
+        "https://marham-backend.onrender.com/prescription/forUser/${userId}";
+
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var responceBody = response.body.toString();
+      responceBody = responceBody.trim();
+      responceBody = responceBody.substring(17, responceBody.length - 1);
+      var pre = jsonDecode(responceBody);
+
+      // Convert date strings to DateTime and sort
+      pre.sort((a, b) {
+        DateTime dateA = DateFormat('MM/dd/yyyy').parse(a['dateFrom']);
+        DateTime dateB = DateFormat('MM/dd/yyyy').parse(b['dateFrom']);
+        return dateA.compareTo(dateB);
+      });
+
+      // Format the sorted date as dd/mm/yyyy
+      DateFormat fromFormat = DateFormat('dd/MM/yyyy');
+      for (var prescription in pre) {
+        prescription['dateFrom'] = fromFormat
+            .format(DateFormat('MM/dd/yyyy').parse(prescription['dateFrom']));
+      } 
+      // Format the sorted date as dd/mm/yyyy
+      DateFormat toFormat = DateFormat('dd/MM/yyyy');
+      for (var prescription in pre) {
+        prescription['dateTo'] = toFormat
+            .format(DateFormat('MM/dd/yyyy').parse(prescription['dateTo']));
+      }
+
+      setState(() {
+        prescriptions.clear();
+        prescriptions.addAll(pre);
+      });
+    }
+  }
+
+  Future<String> getDoctor(String docId) async {
+    // var url = "https://marham-backend.onrender.com/doctor/${docId}";
+    var url =
+        "https://marham-backend.onrender.com/doctor/651c58f32cd651e7a27ac12f";
+    var response = await http.get(Uri.parse(url));
+    var responceBody = response.body.toString();
+    responceBody = responceBody.trim();
+    responceBody = responceBody.substring(10, responceBody.length - 1);
+    var cat = jsonDecode(responceBody);
+
+    return cat['name'];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getPrescription('652fcc8801bf376d7f722690');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFE8EEFA),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
@@ -227,25 +292,34 @@ class _profileState extends State<profile> {
                     height: 10,
                   ),
 
-                  //medicine
                   ListView.builder(
                     shrinkWrap: true,
-                    itemCount: 1,
+                    itemCount: prescriptions.length,
                     itemBuilder: (context, index) {
-                      return Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: medicineList(
-                              diagnosis: 'diagnosis',
-                              from: 'from',
-                              to: 'to',
-                              writtenBy: 'writtenBy',
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => medicineSchedule(),
-                                  ),
-                                );
-                              }));
+                      return FutureBuilder(
+                        future:
+                            getDoctor('${prescriptions[index]['writtenBy']}'),
+                        builder: (context, categorySnapshot) {
+                          if (categorySnapshot.hasError) {
+                            return Text('Error: ${categorySnapshot.error}');
+                          } else {
+                            return Container(
+                              child: medicineList(
+                                  diagnosis: prescriptions[index]['diagnosis'],
+                                  from: prescriptions[index]['dateFrom'],
+                                  to: prescriptions[index]['dateTo'],
+                                  writtenBy: categorySnapshot.data.toString(),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>medicineSchedule(medicines: prescriptions[index]['medicines']),
+                                      ),
+                                    );
+                                  }),
+                            );
+                          }
+                        },
+                      );
                     },
                   ),
                 ],
