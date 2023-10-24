@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:convert' as convert;
  void update(context,String password) async{
-  var url = await Uri.parse("http://10.0.2.2:8000/mail/updatepass");
+  var url = await Uri.parse("https://marham-backend.onrender.com/updatePassword/User");
     try {
     var response = await http.post(
       url,

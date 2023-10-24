@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 Future<String?> checkEmail(String email) async {
-  var url = Uri.parse("http://10.0.2.2:8000/mail/confmail");
+  var url = Uri.parse("https://marham-backend.onrender.com/updatePassword/confirmEmail");
   try {
     var response = await http.post(
       url,

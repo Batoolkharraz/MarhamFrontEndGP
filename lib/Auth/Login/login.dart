@@ -3,7 +3,6 @@ import 'package:flutter_application_4/Auth/Login/ValidateForm.dart';
 import 'package:flutter_application_4/Auth/Login/onpresseButton.dart';
 import 'package:flutter_application_4/Auth/resetpass/reset.dart';
 import 'package:flutter_application_4/Auth/signup/signup.dart';
-import 'package:flutter_application_4/Home/homePage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Login extends StatefulWidget {
@@ -14,13 +13,17 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  GlobalKey<FormState> formstate = new GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var username;
-    var password;
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -71,104 +74,70 @@ class _LoginState extends State<Login> {
                             mouseCursor: MaterialStateMouseCursor.textable,
                           ),
                         ),
-                        SizedBox(height: 50.0),
                       ],
                     ),
                     // SizedBox(height: 30.0),
                     Form(
-                      key: formstate,
+                      key: _formKey,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TextFormField(
-                            style: TextStyle(
-                              fontSize: 25,
-                            ),
-                            onSaved: (text) {
-                              username = text;
+                            controller: _usernameController,
+                            validator: (text) {
+                              if (text == null || text.isEmpty) {
+                                return "Please fill in your username";
+                              }
+                              return null;
                             },
+                            style: TextStyle(fontSize: 25),
                             decoration: InputDecoration(
-                                labelText: 'username',
-                                //hintText: 'test@email.com',
-
-                                labelStyle: TextStyle(fontSize: 25),
-                                hintStyle: TextStyle(fontSize: 25)),
+                              labelText: 'Username',
+                              labelStyle: TextStyle(fontSize: 25),
+                            ),
                           ),
-                          SizedBox(height: 50.0),
+                          SizedBox(height: 20.0),
                           TextFormField(
-                            onSaved: (text) {
-                              password = text;
+                            controller: _passwordController,
+                            validator: (text) {
+                              if (text == null || text.isEmpty) {
+                                return "Please fill in your password";
+                              }
+                              return null;
                             },
                             obscureText: true,
-                            style: TextStyle(
-                              fontSize: 25,
-                            ),
+                            style: TextStyle(fontSize: 25),
                             decoration: InputDecoration(
-                                labelText: 'Password',
-                                hintText: 'Enter your password',
-                                labelStyle: TextStyle(fontSize: 25),
-                                hintStyle: TextStyle(fontSize: 25)),
+                              labelText: 'Password',
+                              hintText: 'Enter your password',
+                              labelStyle: TextStyle(fontSize: 25),
+                            ),
                           ),
-                          SizedBox(height: 10),
-                          Container(
-                              child: InkWell(
-                            child: Text("Forgot your password?",
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'Salsa')),
-                            onTap: () => {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) {
-                                  return ResetPassword();
-                                },
-                              )) //
-                            },
-                          )),
-                          SizedBox(height: 30.0),
+                          SizedBox(height: 20.0),
                           ElevatedButton(
-                            onPressed: () => {
-                              if (validateForm(formstate))
-                                {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return Center(
-                                            child: CircularProgressIndicator());
-                                      }),
-                                  onButtonPressed(context, username, password),
-                                  Future.delayed(Duration(seconds: 2), () {
-                                    Navigator.of(context)
-                                        .pop(); // Close the loading dialog
-                                    onButtonPressed(context, username,
-                                        password); // Call your function
-                                    Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                        builder: (context) {
-                                          return homePage(); // Navigate to the home page
-                                        },
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                onButtonPressed(
+                                    context,
+                                    _usernameController.text,
+                                    _passwordController.text);
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Please fill in both username and password',
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                        fontFamily: 'Helvetica',
                                       ),
-                                    );
-                                  })
-                                }
-                              else
-                                {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        'Please fill in both username and password',
-                                        style: TextStyle(
-                                          fontSize: 25,
-                                          fontFamily: 'Helvetica',
-                                        ),
-                                      ),
-                                      backgroundColor:
-                                          Color.fromARGB(221, 252, 57, 43),
-                                      duration: Duration(seconds: 3),
                                     ),
-                                  )
-                                }
+                                    backgroundColor:
+                                        Color.fromARGB(221, 252, 57, 43),
+                                    duration: Duration(seconds: 3),
+                                  ),
+                                );
+                              }
                             },
                             child: Text(
                               "Sign In",
@@ -178,6 +147,27 @@ class _LoginState extends State<Login> {
                             ),
                             style: ElevatedButton.styleFrom(
                               fixedSize: Size(600, 60),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Container(
+                            child: InkWell(
+                              child: Text(
+                                "Forgot your password?",
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Salsa',
+                                ),
+                              ),
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) {
+                                    return ResetPassword();
+                                  },
+                                ));
+                              },
                             ),
                           ),
                         ],

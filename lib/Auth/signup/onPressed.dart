@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/Login/login.dart';
 import 'package:flutter_application_4/Auth/signup/signuppost.dart';
-void onPressed(BuildContext context, String username, String   email, String   phone, String   password,  String  cpassword) async {
-    String loginSuccessful = await addPOST(username,  email,  phone,  password,  cpassword);
+void onPressed(BuildContext context, String username, String   email, String   phone, String   password) async {
+    String loginSuccessful = await addPOST(username,  email,  phone,  password);
     if (loginSuccessful=="false1") {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

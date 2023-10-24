@@ -81,13 +81,13 @@ class _SignupState extends State<Signup> {
                               username = text;
                             },
                             validator: (text){
-                              if(text ==null)
+                              if (text == null || text.isEmpty)
                               {
                                 return "please fill all information";
                               }
                               else
-
-                              {if (text.length < 3 || text.length > 20) {
+                              {
+                                if (text.length < 3 || text.length > 20) {
                                 return "invalid username";
                               }
                                final RegExp regex = RegExp(r'^[a-zA-Z0-9_]+$');
@@ -152,12 +152,9 @@ class _SignupState extends State<Signup> {
                               phone = text;
                             },
                             validator: (text){
-                              if(text ==null)
+                              if (text == null || text.isEmpty)
                               return "please fill all information";
-                               final RegExp phoneRegex = RegExp(r'^\d{10}$');
-                              if (!phoneRegex.hasMatch(text)) {
-                                return 'Invalid phone number';
-                              }
+                          
                             },
                             decoration: InputDecoration(
                               labelText: 'Phone Number',
@@ -181,7 +178,7 @@ class _SignupState extends State<Signup> {
                             },
                             validator:(text)
                             {
-                              if(text ==null)
+                              if (text == null || text.isEmpty)
                               return"please fill all information";
                               else if(text.length<8)
                               {
@@ -212,7 +209,7 @@ class _SignupState extends State<Signup> {
                             },
                             validator: (text)
                             {
-                              if(text ==null)
+                              if (text == null || text.isEmpty)
                               {
                                 return "please fill all information";
                               }
@@ -244,7 +241,7 @@ class _SignupState extends State<Signup> {
                            onPressed: () {
                               if(validateForm(signstate))
                               {
-                              onPressed(context, username, email, phone, password, cpassword);
+                              onPressed(context, username, email, phone, password);
                               }
                               else
                               {

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
 Future<bool> postLogin(String username, String password) async {
-  var url = Uri.parse("http://10.0.2.2:8000/in/signin");
+   final storage = FlutterSecureStorage();
+  var url = Uri.parse("https://marham-backend.onrender.com/signin/user");
   var response = await http.post(
     url,
     headers: <String, String>{
@@ -17,13 +20,16 @@ Future<bool> postLogin(String username, String password) async {
 
   if (response.statusCode == 200) {
     var responseBody = response.body;
-     final responseData = jsonDecode(response.body);
-    if (responseData==false) {
+    final responseData = jsonDecode(response.body);
+    if (responseData == false) {
       return false; // Return false for invalid data
-    }
-    else
-   { print(responseData);
-    return true; }// Return true for successful response
+    } else {
+       var data = json.decode(responseBody);
+    String token = data["token"];
+    await storage.write(key: 'jwt', value: token);
+    print("token is " +token);
+      return true;
+    } // Return true for successful response
   } else {
     print('A network error occurred');
     return false; // Return false for network error
