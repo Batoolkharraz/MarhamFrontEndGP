@@ -29,7 +29,7 @@ void onButtonPressed(
   if (loginSuccessful) {
     print("username: $username");
     print("Password: $password");
-    Navigator.of(context).push(
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) {
           return homePage(); // Navigate to the home page
