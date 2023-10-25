@@ -79,11 +79,7 @@ class _medicineScheduleState extends State<medicineSchedule> {
                 size: 40,
               ),
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => homePage(),
-                  ),
-                );
+                Navigator.of(context).pop();
               },
             ),
           ),
