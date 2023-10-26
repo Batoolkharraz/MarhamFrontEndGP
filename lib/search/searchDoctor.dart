@@ -122,13 +122,13 @@ class _searchDoctorState extends State<searchDoctor> {
                           child: Column(
                             children: [
                               Container(
-                                  //child: Image.asset('assets/doctor_category.png'),
+                                  child: Image.asset('assets/doctor_category.png'),
                                   ),
                               SizedBox(
                                 height: 10,
                               ),
                               Text(
-                                'There is No Doctor Added Yet!',
+                                'There is No Doctor With This Name!',
                                 style: TextStyle(
                                   fontFamily: 'salsa',
                                   fontSize: 30,
