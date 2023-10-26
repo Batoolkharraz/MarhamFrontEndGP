@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/search/searchDoctor.dart';
 import 'package:flutter_application_4/unit/category.dart';
 import 'package:flutter_application_4/unit/doctor.dart';
 import 'package:flutter_application_4/doctors/doctors.dart';
@@ -109,20 +110,26 @@ class _homeState extends State<home> {
                       margin: EdgeInsets.only(right: 5.0),
                       child: Row(
                         children: [
-                          FaIcon(FontAwesomeIcons.search, size: 30.0),
+                          IconButton(
+                            icon: Icon(
+                              FontAwesomeIcons.search,
+                              size: 30.0,
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => searchDoctor(),
+                                ),
+                              );
+                            },
+                          ),
                           SizedBox(width: 20.0),
                           IconButton(
                             icon: Icon(
                               FontAwesomeIcons.commentDots,
                               size: 30.0,
                             ),
-                            onPressed: () {/*
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => MessagesScreen(),
-                                ),
-                              );*/
-                            },
+                            onPressed: () {},
                           ),
                         ],
                       ),
