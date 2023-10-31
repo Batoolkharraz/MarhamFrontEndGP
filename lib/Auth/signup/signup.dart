@@ -265,9 +265,17 @@ class _SignupState extends State<Signup> {
                               "Sign Up",
                               style: TextStyle(fontSize: 25),
                             ),
-                            style: ElevatedButton.styleFrom(
-                              fixedSize: Size(600, 60),
-                            ),
+                             style:ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF0561DD),
+    fixedSize: Size(600, 60),
+  ).copyWith(
+    shape: MaterialStateProperty.all(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(100),
+        side: BorderSide(color: Color(0xFF0561DD), width: 2.0),
+      ),
+    ),
+  ),
                           ),
                         ],
                       ),

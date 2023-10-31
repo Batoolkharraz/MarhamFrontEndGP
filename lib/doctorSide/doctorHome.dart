@@ -12,7 +12,7 @@ class _doctorHomeState extends State<doctorHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE8EEFA),
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.only(top: 50, left: 25, right: 25),
         child: Container(

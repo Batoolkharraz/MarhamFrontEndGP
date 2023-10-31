@@ -3,6 +3,7 @@ import 'package:flutter_application_4/doctorappointment/workinghour.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+
 class appointment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -67,8 +68,8 @@ class appointment extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     shape: BoxShape
                                         .circle, // This makes the container circular
-                                    color: Colors
-                                        .blue, // You can change the background color
+                                    color:Color(0xFF0561DD),
+                                         // You can change the background color
                                   ),
                                   child: Center(
                                     child:InkWell(
@@ -93,8 +94,7 @@ class appointment extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     shape: BoxShape
                                         .circle, // This makes the container circular
-                                    color: Colors
-                                        .blue, // You can change the background color
+                                    color: Color(0xFF0561DD),// You can change the background color
                                   ),
                                   child: Center(
                                     child: InkWell(
@@ -116,8 +116,7 @@ class appointment extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     shape: BoxShape
                                         .circle, // This makes the container circular
-                                    color: Colors
-                                        .blue, // You can change the background color
+                                    color: Color(0xFF0561DD), // You can change the background color
                                   ),
                                   child: Center(
                                     child: InkWell(child: 
@@ -164,7 +163,7 @@ class appointment extends StatelessWidget {
                             decoration: BoxDecoration(
                               
                               borderRadius: BorderRadius.circular(10.0),
-                                color: Colors.blue,
+                                color: Color(0xFF0561DD),
                               border: Border.all(
                                 color: Colors.grey, // Set the border color here
                                 width: 2.0, // Set the border width
