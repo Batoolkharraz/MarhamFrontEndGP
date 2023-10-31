@@ -7,7 +7,7 @@ Future<void> pressedButton(BuildContext context, String email) async {
   print("pressed:");
   print(message);
   
-  if (message =="false" ) {
+  if (message ==false ) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
