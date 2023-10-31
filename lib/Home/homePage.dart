@@ -3,14 +3,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_4/unit/category.dart';
-import 'package:flutter_application_4/unit/doctor.dart';
+import 'package:flutter_application_4/doctorappointment/doctorapp.dart';
 import 'package:flutter_application_4/Home/home.dart';
-import 'package:flutter_application_4/appointment/appointment.dart';
 import 'package:flutter_application_4/doctors/doctors.dart';
 import 'package:flutter_application_4/profile/profile.dart';
-import 'package:lottie/lottie.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:http/http.dart' as http;
 
