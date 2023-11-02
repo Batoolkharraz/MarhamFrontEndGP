@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/doctorSide/patientRecord.dart';
 import 'package:flutter_application_4/doctorSide/writePrescription.dart';
 
 class doctorHome extends StatefulWidget {
@@ -62,7 +63,12 @@ class _doctorHomeState extends State<doctorHome> {
 
             //check patient record
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => patientRecord(),
+                  ),
+                );},
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
