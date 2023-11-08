@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/Login/logintpost.dart';
-import 'package:flutter_application_4/Auth/updateinformation/edit.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_application_4/doctorSide/doctorHome.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_application_4/Home/homePage.dart';
 
 
@@ -23,19 +23,31 @@ void onButtonPressed(
     );
     return;
   }
-
+    final storage = FlutterSecureStorage();
   bool loginSuccessful = await postLogin(username, password);
   print("fromm post  $loginSuccessful");
   if (loginSuccessful) {
     print("username: $username");
     print("Password: $password");
-    Navigator.of(context).pushReplacement(
+  String? roleofuser = await storage.read(key: 'role');
+  if(roleofuser == "user")
+   { Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) {
-          return EditUser(); // Navigate to the home page
+          return homePage(); // Navigate to the home page
+        },
+      ),
+    );}
+    else if (roleofuser=="doctor")
+    {
+      Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) {
+          return doctorHome(); // Navigate to the home page
         },
       ),
     );
+    }
   } else {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

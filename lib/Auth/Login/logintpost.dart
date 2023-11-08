@@ -26,8 +26,11 @@ Future<bool> postLogin(String username, String password) async {
     } else {
        var data = json.decode(responseBody);
     String token = data["token"];
+    String role=data["role"];
     await storage.write(key: 'jwt', value: token);
+    await storage.write(key:'role',value: role);
     print("token is " +token);
+     print("role is " +role);
       return true;
     } // Return true for successful response
   } else {

@@ -17,7 +17,7 @@ class _SignupState extends State<Signup> {
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
   var username, phone, email, password, cpassword;
-
+  bool isChecked = false;
   @override
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class _SignupState extends State<Signup> {
             child: SingleChildScrollView(
               child: Container(
                 margin: EdgeInsets.fromLTRB(15, 240, 15, 0),
-                padding: EdgeInsets.fromLTRB(10,0, 10,0),
+                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -80,24 +80,20 @@ class _SignupState extends State<Signup> {
                             onSaved: (text) {
                               username = text;
                             },
-                            validator: (text){
-                              if (text == null || text.isEmpty)
-                              {
+                            validator: (text) {
+                              if (text == null || text.isEmpty) {
                                 return "please fill all information";
-                              }
-                              else
-                              {
+                              } else {
                                 if (text.length < 3 || text.length > 20) {
-                                return "invalid username";
+                                  return "invalid username";
+                                }
+                                final RegExp regex = RegExp(r'^[a-zA-Z0-9_]+$');
+                                if (!regex.hasMatch(text)) {
+                                  return "invalid username";
+                                }
                               }
-                               final RegExp regex = RegExp(r'^[a-zA-Z0-9_]+$');
-                              if (!regex.hasMatch(text)) {
-                                return "invalid username";
-                              }}
 
                               // Check if the username contains only alphanumeric characters and underscores.
-                             
-
                             },
                             decoration: InputDecoration(
                               labelText: 'Username',
@@ -115,7 +111,7 @@ class _SignupState extends State<Signup> {
                             onSaved: (text) {
                               email = text;
                             },
-                           validator: (value) {
+                            validator: (value) {
                               final RegExp emailRegex = RegExp(
                                 r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
                               );
@@ -151,10 +147,9 @@ class _SignupState extends State<Signup> {
                             onSaved: (text) {
                               phone = text;
                             },
-                            validator: (text){
+                            validator: (text) {
                               if (text == null || text.isEmpty)
-                              return "please fill all information";
-                          
+                                return "please fill all information";
                             },
                             decoration: InputDecoration(
                               labelText: 'Phone Number',
@@ -172,19 +167,17 @@ class _SignupState extends State<Signup> {
                             ),
                           ),
                           const SizedBox(height: 16),
-                          TextFormField(controller: _passwordController,
+                          TextFormField(
+                            controller: _passwordController,
                             onSaved: (text) {
                               password = text;
                             },
-                            validator:(text)
-                            {
+                            validator: (text) {
                               if (text == null || text.isEmpty)
-                              return"please fill all information";
-                              else if(text.length<8)
-                              {
+                                return "please fill all information";
+                              else if (text.length < 8) {
                                 return "Password sholud be at least 8 characters";
                               }
-
                             },
                             obscureText: true,
                             decoration: InputDecoration(
@@ -203,21 +196,18 @@ class _SignupState extends State<Signup> {
                             ),
                           ),
                           const SizedBox(height: 16),
-                          TextFormField( controller: _confirmPasswordController,
+                          TextFormField(
+                            controller: _confirmPasswordController,
                             onSaved: (text) {
                               cpassword = text;
                             },
-                            validator: (text)
-                            {
-                              if (text == null || text.isEmpty)
-                              {
+                            validator: (text) {
+                              if (text == null || text.isEmpty) {
                                 return "please fill all information";
                               }
-                               if (text != _passwordController.text) {
+                              if (text != _passwordController.text) {
                                 return 'Passwords do not match.';
                               }
-                              
-                              
                             },
                             obscureText: true,
                             decoration: InputDecoration(
@@ -237,14 +227,13 @@ class _SignupState extends State<Signup> {
                             ),
                           ),
                           SizedBox(height: 40.0),
+                          
                           ElevatedButton(
-                           onPressed: () {
-                              if(validateForm(signstate))
-                              {
-                              onPressed(context, username, email, phone, password);
-                              }
-                              else
-                              {
+                            onPressed: () {
+                              if (validateForm(signstate)) {
+                                onPressed(
+                                    context, username, email, phone, password);
+                              } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
@@ -265,17 +254,18 @@ class _SignupState extends State<Signup> {
                               "Sign Up",
                               style: TextStyle(fontSize: 25),
                             ),
-                             style:ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF0561DD),
-    fixedSize: Size(600, 60),
-  ).copyWith(
-    shape: MaterialStateProperty.all(
-      RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(100),
-        side: BorderSide(color: Color(0xFF0561DD), width: 2.0),
-      ),
-    ),
-  ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFF0561DD),
+                              fixedSize: Size(600, 60),
+                            ).copyWith(
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(100),
+                                  side: BorderSide(
+                                      color: Color(0xFF0561DD), width: 2.0),
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
