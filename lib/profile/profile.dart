@@ -115,7 +115,7 @@ class _profileState extends State<profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:  Color.fromARGB(255, 231, 233, 237),
+      backgroundColor: Color.fromARGB(255, 231, 233, 237),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
@@ -141,261 +141,260 @@ class _profileState extends State<profile> {
         ],
       ),
       body: Column(
-          children: [
-            //head
-            User.isEmpty||User==null?
-            Container(
-              height: 200,
-              child: Center(
-                child:
-                 CircularProgressIndicator(),
-              ),
-            )
-            :
-            Container(
-              height: 270,
-              child: Column(
-                children: [
-                  Padding(
-                            padding: const EdgeInsets.only( left:20),
-                            child: Container(
-                              width:
-                                  180, // Width and height to accommodate the border
-                              height: 180,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Color(0xFF0561DD), // Blue border color
-                                  width: 3, // Adjust the border width as needed
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0xFF0561DD)
-                                        .withOpacity(0.3), // Shadow color
-                                    offset: Offset(0, 4), // Shadow position
-                                    blurRadius: 15, // Shadow blur radius
-                                  ),
-                                ],
+        children: [
+          //head
+          User.isEmpty || User == null
+              ? Container(
+                  height: 270,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              : Container(
+                  height: 270,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Container(
+                          width:
+                              180, // Width and height to accommodate the border
+                          height: 180,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Color(0xFF0561DD), // Blue border color
+                              width: 3, // Adjust the border width as needed
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color(0xFF0561DD)
+                                    .withOpacity(0.3), // Shadow color
+                                offset: Offset(0, 4), // Shadow position
+                                blurRadius: 15, // Shadow blur radius
                               ),
-                              child: User['image'] != null
-                        ? CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                            backgroundImage:
-                                NetworkImage(User['image']['secure_url']),
-                            radius: 100,
-                          )
-                        : CircleAvatar(
-                          
-                            // Provide a default image or a placeholder
-                            backgroundImage:
-                                AssetImage('assets/5bbc3519d674c.jpg'),
-                            radius: 100,
+                            ],
                           ),
-                            ),
-                          ),
-                  SizedBox(height:5,),
-                  Text(
-                            User['username'] ?? 'userName',
-                            style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Salsa',
-                            ),
-                          ),
-                          SizedBox(height: 10,),
-                 
-                                Text(
-                                  User['email'] ?? 'email not found',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color:Colors.grey[600],
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Salsa',
-                                  ),
+                          child: User['image'] != null
+                              ? CircleAvatar(
+                                  backgroundColor: Colors.transparent,
+                                  backgroundImage:
+                                      NetworkImage(User['image']['secure_url']),
+                                  radius: 90,
+                                )
+                              : CircleAvatar(
+                                  backgroundImage:
+                                      AssetImage('assets/5bbc3519d674c.jpg'),
+                                  radius: 100,
                                 ),
-                ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        User['username'] ?? 'userName',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Salsa',
+                        ),
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        User['email'] ?? 'email not found',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Salsa',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+          SizedBox(
+            height: 20,
+          ),
+
+          //my appointment
+          Container(
+            height: 655,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(50.0),
+                topRight: Radius.circular(50.0),
               ),
             ),
-
-            SizedBox(
-              height: 30,
-            ),
-
-            //my appointment
-          
-          Container(
-            decoration: BoxDecoration(
-                    
-              color:Colors.white,
-                    borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(50.0),
-      topRight: Radius.circular(50.0),
-    ),
-            ),
-            height: 748,
-              width: 800,
             child: Padding(
-              padding: const EdgeInsets.only(left: 30,right: 30,top: 40),
+              padding: const EdgeInsets.only(left: 30, right: 30, top: 40),
               child: Column(
                 children: [
                   Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //title
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Your appointment',
-                          style: TextStyle(
-                            color: Color(0xFF0561DD),
-                            fontSize: 28,
-                            fontFamily: 'salsa',
-                            
-            
-                          ),
-                        ),
-                        Text(
-                          'see all',
-                          style: TextStyle(
-                            color: Color(0xFF0561DD),
-                            fontSize: 20,
-                            fontFamily: 'salsa',
-                           
-                          ),
-                        ),
-                      ],
-                    ),
-            
-                    SizedBox(
-                      height: 10,
-                    ),
-            
-                    //appointment
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: 1,
-                      itemBuilder: (context, index) {
-                        //  final appointment = appointmentList[index];
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: appointmentList(
-                              doctor: 'doctor',
-                              category: 'category',
-                              date: 'date',
-                              time: 'time',
-                              state: 'state'),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(height: 40,),
-                  Container(
-                
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //title
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Your medicine',
-                          style: TextStyle(
-                            color: Color(0xFF0561DD),
-                            fontSize: 30,
-                            fontFamily: 'salsa',
-                            
-                          ),
-                        ),
-                        Text(
-                          'see all',
-                          style: TextStyle(
-                          
-                            color: Color(0xFF0561DD),
-                            fontSize: 20,
-                            fontFamily: 'salsa',
-                            
-                          ),
-                        ),
-                      ],
-                    ),
-            
-                    prescriptions == null || prescriptions.isEmpty
-                        ? Center(
-                            child: Column(
-                              children: [
-                                Container(
-                                  child: Image.asset('assets/medicine.png'),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  'No Prescription written for You Yet!',
-                                  style: TextStyle(
-                                   color:Colors.grey[600],
-                                    fontFamily: 'salsa',
-                                    fontSize: 25,
-                                   
-                                  ),
-                                ),
-                              ],
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //title
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Your appointment',
+                            style: TextStyle(
+                              color: Color(0xFF0561DD),
+                              fontSize: 28,
+                              fontFamily: 'salsa',
                             ),
-                          )
-                        : SizedBox(
-                            height: 10,
                           ),
-            
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: prescriptions.length,
-                      itemBuilder: (context, index) {
-                        return FutureBuilder(
-                          future:
-                              getDoctor('${prescriptions[index]['writtenBy']}'),
-                          builder: (context, categorySnapshot) {
-                            if (categorySnapshot.hasError) {
-                              return Text('Error: ${categorySnapshot.error}');
-                            } else {
-                              return Container(
-                                child: medicineList(
-                                    diagnosis: prescriptions[index]['diagnosis'],
-                                    from: prescriptions[index]['dateFrom'],
-                                    to: prescriptions[index]['dateTo'],
-                                    writtenBy: categorySnapshot.data.toString(),
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => medicineSchedule(
-                                              medicines: prescriptions[index]
-                                                  ['medicines']),
-                                        ),
-                                      );
-                                    }),
-                              );
-                            }
+                          Text(
+                            'see all',
+                            style: TextStyle(
+                              color: Color(0xFF0561DD),
+                              fontSize: 20,
+                              fontFamily: 'salsa',
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(
+                        height: 10,
+                      ),
+
+                      //appointment
+                      Container(
+                        height:
+                            210, // Set a fixed height or use a different value based on your design
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: 1,
+                          itemBuilder: (context, index) {
+                            //  final appointment = appointmentList[index];
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: appointmentList(
+                                doctor: 'doctor',
+                                category: 'category',
+                                date: 'date',
+                                time: 'time',
+                                state: 'state',
+                              ),
+                            );
                           },
-                        );
-                      },
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 40,
+                  ),
+                  Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        //title
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Your medicine',
+                              style: TextStyle(
+                                color: Color(0xFF0561DD),
+                                fontSize: 30,
+                                fontFamily: 'salsa',
+                              ),
+                            ),
+                            Text(
+                              'see all',
+                              style: TextStyle(
+                                color: Color(0xFF0561DD),
+                                fontSize: 20,
+                                fontFamily: 'salsa',
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        prescriptions == null || prescriptions.isEmpty
+                            ? Center(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      child: Image.asset('assets/medicine.png'),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      'No Prescription written for You Yet!',
+                                      style: TextStyle(
+                                        color: Colors.grey[600],
+                                        fontFamily: 'salsa',
+                                        fontSize: 25,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            :
+                             Container(
+                                height: 250,
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: prescriptions.length,
+                                  itemBuilder: (context, index) {
+                                    return FutureBuilder(
+                                      future: getDoctor(
+                                          '${prescriptions[index]['writtenBy']}'),
+                                      builder: (context, categorySnapshot) {
+                                        if (categorySnapshot.hasError) {
+                                          return Text(
+                                              'Error: ${categorySnapshot.error}');
+                                        } else {
+                                          return Container(
+                                            child: medicineList(
+                                              diagnosis: prescriptions[index]
+                                                  ['diagnosis'],
+                                              from: prescriptions[index]
+                                                  ['dateFrom'],
+                                              to: prescriptions[index]
+                                                  ['dateTo'],
+                                              writtenBy: categorySnapshot.data
+                                                  .toString(),
+                                              onTap: () {
+                                                Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        medicineSchedule(
+                                                      medicines:
+                                                          prescriptions[index]
+                                                              ['medicines'],
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
+                  ),
                 ],
               ),
             ),
-            
           ),
-        
-            //my medicine
-            
-          ],
-        ),
-      
+        ],
+      ),
     );
   }
 }
