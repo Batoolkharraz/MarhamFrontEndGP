@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/doctorappointment/doctorapp.dart';
 import 'package:flutter_application_4/unit/findDoctorList.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:http/http.dart' as http;
-
 
 class searchDoctor extends StatefulWidget {
   const searchDoctor({super.key});
@@ -80,7 +80,7 @@ class _searchDoctorState extends State<searchDoctor> {
               ),
               onPressed: () {
                 Navigator.of(context).pop();
-                },
+              },
             ),
           ),
         ),
@@ -122,8 +122,9 @@ class _searchDoctorState extends State<searchDoctor> {
                           child: Column(
                             children: [
                               Container(
-                                  child: Image.asset('assets/doctor_category.png'),
-                                  ),
+                                child:
+                                    Image.asset('assets/doctor_category.png'),
+                              ),
                               SizedBox(
                                 height: 10,
                               ),
@@ -150,7 +151,14 @@ class _searchDoctorState extends State<searchDoctor> {
                                   '${_foundedDoctors[index]['image']['secure_url']}',
                               doctorName: '${_foundedDoctors[index]['name']}',
                               doctorCat: '${_foundedDoctors[index]['rate']}',
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        appointment(doctor: _foundedDoctors[index]),
+                                  ),
+                                );
+                              },
                             ),
                           );
                         })),
