@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/Home/userdaily.dart';
 import 'package:flutter_application_4/doctorappointment/doctorapp.dart';
 import 'package:flutter_application_4/Home/home.dart';
 import 'package:flutter_application_4/doctors/doctors.dart';
@@ -19,7 +20,7 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> {
-  List<Widget> page = [home(), profile(), searchDoctor()];
+  List<Widget> page = [home(), profile(), UserDaily()];
   int selectedIndex = 0;
   List categories = [];
   List doctors = [];

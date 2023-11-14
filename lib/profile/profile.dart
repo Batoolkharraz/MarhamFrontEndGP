@@ -149,6 +149,7 @@ Future getAppointment() async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       backgroundColor: Color.fromARGB(255, 231, 233, 237),
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -418,6 +419,7 @@ Future getAppointment() async {
                                       },
                                     );
                                   },
+                                  physics: BouncingScrollPhysics(),
                                 ),
                               ),
                       ],
