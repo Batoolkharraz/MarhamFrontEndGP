@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/doctorSide/patientRecord.dart';
+import 'package:flutter_application_4/doctorSide/working.dart';
 import 'dart:typed_data';
 import 'package:flutter_application_4/doctorSide/writePrescription.dart';
 import 'package:image_picker/image_picker.dart';
@@ -118,7 +120,6 @@ class _doctorHomeState extends State<doctorHome> {
                               ),
                             ),
                           ),
-                    
                   ],
                 ),
               ),
@@ -156,7 +157,13 @@ class _doctorHomeState extends State<doctorHome> {
                 child: Column(
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => Workingdoctor(),
+                          ),
+                        );
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -176,16 +183,63 @@ class _doctorHomeState extends State<doctorHome> {
                         child: Row(
                           children: [
                             Container(
+                              width: 150,
+                              child: Image.asset('assets/calendar.png'),
+                            ),
+                            Text(
+                              'Make Your Schedule',
+                              style: TextStyle(
+                                color: Color(0xFF0561DD),
+                                fontSize: 27,
+                                fontFamily: 'salsa',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    
+                    SizedBox(
+                      height: 30,
+                    ),
+
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => patientRecord(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            width: 2,
+                            color: Color(0xFF0561DD),
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey, // Shadow color
+                              offset: Offset(0, 0), // Offset of the shadow
+                              blurRadius: 15, // Spread of the shadow
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 150,
                               child: Image.asset('assets/patient_icon.png'),
                             ),
                             Text(
                               'Check patient record',
-                               style: TextStyle(
-                            color: Color(0xFF0561DD),
-                            fontSize: 27,
-                            fontFamily: 'salsa',
-                           
-                          ),
+                              style: TextStyle(
+                                color: Color(0xFF0561DD),
+                                fontSize: 27,
+                                fontFamily: 'salsa',
+                              ),
                             ),
                           ],
                         ),
@@ -225,19 +279,19 @@ class _doctorHomeState extends State<doctorHome> {
                           children: [
                             Padding(
                               padding:
-                                  const EdgeInsets.only(top: 10, bottom: 10),
+                                  const EdgeInsets.only(left: 10),
                               child: Container(
+                                width: 150,
                                 child: Image.asset('assets/prescription.png'),
                               ),
                             ),
                             Text(
                               'Write Prescription',
                               style: TextStyle(
-                            color: Color(0xFF0561DD),
-                            fontSize: 27,
-                            fontFamily: 'salsa',
-                           
-                          ),
+                                color: Color(0xFF0561DD),
+                                fontSize: 27,
+                                fontFamily: 'salsa',
+                              ),
                             ),
                           ],
                         ),
@@ -273,12 +327,11 @@ class _doctorHomeState extends State<doctorHome> {
                           ),
                           Text(
                             'Daily Appointment',
-                             style: TextStyle(
-                            color: Color(0xFF0561DD),
-                            fontSize: 27,
-                            fontFamily: 'salsa',
-                           
-                          ),
+                            style: TextStyle(
+                              color: Color(0xFF0561DD),
+                              fontSize: 27,
+                              fontFamily: 'salsa',
+                            ),
                           ),
                         ],
                       ),
