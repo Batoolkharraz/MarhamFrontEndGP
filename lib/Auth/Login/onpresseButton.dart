@@ -30,15 +30,17 @@ void onButtonPressed(
     print("username: $username");
     print("Password: $password");
   String? roleofuser = await storage.read(key: 'role');
+  print("role is + roleofuser");
+  print(roleofuser);
   if(roleofuser == "user")
-   { Navigator.of(context).pushReplacement(
+  { Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) {
           return homePage(); // Navigate to the home page
         },
       ),
     );}
-    else if (roleofuser=="doctor")
+    if(roleofuser=="doctor;")
     {
       Navigator.of(context).pushReplacement(
       MaterialPageRoute(
