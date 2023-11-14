@@ -87,28 +87,28 @@ class _DoctorsPageState extends State<DoctorsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFE8EEFA),
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70.0),
-        child: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: Color(0xFF0561DD),
-          elevation: 0,
-          centerTitle: true,
-          title: Text(
-            'doctor list',
-            style: TextStyle(
-              fontSize: 30.0,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Salsa',
-            ),
-          ),
+      appBar: AppBar(
+        toolbarHeight: 90,
+        backgroundColor:  Color(0xFF0561DD),
+        elevation: 1,
+        title: Center(
+          child: Text("Doctor List",
+           style: TextStyle(
+                  fontSize: 30,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Salsa',
+                ),
+           ),
+        ),
+      
           leading: Padding(
-            padding: const EdgeInsets.only(left: 24.0),
+            padding: const EdgeInsets.only(left:14.0),
             child: IconButton(
               icon: Icon(
                 Icons.arrow_back,
                 color: Colors.white,
-                size: 40,
+                size: 25,
               ),
               onPressed: () {
                 Navigator.of(context).push(
@@ -135,7 +135,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
             )
           ],
         ),
-      ),
+      
       body: Padding(
         padding: const EdgeInsets.only(right: 20),
         child: Column(
@@ -157,6 +157,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
                       ),
                     );
                   },
+                   physics:BouncingScrollPhysics(),
                 ),
               ),
             ),
@@ -211,12 +212,15 @@ class _DoctorsPageState extends State<DoctorsPage> {
                 :
                 // doctors
                 Expanded(
+                  
                     child: GridView.builder(
+                     physics:BouncingScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         mainAxisSpacing: 15.0,
                         childAspectRatio: 0.77,
                       ),
+                       
                       itemCount: doctors.length,
                       itemBuilder: (context, index) {
                         return FutureBuilder(
@@ -227,6 +231,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
                               return Text('Error: ${categorySnapshot.error}');
                             } else {
                               return Container(
+                                
                                 //height: 300, // Adjust the height as needed
                                 child: doctor(
                                   doctorPic:

@@ -267,66 +267,7 @@ Future getAppointment() async {
             ),
             child: Padding(
               padding: const EdgeInsets.only(left: 30, right: 30, top: 40),
-              child: Column(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      //title
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Your appointment',
-                            style: TextStyle(
-                              color: Color(0xFF0561DD),
-                              fontSize: 28,
-                              fontFamily: 'salsa',
-                            ),
-                          ),
-                          Text(
-                            'see all',
-                            style: TextStyle(
-                              color: Color(0xFF0561DD),
-                              fontSize: 20,
-                              fontFamily: 'salsa',
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      SizedBox(
-                        height: 10,
-                      ),
-
-                      //appointment
-                      Container(
-                        height:
-                            210, // Set a fixed height or use a different value based on your design
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: 1,
-                          itemBuilder: (context, index) {
-                            //  final appointment = appointmentList[index];
-                            return Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: appointmentList(
-                                doctor: 'doctor',
-                                category: 'category',
-                                date: 'date',
-                                time: 'time',
-                                state: 'state',
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
+              child:
                   Container(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -378,8 +319,9 @@ Future getAppointment() async {
                               )
                             :
                              Container(
-                                height: 250,
+                                height: 500,
                                 child: ListView.builder(
+                                    physics: BouncingScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount: prescriptions.length,
                                   itemBuilder: (context, index) {
@@ -419,16 +361,15 @@ Future getAppointment() async {
                                       },
                                     );
                                   },
-                                  physics: BouncingScrollPhysics(),
                                 ),
                               ),
                       ],
                     ),
                   ),
-                ],
+                
               ),
             ),
-          ),
+          
         ],
       ),
     );

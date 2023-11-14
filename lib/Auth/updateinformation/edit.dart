@@ -62,6 +62,7 @@ class _EditUserState extends State<EditUser> {
         child: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Color(0xFF0561DD),
+          toolbarHeight: 90,
           elevation: 0,
           centerTitle: true,
           title: Text(
@@ -73,12 +74,12 @@ class _EditUserState extends State<EditUser> {
             ),
           ),
           leading: Padding(
-            padding: const EdgeInsets.only(left: 24.0),
+            padding: const EdgeInsets.only(left: 15.0),
             child: IconButton(
               icon: Icon(
                 Icons.arrow_back,
                 color: Colors.white,
-                size: 40,
+                size: 25,
               ),
               onPressed: () {
                 Navigator.of(context).pop();
