@@ -55,72 +55,48 @@ class _medicineScheduleState extends State<medicineSchedule> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFE8EEFA),
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80.0),
-        child: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: Color(0xFF0561DD),
-          elevation: 0,
-          centerTitle: true,
-          title: Text(
-            'My Medicine Schedule',
-            style: TextStyle(
-              fontSize: 30.0,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Salsa',
-            ),
-          ),
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 24.0),
-            child: IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-                size: 40,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ),
+      appBar: AppBar(
+        toolbarHeight: 90,
+        backgroundColor:  Color(0xFF0561DD),
+        elevation: 1,
+        title: Center(
+          child: Text("Medicine Schedule",
+           style: TextStyle(
+                  fontSize: 30,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Salsa',
+                ),
+           ),
         ),
       ),
+      
       body: Padding(
         padding: const EdgeInsets.only(top: 20, left: 20),
-        child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 10),
+        child: Column(
+          children: [
+          Center(
             child: Container(
-              child: Text(
-                'Time',
-                style: TextStyle(
-                    fontFamily: 'salsa',
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold),
+              height: 100,
+              child: ListView.builder(
+                physics: BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                itemCount: times.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    child: timeList(
+                      time: times[index],
+                      isSelected: selectedTime == times[index],
+                      onTap: () {
+                        handleTapTime(times[index]);
+                        filteredMedicines = widget.medicines
+                            .where((med) => med['time'].contains(selectedTime))
+                            .toList();
+                      },
+                    ),
+                  );
+                },
               ),
-              alignment: Alignment.centerLeft,
-            ),
-          ),
-          Container(
-            height: 100,
-            child: ListView.builder(
-              physics: BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemCount: times.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  child: timeList(
-                    time: times[index],
-                    isSelected: selectedTime == times[index],
-                    onTap: () {
-                      handleTapTime(times[index]);
-                      filteredMedicines = widget.medicines
-                          .where((med) => med['time'].contains(selectedTime))
-                          .toList();
-                    },
-                  ),
-                );
-              },
             ),
           ),
           filteredMedicines == null || filteredMedicines.isEmpty
