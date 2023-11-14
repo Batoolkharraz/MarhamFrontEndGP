@@ -122,6 +122,7 @@ class _medicineScheduleState extends State<medicineSchedule> {
               )
               : Expanded(
                   child: ListView.builder(
+                      physics: BouncingScrollPhysics(),
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
                     itemCount: filteredMedicines.length,

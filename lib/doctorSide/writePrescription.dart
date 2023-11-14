@@ -311,12 +311,14 @@ class _writePrescriptionState extends State<writePrescription> {
     );
 
     return Scaffold(
-      backgroundColor: Color(0xFFE8EEFA),
+      backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0),
         child: AppBar(
+
           automaticallyImplyLeading: false,
-          backgroundColor: Color(0xFF0561DD),
+         toolbarHeight: 90,
+        backgroundColor:  Color(0xFF0561DD),
           elevation: 0,
           centerTitle: true,
           title: Text(
@@ -328,12 +330,12 @@ class _writePrescriptionState extends State<writePrescription> {
             ),
           ),
           leading: Padding(
-            padding: const EdgeInsets.only(left: 24.0),
+            padding: const EdgeInsets.only(left: 15.0),
             child: IconButton(
               icon: Icon(
                 Icons.arrow_back,
                 color: Colors.white,
-                size: 40,
+                size:25,
               ),
               onPressed: () {
                 Navigator.of(context).push(
@@ -571,6 +573,7 @@ class _writePrescriptionState extends State<writePrescription> {
             // Display the generated combination widgets
             Expanded(
               child: ListView(
+                  physics: BouncingScrollPhysics(),
                 children: combinationWidgets,
               ),
             ),

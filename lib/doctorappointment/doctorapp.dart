@@ -74,7 +74,9 @@ class _appointmentState extends State<appointment> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF0561DD),
+       toolbarHeight: 90,
+        backgroundColor:  Color(0xFF0561DD),
+        
         leading: BackButton(
           onPressed: () => {Navigator.of(context).pop()},
         ),

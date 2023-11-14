@@ -148,7 +148,6 @@ class _UserDailyState extends State<UserDaily> {
                      child: ListView.builder(
                   itemBuilder: (context, int i) {
                     return cancleuser();
-                    schedualupcomplete();
                   },
                   itemCount: 5,
                   scrollDirection: Axis.vertical,
