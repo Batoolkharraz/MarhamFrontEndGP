@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/doctorappointment/doctorapp.dart';
 import 'package:flutter_application_4/search/searchDoctor.dart';
 import 'package:flutter_application_4/unit/category.dart';
 import 'package:flutter_application_4/unit/doctor.dart';
@@ -35,12 +36,23 @@ class _homeState extends State<home> {
   Future<String> getCategory(String catId) async {
     var url = "https://marham-backend.onrender.com/category/${catId}";
     var response = await http.get(Uri.parse(url));
-    var responceBody = response.body.toString();
-    responceBody = responceBody.trim();
-    responceBody = responceBody.substring(12, responceBody.length - 1);
-    var cat = jsonDecode(responceBody);
 
-    return cat['name'];
+    if (response.statusCode == 200) {
+      var responseBody = response.body.toString();
+
+      if (responseBody.length >= 12) {
+        responseBody = responseBody.trim();
+        responseBody = responseBody.substring(12, responseBody.length - 1);
+        var cat = jsonDecode(responseBody);
+
+        if (cat.containsKey('name')) {
+          return cat['name'];
+        }
+      }
+    }
+
+    // Return a default value or an error message in case of issues
+    return 'Category not found';
   }
 
   Future getDoctor() async {
@@ -248,12 +260,19 @@ class _homeState extends State<home> {
                             return Text('Error: ${categorySnapshot.error}');
                           } else {
                             return doctor(
-                              doctorPic:
-                                  '${doctors[index]['image']['secure_url']}',
-                              doctorRate: '${doctors[index]['rate']}',
-                              doctorName: '${doctors[index]['name']}',
-                              doctorCat: categorySnapshot.data.toString(),
-                            );
+                                doctorPic:
+                                    '${doctors[index]['image']['secure_url']}',
+                                doctorRate: '${doctors[index]['rate']}',
+                                doctorName: '${doctors[index]['name']}',
+                                doctorCat: categorySnapshot.data.toString(),
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          appointment(doctor: doctors[index]),
+                                    ),
+                                  );
+                                });
                           }
                         },
                       );

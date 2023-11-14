@@ -1,0 +1,39 @@
+import 'package:flutter/material.dart';
+
+class appOfDate extends StatelessWidget {
+  final date;
+  final VoidCallback onTap;
+  appOfDate({
+    required this.date,
+    required this.onTap,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.0),
+            color: Colors.white,
+            border: Border.all(
+              color: Colors.grey, // Set the border color here
+              width: 2.0, // Set the border width
+            ),
+          ),
+          width: 600,
+          height: 150,
+          child: Center(
+            child: Text(date,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Salsa')),
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -112,6 +112,40 @@ class _profileState extends State<profile> {
     return doc['name'];
   }
 
+Future getAppointment() async {
+    String id = await getTokenFromStorage();
+    var url = "https://marham-backend.onrender.com/prescription/forUser/${id}";
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var responceBody = response.body.toString();
+      responceBody = responceBody.trim();
+      responceBody = responceBody.substring(17, responceBody.length - 1);
+      var pre = jsonDecode(responceBody);
+
+      // Convert date strings to DateTime and sort by dateFrom in descending order
+      pre.sort((a, b) {
+        DateTime dateA = DateFormat('MM/dd/yyyy').parse(a['dateFrom']);
+        DateTime dateB = DateFormat('MM/dd/yyyy').parse(b['dateFrom']);
+        return dateB.compareTo(dateA);
+      });
+
+      // Format the sorted date as dd/mm/yyyy
+      DateFormat fromFormat = DateFormat('dd/MM/yyyy');
+      for (var prescription in pre) {
+        prescription['dateFrom'] = fromFormat
+            .format(DateFormat('MM/dd/yyyy').parse(prescription['dateFrom']));
+        prescription['dateTo'] = fromFormat
+            .format(DateFormat('MM/dd/yyyy').parse(prescription['dateTo']));
+      }
+
+      setState(() {
+        prescriptions.clear();
+        prescriptions.addAll(pre);
+      });
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

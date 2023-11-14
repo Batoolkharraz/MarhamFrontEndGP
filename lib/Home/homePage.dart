@@ -7,6 +7,7 @@ import 'package:flutter_application_4/doctorappointment/doctorapp.dart';
 import 'package:flutter_application_4/Home/home.dart';
 import 'package:flutter_application_4/doctors/doctors.dart';
 import 'package:flutter_application_4/profile/profile.dart';
+import 'package:flutter_application_4/search/searchDoctor.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,7 +19,7 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> {
-  List<Widget> page = [home(), profile(), appointment()];
+  List<Widget> page = [home(), profile(), searchDoctor()];
   int selectedIndex = 0;
   List categories = [];
   List doctors = [];

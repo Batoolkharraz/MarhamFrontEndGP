@@ -1,8 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class working extends StatelessWidget {
+  final String date;
+  final String time;
+  final String is_booked;
+  final VoidCallback onTap;
+
+  working({
+    required this.date,
+    required this.time,
+    required this.is_booked,
+    required this.onTap,
+  });
+  
   @override
   Widget build(BuildContext context) {
+    final dateParts = date.split(' ');
+    final formattedDate = '${dateParts[0]} ${dateParts[1]}\n${dateParts[2]}';
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -25,16 +41,17 @@ class working extends StatelessWidget {
                   SizedBox(
                     width: 25,
                   ),
-                  Text("Sat \n07 Dec,2023",
+                  
+                  Text(formattedDate,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 30,
                           fontWeight: FontWeight.w500,
                           fontFamily: 'Salsa')),
                   SizedBox(
-                    width: 29,
+                    width: 25,
                   ),
-                  Text("4 PM",
+                  Text(time,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 50,
@@ -44,15 +61,18 @@ class working extends StatelessWidget {
                     width: 70,
                   ),
                   InkWell(
-                    child: Text("Book",
-                        style: TextStyle(
-                            color: Color(0xFF0561DD),
-                            fontSize: 38,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Salsa')),
-                    onTap: () {
-                      print("Booked");
-                    },
+                    child: Text(
+                      is_booked == 'true' ? 'booked' : 'book',
+                      style: TextStyle(
+                        color: is_booked == 'true'
+                            ? Colors.red
+                            : Color(0xFF0561DD),
+                        fontSize: 35,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Salsa',
+                      ),
+                    ),
+                    onTap: onTap,
                   ),
                 ],
               ),

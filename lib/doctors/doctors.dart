@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Home/home.dart';
+import 'package:flutter_application_4/doctorappointment/doctorapp.dart';
 import 'package:flutter_application_4/profile/profile.dart';
 import 'package:flutter_application_4/unit/category.dart';
 import 'package:flutter_application_4/unit/doctor.dart';
@@ -233,6 +234,13 @@ class _DoctorsPageState extends State<DoctorsPage> {
                                   doctorRate: '${doctors[index]['rate']}',
                                   doctorName: '${doctors[index]['name']}',
                                   doctorCat: categorySnapshot.data.toString(),
+                                  onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>appointment(doctor:doctors[index]),
+                                    ),
+                                  );
+                                }
                                 ),
                               );
                             }
