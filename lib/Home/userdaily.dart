@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Home/cancleuser.dart';
 import 'package:flutter_application_4/Home/completeuser.dart';
@@ -5,6 +7,9 @@ import 'package:flutter_application_4/Home/upcompleteuser.dart';
 import 'package:flutter_application_4/doctorSide/cancle.dart';
 import 'package:flutter_application_4/doctorSide/complete.dart';
 import 'package:flutter_application_4/doctorSide/upcoming.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:http/http.dart' as http;
 
 
 class UserDaily extends StatefulWidget {
@@ -16,6 +21,49 @@ class UserDaily extends StatefulWidget {
 
 
 class _UserDailyState extends State<UserDaily> {
+    final storage = FlutterSecureStorage();
+
+ Future<String> getTokenFromStorage() async {
+    final token = await storage.read(key: 'jwt');
+    if (token != null) {
+      final String userId = getUserIdFromToken(token);
+      await Future.delayed(Duration(seconds: 2));
+      return userId;
+    } else {
+      print('Token not found in local storage.');
+      return '';
+    }
+  }
+
+  String getUserIdFromToken(String token) {
+    try {
+      final Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+      final String userId = decodedToken['id'];
+      return userId;
+    } catch (e) {
+      print('Error decoding token: $e');
+      return '';
+    }
+  }
+
+
+  Future getAllAppointment() async {
+    String id = await getTokenFromStorage();
+    var url = "https://marham-backend.onrender.com/schedule/byUser/all/654bbfeb25275580d9d2aed0${Id}";
+
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var responceBody = response.body.toString();
+      responceBody = responceBody.trim();
+      responceBody = responceBody.substring(17, responceBody.length - 1);
+      var AllApp = jsonDecode(responceBody);
+
+
+      setState(() {
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
    
