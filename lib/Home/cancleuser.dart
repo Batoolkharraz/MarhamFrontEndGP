@@ -1,6 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class cancleuser extends StatelessWidget {
+    final String Id;
+    final String doctorName;
+  final String date;
+  final String time;
+
+  cancleuser({
+    required this.Id,
+    required this.doctorName,
+    required this.date,
+    required this.time,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,7 +37,7 @@ class cancleuser extends StatelessWidget {
                   SizedBox(
                     width: 25,
                   ),
-                  Text("Dr Name Family",
+                  Text('Dr. '+doctorName,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 30,
@@ -34,7 +46,7 @@ class cancleuser extends StatelessWidget {
                           SizedBox(
                     width: 150,
                   ),
-                           Text("cancled",
+                           Text("canceled",
                       style: TextStyle(
                           color: Colors.red,
                           fontSize: 30,
@@ -70,7 +82,7 @@ class cancleuser extends StatelessWidget {
                                       color: Color(0xFF0561DD),
                                     ),
                                     SizedBox(width: 10,),
-                      Text("Sat,11/28/2023",
+                      Text(date,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 25,
@@ -83,7 +95,7 @@ class cancleuser extends StatelessWidget {
                                       color: Color(0xFF0561DD),
                                     ),
                                     SizedBox(width:10,),
-                                    Text("2:30 PM",
+                                    Text(time,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 25,

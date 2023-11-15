@@ -22,68 +22,11 @@ class homePage extends StatefulWidget {
 class _homePageState extends State<homePage> {
   List<Widget> page = [home(), profile(), UserDaily()];
   int selectedIndex = 0;
-  List categories = [];
-  List doctors = [];
 
   void navigateBottomBar(int index) {
     setState(() {
       selectedIndex = index;
     });
-  }
-
-  Future getCategories() async {
-    var url = "https://marham-backend.onrender.com/category/";
-    var response = await http.get(Uri.parse(url));
-    var responceBody = response.body.toString();
-    responceBody = responceBody.trim();
-    responceBody = responceBody.substring(14, responceBody.length - 1);
-    var cat = jsonDecode(responceBody);
-
-    setState(() {
-      categories.addAll(cat);
-    });
-  }
-
-  Future<String> getCategory(String catId) async {
-    var url = "https://marham-backend.onrender.com/category/${catId}";
-    var response = await http.get(Uri.parse(url));
-    var responceBody = response.body.toString();
-    responceBody = responceBody.trim();
-    responceBody = responceBody.substring(12, responceBody.length - 1);
-    var cat = jsonDecode(responceBody);
-
-    return cat['name'];
-  }
-
-  Future getDoctor() async {
-    var url = "https://marham-backend.onrender.com/doctor/";
-    var response = await http.get(Uri.parse(url));
-    var responceBody = response.body.toString();
-    responceBody = responceBody.trim();
-    responceBody = responceBody.substring(11, responceBody.length - 1);
-    var doc = jsonDecode(responceBody);
-
-    setState(() {
-      //print(getCategory(doc[0]['categoryId']));
-      doctors.addAll(doc);
-    });
-  }
-
-  void navigateToNextPageWithCategory(String categoryId) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => DoctorsPage(categoryId: categoryId),
-      ),
-    );
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    getCategories();
-    //getCategory();
-    getDoctor();
-    super.initState();
   }
 
   @override
