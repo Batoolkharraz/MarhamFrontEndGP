@@ -72,7 +72,8 @@ class working extends StatelessWidget {
                         fontFamily: 'Salsa',
                       ),
                     ),
-                    onTap: onTap,
+                    onTap: onTap
+                    ,
                   ),
                 ],
               ),

@@ -58,7 +58,7 @@ class _UserDailyState extends State<UserDaily> {
       if (response.statusCode == 200) {
         var responseBody = response.body.toString();
         responseBody = responseBody.trim();
-        responseBody = responseBody.substring(11, responseBody.length - 1);
+        responseBody = responseBody.substring(12, responseBody.length - 1);
         var allApp = jsonDecode(responseBody);
 
         setState(() {
@@ -91,7 +91,7 @@ class _UserDailyState extends State<UserDaily> {
         });
       }
     } catch (error) {
-      print("Error fetching appointments: $error");
+      print("Error fetching done appointments: $error");
       // Handle the error accordingly
     }
   }
@@ -115,7 +115,7 @@ class _UserDailyState extends State<UserDaily> {
         });
       }
     } catch (error) {
-      print("Error fetching appointments: $error");
+      print("Error fetching cancel appointments: $error");
       // Handle the error accordingly
     }
   }
@@ -288,7 +288,8 @@ class _UserDailyState extends State<UserDaily> {
                                       String time =
                                           snapshot.data!['time'] ?? '';
                                       return schedualupcomplete(
-                                        Id:appointmentInfo[j]['bookId'],
+                                        userId:appointmentInfo[j]['bookId'],
+                                        doctorId:appointmentInfo[j]['doctorId'],
                                         doctorName: doctorName,
                                         date: date,
                                         time: time,
@@ -412,7 +413,7 @@ class _UserDailyState extends State<UserDaily> {
                                           snapshot.data!['time'] ?? '';
 
                                       return completeuser(
-                                        Id:appointmentInfo[j]['bookId'],
+                                        id:appointmentInfo[j]['bookId'],
                                         doctorName: doctorName,
                                         date: date,
                                         time: time,

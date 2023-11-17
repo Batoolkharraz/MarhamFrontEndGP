@@ -29,29 +29,26 @@ class cancleuser extends StatelessWidget {
         width: 600,
         height: 150,
         child: Padding(
-          padding: const EdgeInsets.only(top:10),
+          padding: const EdgeInsets.only(top:10,left: 15,right: 15),
           child: Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
-                    width: 25,
-                  ),
                   Text('Dr. '+doctorName,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 30,
                           fontWeight: FontWeight.w500,
                           fontFamily: 'Salsa')),
-                          SizedBox(
-                    width: 150,
-                  ),
+                          
                            Text("canceled",
                       style: TextStyle(
                           color: Colors.red,
                           fontSize: 30,
                           fontWeight: FontWeight.w500,
                           fontFamily: 'Salsa')),
+                  
 
                 ],
               ),

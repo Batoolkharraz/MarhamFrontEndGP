@@ -1,18 +1,29 @@
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'dart:convert';
 
-class completeuser extends StatelessWidget {
-  final String Id;
+import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
+import 'package:jwt_decoder/jwt_decoder.dart';
+
+class completeuser extends StatefulWidget {
+  final String id;
   final String doctorName;
   final String date;
   final String time;
 
   completeuser({
-    required this.Id,
+    required this.id,
     required this.doctorName,
     required this.date,
     required this.time,
   });
+
+  @override
+  _completeuserState createState() => _completeuserState();
+}
+
+class _completeuserState extends State<completeuser> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -37,7 +48,7 @@ class completeuser extends StatelessWidget {
                   SizedBox(
                     width: 25,
                   ),
-                  Text('Dr. ' + doctorName,
+                  Text('Dr. ' + widget.doctorName,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 30,
@@ -53,7 +64,7 @@ class completeuser extends StatelessWidget {
                       color: Colors.green,
                     ),
                     onTap: () {
-                      print(Id);
+                      print(widget.id);
                     },
                   )
                 ],
@@ -91,7 +102,7 @@ class completeuser extends StatelessWidget {
                         SizedBox(
                           width: 10,
                         ),
-                        Text(date,
+                        Text(widget.date,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 25,
@@ -108,7 +119,7 @@ class completeuser extends StatelessWidget {
                         SizedBox(
                           width: 10,
                         ),
-                        Text(time,
+                        Text(widget.time,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 25,
