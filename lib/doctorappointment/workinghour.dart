@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class working extends StatelessWidget {
+class working extends StatefulWidget {
   final String date;
   final String time;
   final String is_booked;
@@ -13,10 +13,30 @@ class working extends StatelessWidget {
     required this.is_booked,
     required this.onTap,
   });
-  
+
+  @override
+  _WorkingState createState() => _WorkingState();
+}
+
+class _WorkingState extends State<working> {
+  late String buttonText;
+  late Color buttonColor;
+
+  @override
+  void initState() {
+    super.initState();
+    updateButtonState();
+  }
+
+  void updateButtonState() {
+    buttonText = widget.is_booked == 'true' ? 'booked' : 'book';
+    buttonColor =
+        widget.is_booked == 'true' ? Colors.red : Color(0xFF0561DD);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final dateParts = date.split(' ');
+    final dateParts = widget.date.split(' ');
     final formattedDate = '${dateParts[0]} ${dateParts[1]}\n${dateParts[2]}';
 
     return Padding(
@@ -41,39 +61,47 @@ class working extends StatelessWidget {
                   SizedBox(
                     width: 25,
                   ),
-                  
-                  Text(formattedDate,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 30,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Salsa')),
+                  Text(
+                    formattedDate,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Salsa',
+                    ),
+                  ),
                   SizedBox(
                     width: 25,
                   ),
-                  Text(time,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 50,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Salsa')),
+                  Text(
+                    widget.time,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 50,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Salsa',
+                    ),
+                  ),
                   SizedBox(
                     width: 70,
                   ),
                   InkWell(
+                    onTap: widget.onTap,
+                    onTapDown: (_) {
+                      setState(() {
+                        buttonText = 'booked';
+                        buttonColor = Colors.red;
+                      });
+                    },
                     child: Text(
-                      is_booked == 'true' ? 'booked' : 'book',
+                      buttonText,
                       style: TextStyle(
-                        color: is_booked == 'true'
-                            ? Colors.red
-                            : Color(0xFF0561DD),
+                        color: buttonColor,
                         fontSize: 35,
                         fontWeight: FontWeight.w500,
                         fontFamily: 'Salsa',
                       ),
                     ),
-                    onTap: onTap
-                    ,
                   ),
                 ],
               ),

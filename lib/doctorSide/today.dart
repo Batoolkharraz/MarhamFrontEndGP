@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class complete extends StatelessWidget {
+class today extends StatelessWidget {
   @override
   final String Id;
+  final String userId;
   final String userName;
   final String date;
   final String time;
 
-  complete({
+  today({
     required this.Id,
+    required this.userId,
     required this.userName,
     required this.date,
     required this.time,
   });
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -32,28 +35,21 @@ class complete extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 25,right: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(userName,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 30,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Salsa')),
-                    InkWell(
-                      child: FaIcon(
-                        FontAwesomeIcons.circleCheck,
-                        size: 26.0,
-                        color: Colors.green,
-                      ),
-                      onTap: () {
-                      },
-                    )
-                  ],
-                ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 25,
+                  ),
+                  Text(userName,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Salsa')),
+                  SizedBox(
+                    width: 230,
+                  ),
+                ],
               ),
               SizedBox(
                 height: 10,
@@ -95,7 +91,7 @@ class complete extends StatelessWidget {
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Salsa')),
                         SizedBox(
-                          width: 100,
+                          width: 25,
                         ),
                         FaIcon(
                           FontAwesomeIcons.clock,

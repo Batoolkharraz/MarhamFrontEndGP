@@ -194,17 +194,6 @@ class _DoctorsPageState extends State<DoctorsPage> {
                           Container(
                             child: Image.asset('assets/doctor_category.png'),
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'There is No Doctor Added Yet!',
-                            style: TextStyle(
-                              fontFamily: 'salsa',
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
                         ],
                       ),
                     ),

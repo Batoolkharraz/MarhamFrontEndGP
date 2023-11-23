@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/doctorSide/dailyapp.dart';
 import 'package:flutter_application_4/doctorSide/patientRecord.dart';
 import 'package:flutter_application_4/doctorSide/working.dart';
 import 'dart:typed_data';
@@ -300,40 +301,51 @@ class _doctorHomeState extends State<doctorHome> {
                     SizedBox(
                       height: 30,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          width: 2,
-                          color: Color(0xFF0561DD),
+
+                    //daily appointment
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AppointmentPage(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            width: 2,
+                            color: Color(0xFF0561DD),
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey, // Shadow color
+                              offset: Offset(0, 0), // Offset of the shadow
+                              blurRadius: 15, // Spread of the shadow
+                            ),
+                          ],
                         ),
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey, // Shadow color
-                            offset: Offset(0, 0), // Offset of the shadow
-                            blurRadius: 15, // Spread of the shadow
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10),
-                            child: Container(
-                              width: 150,
-                              child: Image.asset('assets/image (18).png'),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10, bottom: 10),
+                              child: Container(
+                                width: 150,
+                                child: Image.asset('assets/image (18).png'),
+                              ),
                             ),
-                          ),
-                          Text(
-                            'Daily Appointment',
-                            style: TextStyle(
-                              color: Color(0xFF0561DD),
-                              fontSize: 27,
-                              fontFamily: 'salsa',
+                            Text(
+                              'Daily Appointment',
+                              style: TextStyle(
+                                color: Color(0xFF0561DD),
+                                fontSize: 27,
+                                fontFamily: 'salsa',
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ],

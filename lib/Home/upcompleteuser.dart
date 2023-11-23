@@ -8,14 +8,14 @@ import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 class schedualupcomplete extends StatelessWidget {
-  final String userId;
+  final String bookId;
   final String doctorId;
   final String doctorName;
   final String date;
   final String time;
 
   schedualupcomplete({
-    required this.userId,
+    required this.bookId,
     required this.doctorId,
     required this.doctorName,
     required this.date,
@@ -48,8 +48,6 @@ class schedualupcomplete extends StatelessWidget {
       return '';
     }
   }
-
-  
 
       Future<void> cancelAppointment(String bookId,String doctorId) async {
     try {
@@ -144,7 +142,7 @@ class schedualupcomplete extends StatelessWidget {
                       color: Colors.blue,
                     ),
                     onTap: () {
-                      cancelAppointment(userId,doctorId);
+                      cancelAppointment(bookId,doctorId);
                     },
                   )
                 ],

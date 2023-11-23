@@ -126,7 +126,7 @@ class _searchDoctorState extends State<searchDoctor> {
                                 child:
                                     Image.asset('assets/doctor_category.png'),
                               ),
-                              SizedBox(
+                              /*SizedBox(
                                 height: 10,
                               ),
                               Text(
@@ -136,7 +136,7 @@ class _searchDoctorState extends State<searchDoctor> {
                                   fontSize: 30,
                                   fontWeight: FontWeight.bold,
                                 ),
-                              ),
+                              ),*/
                             ],
                           ),
                         ),

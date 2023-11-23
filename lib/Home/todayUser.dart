@@ -1,19 +1,30 @@
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'dart:convert';
 
-class complete extends StatelessWidget {
-  @override
-  final String Id;
-  final String userName;
+import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
+import 'package:jwt_decoder/jwt_decoder.dart';
+
+class todayUser extends StatefulWidget {
+  final String id;
+  final String doctorName;
   final String date;
   final String time;
 
-  complete({
-    required this.Id,
-    required this.userName,
+  todayUser({
+    required this.id,
+    required this.doctorName,
     required this.date,
     required this.time,
   });
+
+  @override
+  _todayUserState createState() => _todayUserState();
+}
+
+class _todayUserState extends State<todayUser> {
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -32,28 +43,21 @@ class complete extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 25,right: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(userName,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 30,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Salsa')),
-                    InkWell(
-                      child: FaIcon(
-                        FontAwesomeIcons.circleCheck,
-                        size: 26.0,
-                        color: Colors.green,
-                      ),
-                      onTap: () {
-                      },
-                    )
-                  ],
-                ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 25,
+                  ),
+                  Text('Dr. ' + widget.doctorName,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Salsa')),
+                  SizedBox(
+                    width: 230,
+                  ),
+                ],
               ),
               SizedBox(
                 height: 10,
@@ -88,14 +92,14 @@ class complete extends StatelessWidget {
                         SizedBox(
                           width: 10,
                         ),
-                        Text(date,
+                        Text(widget.date,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 25,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Salsa')),
                         SizedBox(
-                          width: 100,
+                          width: 25,
                         ),
                         FaIcon(
                           FontAwesomeIcons.clock,
@@ -105,7 +109,7 @@ class complete extends StatelessWidget {
                         SizedBox(
                           width: 10,
                         ),
-                        Text(time,
+                        Text(widget.time,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 25,
