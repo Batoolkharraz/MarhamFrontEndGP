@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
 void updateinformation(String variable,String value)async{
-    final storage = FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
   String? toke2 = await storage.read(key: 'jwt');
 
   if (toke2 != null) {

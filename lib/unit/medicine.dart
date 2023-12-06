@@ -4,7 +4,7 @@ class medicine extends StatelessWidget {
   final String name;
   final String des;
 
-  medicine({required this.name, required this.des});
+  const medicine({super.key, required this.name, required this.des});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class medicine extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(
-            color: Color(0xFF0561DD),
+            color: const Color(0xFF0561DD),
             width: 3,
           ),
           borderRadius: BorderRadius.circular(10),
@@ -31,7 +31,7 @@ class medicine extends StatelessWidget {
                   child: Image.asset('assets/medicine.png'),
                 ),
 
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
 
@@ -45,20 +45,20 @@ class medicine extends StatelessWidget {
                       // name
                       Text(
                         name,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 25,
                           fontFamily: 'salsa',
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
 
                       // qty
                       Text(
                         des,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20,
                           fontFamily: 'salsa',
                           fontWeight: FontWeight.bold,

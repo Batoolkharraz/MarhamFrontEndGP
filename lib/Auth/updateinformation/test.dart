@@ -8,13 +8,13 @@ import 'package:flutter_application_4/Auth/updateinformation/updatenow.dart';
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Enter Your Name',
+        title: const Text('Enter Your Name',
         style: TextStyle(
               color: Colors.black,
               fontSize: 25,
               fontFamily: 'Salsa',
             ),),
-        content:Container(
+        content:SizedBox(
          
           width: 300, // Set the width as desired
     height:80, 
@@ -23,17 +23,17 @@ import 'package:flutter_application_4/Auth/updateinformation/updatenow.dart';
                         child:TextFormField(
                             decoration: InputDecoration(
                           labelText: 'UserName',
-                          labelStyle: TextStyle(
+                          labelStyle: const TextStyle(
                             fontSize: 28,
                           ),
                           border: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Colors.grey,
                             ),
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                          style: TextStyle(
+                          style: const TextStyle(
               color: Colors.black,
               fontSize: 25,
               fontFamily: 'Salsa',
@@ -55,6 +55,7 @@ import 'package:flutter_application_4/Auth/updateinformation/updatenow.dart';
                                 if (!regex.hasMatch(text)) {
                                   return "invalid username";
                                 }}
+                                return null;
                               }
                
           ),
@@ -62,7 +63,7 @@ import 'package:flutter_application_4/Auth/updateinformation/updatenow.dart';
         ),
         actions: <Widget>[
           TextButton(
-            child: Text('Cancel',
+            child: const Text('Cancel',
             style: TextStyle(
               color: Colors.blue,
               fontSize: 25,
@@ -73,7 +74,7 @@ import 'package:flutter_application_4/Auth/updateinformation/updatenow.dart';
             },
           ),
           TextButton(
-            child: Text('OK',
+            child: const Text('OK',
             style: TextStyle(
               color: Colors.blue,
               fontSize: 25,
@@ -83,7 +84,7 @@ import 'package:flutter_application_4/Auth/updateinformation/updatenow.dart';
               if(validateForm(signstate))
               {
                 updateinformation(username,"username");
-              print('Entered text: $username');
+              print('Entered text:+ $username');
                 Navigator.of(context).pop(); 
               }
               else{

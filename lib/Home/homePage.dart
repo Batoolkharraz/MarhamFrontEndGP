@@ -1,14 +1,9 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Home/userdaily.dart';
-import 'package:flutter_application_4/doctorappointment/doctorapp.dart';
 import 'package:flutter_application_4/Home/home.dart';
 import 'package:flutter_application_4/doctors/doctors.dart';
 import 'package:flutter_application_4/profile/profile.dart';
-import 'package:flutter_application_4/search/searchDoctor.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,7 +15,7 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> {
-  List<Widget> page = [home(), profile(), UserDaily()];
+  List<Widget> page = [const home(), const profile(), const UserDaily()];
   int selectedIndex = 0;
   List categories = [];
   List doctors = [];
@@ -45,7 +40,7 @@ class _homePageState extends State<homePage> {
   }
 
   Future<String> getCategory(String catId) async {
-    var url = "https://marham-backend.onrender.com/category/${catId}";
+    var url = "https://marham-backend.onrender.com/category/$catId";
     var response = await http.get(Uri.parse(url));
     var responceBody = response.body.toString();
     responceBody = responceBody.trim();
@@ -89,7 +84,7 @@ class _homePageState extends State<homePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE8EEFA),
+      backgroundColor: const Color(0xFFE8EEFA),
       bottomNavigationBar: Container(
         color: Colors.white,
         child: Padding(
@@ -100,7 +95,7 @@ class _homePageState extends State<homePage> {
               backgroundColor: Colors.white,
               color: Colors.black,
               activeColor: Colors.white,
-              tabBackgroundColor: Color(0xFF0561DD),
+              tabBackgroundColor: const Color(0xFF0561DD),
               tabs: const [
                 GButton(
                   icon: Icons.home,

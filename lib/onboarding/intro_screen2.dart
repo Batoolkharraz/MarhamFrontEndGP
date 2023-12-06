@@ -1,30 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 class IntroPage2 extends StatelessWidget {
   const IntroPage2
 ({super.key});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor:Color.fromARGB(230, 21, 96, 225),
+    return Scaffold(backgroundColor:const Color.fromARGB(230, 21, 96, 225),
       
       body:Column(
        
         mainAxisAlignment: MainAxisAlignment.start,
         children:[
-          Padding(padding:EdgeInsets.fromLTRB(0, 200, 0, 10))
+          const Padding(padding:EdgeInsets.fromLTRB(0, 200, 0, 10))
          ,Center(child: CircleAvatar(
+          radius: 200,
           child:Image.asset(
             "assets/Medicine-bro.png",) ,
-          radius: 200,
 
 
          )
          ,),
      
           // SvgPicture.asset("assets/Doctors-pana.svg",),
-            SizedBox(height: 10,),
-          Text("Doctor's HelpLine",
+            const SizedBox(height: 10,),
+          const Text("Doctor's HelpLine",
           style: TextStyle(
             fontSize: 40,
             fontWeight: FontWeight.bold,
@@ -33,8 +31,8 @@ class IntroPage2 extends StatelessWidget {
 
             ),
             ),
-            SizedBox(height: 30,),
-      Text(
+            const SizedBox(height: 30,),
+      const Text(
   "streamlines scheduling, provides reminders,\n offers easy access to healthcare providers\n enhancing the patient experience and\n improving healthcare access.",
   style: TextStyle(
     height: 1.3,

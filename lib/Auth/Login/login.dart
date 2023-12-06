@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_4/Auth/Login/ValidateForm.dart';
 import 'package:flutter_application_4/Auth/Login/onpresseButton.dart';
 import 'package:flutter_application_4/Auth/resetpass/reset.dart';
 import 'package:flutter_application_4/Auth/signup/signup.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Login extends StatefulWidget {
-  Login({Key? key}) : super(key: key);
+  const Login({Key? key}) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
@@ -16,6 +15,7 @@ class _LoginState extends State<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  @override
   void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
@@ -37,10 +37,10 @@ class _LoginState extends State<Login> {
           SafeArea(
             child: SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.fromLTRB(20, 20, 20, 2),
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 2),
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.fromLTRB(10, 300, 10, 200),
+                margin: const EdgeInsets.fromLTRB(10, 300, 10, 200),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -48,12 +48,12 @@ class _LoginState extends State<Login> {
                       "Sign in",
                       style: Theme.of(context)
                           .textTheme
-                          .headline5!
+                          .headlineSmall!
                           .copyWith(fontWeight: FontWeight.bold, fontSize: 30),
                     ),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           "Don't have an account?",
                           style: TextStyle(fontSize: 25),
                         ),
@@ -61,17 +61,17 @@ class _LoginState extends State<Login> {
                           onPressed: () {
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) {
-                                return Signup();
+                                return const Signup();
                               },
                             ));
                           },
-                          child: Text(
+                          style: const ButtonStyle(
+                            mouseCursor: MaterialStateMouseCursor.textable,
+                          ),
+                          child: const Text(
                             "Sign Up!",
                             style: TextStyle(
                                 fontSize: 25, fontWeight: FontWeight.bold),
-                          ),
-                          style: ButtonStyle(
-                            mouseCursor: MaterialStateMouseCursor.textable,
                           ),
                         ),
                       ],
@@ -87,17 +87,17 @@ class _LoginState extends State<Login> {
                             controller: _usernameController,
                             validator: (text) {
                               if (text == null || text.isEmpty) {
-                                return "Please fill in your username";
+                                return "Please fill in your Email";
                               }
                               return null;
                             },
-                            style: TextStyle(fontSize: 25),
-                            decoration: InputDecoration(
-                              labelText: 'Username',
+                            style: const TextStyle(fontSize: 25),
+                            decoration: const InputDecoration(
+                              labelText: 'Email',
                               labelStyle: TextStyle(fontSize: 25),
                             ),
                           ),
-                          SizedBox(height: 20.0),
+                          const SizedBox(height: 20.0),
                           TextFormField(
                             controller: _passwordController,
                             validator: (text) {
@@ -107,14 +107,14 @@ class _LoginState extends State<Login> {
                               return null;
                             },
                             obscureText: true,
-                            style: TextStyle(fontSize: 25),
-                            decoration: InputDecoration(
+                            style: const TextStyle(fontSize: 25),
+                            decoration: const InputDecoration(
                               labelText: 'Password',
                               hintText: 'Enter your password',
                               labelStyle: TextStyle(fontSize: 25),
                             ),
                           ),
-                          SizedBox(height: 20.0),
+                          const SizedBox(height: 20.0),
                           ElevatedButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
@@ -124,9 +124,9 @@ class _LoginState extends State<Login> {
                                     _passwordController.text);
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
+                                  const SnackBar(
                                     content: Text(
-                                      'Please fill in both username and password',
+                                      'Please fill in both Email and password',
                                       style: TextStyle(
                                         fontSize: 25,
                                         fontFamily: 'Helvetica',
@@ -139,29 +139,29 @@ class _LoginState extends State<Login> {
                                 );
                               }
                             },
-                            child: Text(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF0561DD),
+                              fixedSize: const Size(600, 60),
+                            ).copyWith(
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(100),
+                                  side: const BorderSide(
+                                      color: Color(0xFF0561DD), width: 2.0),
+                                ),
+                              ),
+                            ),
+                            child: const Text(
                               "Sign In",
                               style: TextStyle(
                                 fontSize: 25,
                               ),
                             ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF0561DD),
-                              fixedSize: Size(600, 60),
-                            ).copyWith(
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(100),
-                                  side: BorderSide(
-                                      color: Color(0xFF0561DD), width: 2.0),
-                                ),
-                              ),
-                            ),
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Container(
                             child: InkWell(
-                              child: Text(
+                              child: const Text(
                                 "Forgot your password?",
                                 style: TextStyle(
                                   color: Colors.blue,
@@ -173,7 +173,7 @@ class _LoginState extends State<Login> {
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) {
-                                    return ResetPassword();
+                                    return const ResetPassword();
                                   },
                                 ));
                               },

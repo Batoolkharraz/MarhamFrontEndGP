@@ -5,7 +5,6 @@ import 'package:flutter_application_4/unit/patientRec.dart';
 //import 'package:flutter/scheduler.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import '../unit/diagnosisList.dart';
 import 'doctorHome.dart';
 
 class patientRecord extends StatefulWidget {
@@ -50,7 +49,7 @@ class _patientRecordState extends State<patientRecord> {
   }
 
   Future getPrescriptionById(String Id) async {
-    var url = "https://marham-backend.onrender.com/prescription/forUser/${Id}";
+    var url = "https://marham-backend.onrender.com/prescription/forUser/$Id";
 
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
@@ -83,15 +82,17 @@ class _patientRecordState extends State<patientRecord> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE8EEFA),
+      backgroundColor: const Color(0xFFE8EEFA),
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80.0),
+        preferredSize: const Size.fromHeight(80.0),
         child: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Color(0xFF0561DD),
+          toolbarHeight: 90,
+        backgroundColor:  const Color(0xFF0561DD),
+
           elevation: 0,
           centerTitle: true,
-          title: Text(
+          title: const Text(
             'Patient Record',
             style: TextStyle(
               fontSize: 30.0,
@@ -100,17 +101,17 @@ class _patientRecordState extends State<patientRecord> {
             ),
           ),
           leading: Padding(
-            padding: const EdgeInsets.only(left: 24.0),
+            padding: const EdgeInsets.only(left: 15.0),
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back,
                 color: Colors.white,
-                size: 40,
+                size: 25,
               ),
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => doctorHome(),
+                    builder: (context) => const doctorHome(),
                   ),
                 );
               },
@@ -125,20 +126,20 @@ class _patientRecordState extends State<patientRecord> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 60,
               ),
-              Text('Enter Your Patient Email here:',
+              const Text('Enter Your Patient Email here:',
                   style: TextStyle(
                       fontSize: 20,
                       fontFamily: 'salsa',
                       fontWeight: FontWeight.bold)),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               TextField(
                 controller: emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Email',
                   labelStyle: TextStyle(
                       fontSize: 20,
@@ -151,13 +152,13 @@ class _patientRecordState extends State<patientRecord> {
                   ),
                   prefixIcon: Icon(Icons.email),
                 ),
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 20,
                     fontFamily: 'salsa',
                     fontWeight: FontWeight
                         .bold), // Add an icon to the left of the input
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               ElevatedButton(
@@ -168,10 +169,10 @@ class _patientRecordState extends State<patientRecord> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Color(0xFF0561DD)),
+                      MaterialStateProperty.all<Color>(const Color(0xFF0561DD)),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(10.0),
                   child: Text(
                     'Find Patient Record',
                     style: TextStyle(
@@ -181,10 +182,10 @@ class _patientRecordState extends State<patientRecord> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
-              prescriptions == null || prescriptions.isEmpty
+              prescriptions.isEmpty
                   ? Center(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 100),
@@ -193,10 +194,10 @@ class _patientRecordState extends State<patientRecord> {
                             Container(
                               child: Image.asset('assets/patient_report.png'),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
-                            Text(
+                            const Text(
                               'No Patient Record Yet!',
                               style: TextStyle(
                                 fontFamily: 'salsa',

@@ -6,7 +6,7 @@ class findDoctorList extends StatelessWidget {
   final String doctorCat;
   final VoidCallback onTap;
 
-  findDoctorList({
+  const findDoctorList({super.key, 
     required this.doctorPic,
     required this.doctorName,
     required this.doctorCat,
@@ -19,14 +19,14 @@ class findDoctorList extends StatelessWidget {
       GestureDetector(
       onTap: onTap,
         child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20),
-        padding: EdgeInsets.only(top: 10, bottom: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.only(top: 10, bottom: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
-                Container(
+                SizedBox(
                   width: 70,
                   height: 70,
                   child: ClipRRect(
@@ -34,14 +34,14 @@ class findDoctorList extends StatelessWidget {
                     child: Image.network(doctorPic),
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(doctorName,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.black, fontWeight: FontWeight.w500,fontSize: 25)),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Text(

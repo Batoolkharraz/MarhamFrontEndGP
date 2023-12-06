@@ -5,7 +5,7 @@ class timeList extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
 
-  timeList({required this.time,required this.isSelected, required this.onTap});
+  const timeList({super.key, required this.time,required this.isSelected, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +19,18 @@ class timeList extends StatelessWidget {
          Container(
           width: 150,
           height:60,
+                       
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: const Color(0xFF0561DD), width: 1)
+                        ),
         child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: Text(
                     time,
                     style: TextStyle(
-                      color: isSelected ? Color(0xFF0561DD): Colors.black,
+                      color: isSelected ? const Color(0xFF0561DD): Colors.black,
                       fontSize: 27,
                       fontFamily: 'salsa',
                       fontWeight: FontWeight.bold,
@@ -33,11 +38,6 @@ class timeList extends StatelessWidget {
                   ),
                 ),
               ),
-                       
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          border: Border.all(color: Color(0xFF0561DD), width: 1)
-                        ),
                       
                         
                       ),

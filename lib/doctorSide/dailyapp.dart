@@ -1,12 +1,8 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/doctorSide/cancle.dart';
 import 'package:flutter_application_4/doctorSide/complete.dart';
 import 'package:flutter_application_4/doctorSide/upcoming.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:http/http.dart' as http;
 
 
 class AppointmentPage extends StatefulWidget {
@@ -25,10 +21,10 @@ class _AppointmentPageState extends State<AppointmentPage> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 90,
-        backgroundColor:  Color(0xFF0561DD),
+        backgroundColor:  const Color(0xFF0561DD),
         elevation: 1,
-        title: Center(
-          child: Text("Appointment",
+        title: const Center(
+          child: Text("Your Appointment",
            style: TextStyle(
                   fontSize: 30,
                   color: Colors.white,
@@ -49,12 +45,12 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 color: Colors.white,
                 child: TabBar(
                   physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
-                  unselectedLabelColor:Color(0xFF0561DD),
+                  padding: const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
+                  unselectedLabelColor:const Color(0xFF0561DD),
                   indicatorSize: TabBarIndicatorSize.label,
                   indicator: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
-                    color: Color(0xFF0561DD)
+                    color: const Color(0xFF0561DD)
                   ),
                   tabs: [
                     Tab(
@@ -62,9 +58,9 @@ class _AppointmentPageState extends State<AppointmentPage> {
                         height: 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                          border: Border.all(color: Color(0xFF0561DD), width: 1)
+                          border: Border.all(color: const Color(0xFF0561DD), width: 1)
                         ),
-                        child: Align(
+                        child: const Align(
                           alignment: Alignment.center,
                           child: Text("upcoming"
                          , style: TextStyle(
@@ -81,9 +77,9 @@ class _AppointmentPageState extends State<AppointmentPage> {
                         height: 50,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            border: Border.all(color:Color(0xFF0561DD), width: 1)
+                            border: Border.all(color:const Color(0xFF0561DD), width: 1)
                         ),
-                        child: Align(
+                        child: const Align(
                           alignment: Alignment.center,
                           child: Text("complete",
                           
@@ -100,9 +96,9 @@ class _AppointmentPageState extends State<AppointmentPage> {
                         height: 50,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            border: Border.all(color: Color(0xFF0561DD), width: 1)
+                            border: Border.all(color: const Color(0xFF0561DD), width: 1)
                         ),
-                        child: Align(
+                        child: const Align(
                           alignment: Alignment.center,
                           child: Text("cancle",
                           style: TextStyle(
@@ -125,11 +121,11 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 
                 child: ListView.builder(
                   itemBuilder: (context, int i) {
-                    return schedual();
+                    return const schedual();
                   },
                   itemCount: 5,
                   scrollDirection: Axis.vertical,
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.all(8),
                 ),
                   ),
@@ -137,11 +133,11 @@ class _AppointmentPageState extends State<AppointmentPage> {
                     
                      child: ListView.builder(
                   itemBuilder: (context, int i) {
-                    return complete();
+                    return const complete();
                   },
                   itemCount: 5,
                   scrollDirection: Axis.vertical,
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.all(8),
                 ),
                     
@@ -150,11 +146,11 @@ class _AppointmentPageState extends State<AppointmentPage> {
                     
                      child: ListView.builder(
                   itemBuilder: (context, int i) {
-                    return cancle();
+                    return const cancle();
                   },
                   itemCount: 5,
                   scrollDirection: Axis.vertical,
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.all(8),
                 ),
                   ),

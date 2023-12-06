@@ -7,7 +7,7 @@ class appointmentList extends StatelessWidget {
   final String time;
   final String state;
 
-  appointmentList({
+  const appointmentList({super.key, 
     required this.doctor,
     required this.category,
     required this.date,
@@ -20,7 +20,7 @@ class appointmentList extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(
-          color: Color(0xFF0561DD),
+          color: const Color(0xFF0561DD),
           width: 3,
         ),
         borderRadius: BorderRadius.circular(10),
@@ -47,26 +47,26 @@ class appointmentList extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     //dr name
                     Text(
                       doctor,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         fontFamily: 'salsa',
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 12,
                     ),
 
                     // Category
                     Text(
                       category,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         fontFamily: 'salsa',
                         fontWeight: FontWeight.bold,
@@ -76,7 +76,7 @@ class appointmentList extends StatelessWidget {
                 ),
               ),
 
-              SizedBox(
+              const SizedBox(
                 width: 15,
               ),
 
@@ -97,26 +97,26 @@ class appointmentList extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 12,
                     ),
                     // Date
                     Text(
                       date,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         fontFamily: 'salsa',
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 12,
                     ),
                   ],
                 ),
               ),
 
-              SizedBox(
+              const SizedBox(
                 width: 15,
               ),
 
@@ -137,14 +137,14 @@ class appointmentList extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 12,
                     ),
 
                     // Time
                     Text(
                       time,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         fontFamily: 'salsa',
                         fontWeight: FontWeight.bold,
@@ -156,7 +156,7 @@ class appointmentList extends StatelessWidget {
             ],
           ),
 
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           // State
@@ -165,7 +165,7 @@ class appointmentList extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'State:',
                   style: TextStyle(
                     fontFamily: 'salsa',
@@ -173,25 +173,25 @@ class appointmentList extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 Text(
                   state,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'salsa',
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 70,
                 ),
                 TextButton(
                   onPressed: () {
                     // Handle reschedule button tap
                   },
-                  child: Text(
+                  child: const Text(
                     "Reschedule",
                     style: TextStyle(
                       fontSize: 25,

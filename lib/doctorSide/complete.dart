@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class complete extends StatelessWidget {
+  const complete({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,20 +24,20 @@ class complete extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 25,
                   ),
-                  Text("Dr Name Family",
+                  const Text("Dr Name Family",
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 30,
                           fontWeight: FontWeight.w500,
                           fontFamily: 'Salsa')),
-                           SizedBox(
+                           const SizedBox(
                     width: 230,
                   ),
                   InkWell(
-                    child: FaIcon(
+                    child: const FaIcon(
                       
                                       FontAwesomeIcons.circleCheck,
                                       size: 26.0,
@@ -47,16 +49,16 @@ class complete extends StatelessWidget {
                   ) 
                 ],
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 22,
                   ),
                  Container(
                   decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          color:  Color.fromARGB(255, 228, 235, 248),
+          color:  const Color.fromARGB(255, 228, 235, 248),
           border: Border.all(
             color: const Color.fromARGB(255, 194, 186, 186), // Set the border color here
             width: 2.0, // Set the border width
@@ -65,7 +67,7 @@ class complete extends StatelessWidget {
                   
                   width: 450,
                   height: 70,
-                  child: Row(
+                  child: const Row(
                     children: [
                       SizedBox(width: 15,),
                       FaIcon(

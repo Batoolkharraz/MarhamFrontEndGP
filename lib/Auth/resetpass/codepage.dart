@@ -3,7 +3,7 @@ import 'package:flutter_application_4/Auth/Login/ValidateForm.dart';
 import 'package:flutter_application_4/Auth/resetpass/setNewpass.dart';
 
 class CodePage extends StatefulWidget {
-  CodePage({Key? key}) : super(key: key);
+  const CodePage({Key? key}) : super(key: key);
 
   @override
   State<CodePage> createState() => _CodePageState();
@@ -13,6 +13,7 @@ class _CodePageState extends State<CodePage> {
   GlobalKey<FormState> formState = GlobalKey<FormState>();
   var codefromtext;
   var codeis;
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     // Access the passed data from the ModalRoute settings
@@ -31,25 +32,25 @@ class _CodePageState extends State<CodePage> {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
             child: Container(
-                padding: EdgeInsets.only(top: 80),
+                padding: const EdgeInsets.only(top: 80),
                 child: Column(
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 25),
-                      child: Container(
-                        child: Image.asset(
-                          "assets/image (17).png",
-                        ),
+                      child: SizedBox(
                         width:
                             600.0, // Set the width and height to make it a perfect circle
                         height: 500.0,
+                        child: Image.asset(
+                          "assets/image (17).png",
+                        ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Container(
-                      child: Center(
+                      child: const Center(
                         child: Text("Enter Your Code now !",
                             style: TextStyle(
                                 color: Colors.black,
@@ -58,11 +59,11 @@ class _CodePageState extends State<CodePage> {
                                 fontFamily: 'Salsa')),
                       ),
                     ),
-                    Container(
+                    const SizedBox(
                       width: 340,
                       child: Text("We send email to you !",
                           style: TextStyle(
-                              color: const Color.fromARGB(255, 110, 106, 106),
+                              color: Color.fromARGB(255, 110, 106, 106),
                               fontSize: 23,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Salsa')),
@@ -78,24 +79,24 @@ class _CodePageState extends State<CodePage> {
                                     onSaved: (text) {
                                       codefromtext = text;
                                     },
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       // Set the style for the entered text
                                       fontSize: 25,
                                       // Adjust the font size as per your preference
                                     )),
-                                SizedBox(
+                                const SizedBox(
                                   height: 30,
                                 ),
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color(0xFF0561DD),
-                                    fixedSize: Size(600, 80),
+                                    backgroundColor: const Color(0xFF0561DD),
+                                    fixedSize: const Size(600, 80),
                                   ).copyWith(
                                     shape: MaterialStateProperty.all(
                                       RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(100),
-                                        side: BorderSide(
+                                        side: const BorderSide(
                                             color: Color(0xFF0561DD),
                                             width: 2.0),
                                       ),
@@ -107,14 +108,14 @@ class _CodePageState extends State<CodePage> {
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
                                             builder: (context) {
-                                              return NewPassword(); // Pass successful to the constructor
+                                              return const NewPassword(); // Pass successful to the constructor
                                             },
                                           ),
                                         );
                                       }
                                       else{
                                         ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
+                                    const SnackBar(
                                       content: Text(
                                         'Code is Not Correct',
                                         style: TextStyle(
@@ -131,7 +132,7 @@ class _CodePageState extends State<CodePage> {
                                     }
                                    
                                   },
-                                  child: Text('Confirm',
+                                  child: const Text('Confirm',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 30,

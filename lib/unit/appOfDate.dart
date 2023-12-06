@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class appOfDate extends StatelessWidget {
   final date;
   final VoidCallback onTap;
-  appOfDate({
+  const appOfDate({super.key, 
     required this.date,
     required this.onTap,
   });
@@ -26,7 +26,7 @@ class appOfDate extends StatelessWidget {
           height: 150,
           child: Center(
             child: Text(date,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black,
                     fontSize: 30,
                     fontWeight: FontWeight.w500,

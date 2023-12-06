@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/Login/ValidateForm.dart';
 import 'package:flutter_application_4/Auth/Login/login.dart';
 import 'package:flutter_application_4/Auth/signup/onPressed.dart';
-import 'package:flutter_application_4/Auth/signup/signuppost.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);
 
@@ -14,12 +12,12 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   final GlobalKey<FormState> signstate = GlobalKey<FormState>();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
   var username, phone, email, password, cpassword;
   bool isChecked = false;
   @override
-  @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -33,12 +31,12 @@ class _SignupState extends State<Signup> {
           SafeArea(
             child: SingleChildScrollView(
               child: Container(
-                margin: EdgeInsets.fromLTRB(15, 240, 15, 0),
-                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                margin: const EdgeInsets.fromLTRB(15, 240, 15, 0),
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Create Account",
                       style: TextStyle(
                         fontSize: 30,
@@ -47,7 +45,7 @@ class _SignupState extends State<Signup> {
                     ),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           "Already have an account?",
                           style: TextStyle(fontSize: 25),
                         ),
@@ -55,23 +53,23 @@ class _SignupState extends State<Signup> {
                           onPressed: () {
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) {
-                                return Login();
+                                return const Login();
                               },
                             ));
                           },
-                          child: Text(
+                          style: const ButtonStyle(
+                            mouseCursor: MaterialStateMouseCursor.textable,
+                          ),
+                          child: const Text(
                             "LogIn!",
                             style: TextStyle(
                                 fontSize: 25, fontWeight: FontWeight.bold),
                           ),
-                          style: ButtonStyle(
-                            mouseCursor: MaterialStateMouseCursor.textable,
-                          ),
                         ),
-                        SizedBox(height: 50.0),
+                        const SizedBox(height: 50.0),
                       ],
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
                     Form(
                       key: signstate,
                       child: Column(
@@ -92,21 +90,22 @@ class _SignupState extends State<Signup> {
                                   return "invalid username";
                                 }
                               }
+                              return null;
 
                               // Check if the username contains only alphanumeric characters and underscores.
                             },
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'Username',
                               labelStyle: TextStyle(
                                 fontSize: 25,
                               ),
                             ),
-                            style: TextStyle(
+                            style: const TextStyle(
                               // Set the style for the entered text
                               fontSize: 25,
                             ),
                           ),
-                          SizedBox(height: 16.0),
+                          const SizedBox(height: 16.0),
                           TextFormField(
                             onSaved: (text) {
                               email = text;
@@ -127,7 +126,7 @@ class _SignupState extends State<Signup> {
                               return null; // Return null for no validation errors
                             },
                             keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: "test@email.com",
                               labelText: "Email",
                               labelStyle: TextStyle(
@@ -137,7 +136,7 @@ class _SignupState extends State<Signup> {
                                 fontSize: 25,
                               ),
                             ),
-                            style: TextStyle(
+                            style: const TextStyle(
                               // Set the style for the entered text
                               fontSize: 25,
                             ),
@@ -148,10 +147,13 @@ class _SignupState extends State<Signup> {
                               phone = text;
                             },
                             validator: (text) {
-                              if (text == null || text.isEmpty)
+                              if (text == null || text.isEmpty) {
                                 return "please fill all information";
+                              return null;
+                              }
+                              return null;
                             },
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'Phone Number',
                               hintText: '+972',
                               labelStyle: TextStyle(
@@ -161,7 +163,7 @@ class _SignupState extends State<Signup> {
                                 fontSize: 25,
                               ),
                             ),
-                            style: TextStyle(
+                            style: const TextStyle(
                               // Set the style for the entered text
                               fontSize: 25,
                             ),
@@ -173,14 +175,15 @@ class _SignupState extends State<Signup> {
                               password = text;
                             },
                             validator: (text) {
-                              if (text == null || text.isEmpty)
+                              if (text == null || text.isEmpty) {
                                 return "please fill all information";
-                              else if (text.length < 8) {
+                              } else if (text.length < 8) {
                                 return "Password sholud be at least 8 characters";
                               }
+                              return null;
                             },
                             obscureText: true,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: "Password",
                               hintText: "*************",
                               labelStyle: TextStyle(
@@ -190,7 +193,7 @@ class _SignupState extends State<Signup> {
                                 fontSize: 25,
                               ),
                             ),
-                            style: TextStyle(
+                            style: const TextStyle(
                               // Set the style for the entered text
                               fontSize: 25,
                             ),
@@ -208,9 +211,10 @@ class _SignupState extends State<Signup> {
                               if (text != _passwordController.text) {
                                 return 'Passwords do not match.';
                               }
+                              return null;
                             },
                             obscureText: true,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: "Confirm password",
                               hintText: "*************",
                               labelStyle: TextStyle(
@@ -220,13 +224,13 @@ class _SignupState extends State<Signup> {
                                 fontSize: 25,
                               ),
                             ),
-                            style: TextStyle(
+                            style: const TextStyle(
                               // Set the style for the entered text
                               fontSize: 25,
                               // Adjust the font size as per your preference
                             ),
                           ),
-                          SizedBox(height: 40.0),
+                          const SizedBox(height: 40.0),
                           
                           ElevatedButton(
                             onPressed: () {
@@ -235,7 +239,7 @@ class _SignupState extends State<Signup> {
                                     context, username, email, phone, password);
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
+                                  const SnackBar(
                                     content: Text(
                                       'Incorrect Data',
                                       style: TextStyle(
@@ -250,21 +254,21 @@ class _SignupState extends State<Signup> {
                                 );
                               }
                             },
-                            child: Text(
-                              "Sign Up",
-                              style: TextStyle(fontSize: 25),
-                            ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF0561DD),
-                              fixedSize: Size(600, 60),
+                              backgroundColor: const Color(0xFF0561DD),
+                              fixedSize: const Size(600, 60),
                             ).copyWith(
                               shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(100),
-                                  side: BorderSide(
+                                  side: const BorderSide(
                                       color: Color(0xFF0561DD), width: 2.0),
                                 ),
                               ),
+                            ),
+                            child: const Text(
+                              "Sign Up",
+                              style: TextStyle(fontSize: 25),
                             ),
                           ),
                         ],

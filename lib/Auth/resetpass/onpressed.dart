@@ -9,7 +9,7 @@ Future<void> pressedButton(BuildContext context, String email) async {
   
   if (message ==false ) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         content: Text(
           'This User Is Not Found',
           style: TextStyle(
@@ -25,7 +25,7 @@ Future<void> pressedButton(BuildContext context, String email) async {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) {
-          return CodePage();
+          return const CodePage();
         },
         settings: RouteSettings(
           arguments: message,

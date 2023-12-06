@@ -16,17 +16,17 @@ class _WorkingdoctorState extends State<Workingdoctor> {
   DateTime dateTime = DateTime(2023, 10, 30, 8, 00);
   DateTime dateTime2 = DateTime(2023, 10, 30, 8, 00);
   final durationController = TextEditingController();
-  final storage = FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
   String userId = '';
 
   Future<TimeOfDay?> pickTime() => showTimePicker(
-      context: context, initialTime: TimeOfDay(hour: 12, minute: 00));
+      context: context, initialTime: const TimeOfDay(hour: 12, minute: 00));
 
   Future<String> getTokenFromStorage() async {
     final token = await storage.read(key: 'jwt');
     if (token != null) {
       final String userId = getUserIdFromToken(token);
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       return userId;
     } else {
       print('Token not found in local storage.');
@@ -67,15 +67,15 @@ class _WorkingdoctorState extends State<Workingdoctor> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            contentPadding: EdgeInsets.all(40), 
-            title: Text(
+            contentPadding: const EdgeInsets.all(40), 
+            title: const Text(
               'Invalid Time Selection',
               style: TextStyle(
                   fontSize: 25,
                   fontFamily: 'salsa',
                   fontWeight: FontWeight.bold),
             ),
-            content: Text(
+            content: const Text(
               'End time cannot be before start time.',
               style: TextStyle(
                   fontSize: 20,
@@ -87,12 +87,12 @@ class _WorkingdoctorState extends State<Workingdoctor> {
                 padding: const EdgeInsets.all(10.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Color(0xFF0561DD), // Change the background color as needed
+                    color: const Color(0xFF0561DD), // Change the background color as needed
                     borderRadius: BorderRadius.circular(
                         20), // Adjust the border radius for circular shape
                   ),
                   child: TextButton(
-                    child: Text(
+                    child: const Text(
                       'OK',
                       style: TextStyle(
                         fontSize: 20,
@@ -124,7 +124,7 @@ class _WorkingdoctorState extends State<Workingdoctor> {
 
       final response = await http.post(
         Uri.parse(
-            'https://marham-backend.onrender.com/schedule/${id}'), // Replace with your server URL
+            'https://marham-backend.onrender.com/schedule/$id'), // Replace with your server URL
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -133,7 +133,7 @@ class _WorkingdoctorState extends State<Workingdoctor> {
 
       if (response.statusCode == 201) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             backgroundColor: Color(0xFF0561DD),
             content: Center(
               child: Text(
@@ -155,20 +155,27 @@ class _WorkingdoctorState extends State<Workingdoctor> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     final starthour = dateTime.hour.toString().padLeft(2, '0');
     final startminutes = dateTime.minute.toString().padLeft(2, '0');
 
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 90,
+        backgroundColor:  const Color(0xFF0561DD),
+        elevation: 1,
+        
+      ),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Container(
           height: 1200,
-          color: Colors.blue,
+          color: const Color(0xFF0561DD),
           child: Column(
             children: [
               //img
-              Container(
+              SizedBox(
                 width: 500,
                 height: 400,
                 child: Image.asset("assets/Doctors-bro.png"),
@@ -185,9 +192,9 @@ class _WorkingdoctorState extends State<Workingdoctor> {
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.only(top: 50),
+                      padding: const EdgeInsets.only(top: 50),
                       width: 500,
-                      child: Column(
+                      child: const Column(
                         children: [
                           Row(
                             children: [
@@ -210,7 +217,7 @@ class _WorkingdoctorState extends State<Workingdoctor> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     Padding(
@@ -222,7 +229,7 @@ class _WorkingdoctorState extends State<Workingdoctor> {
                               children: [
                                 Text(
                                   '${dateTime.year}/${dateTime.month}/${dateTime.day}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.blue,
                                     fontSize: 25,
                                     fontWeight: FontWeight.w500,
@@ -231,14 +238,14 @@ class _WorkingdoctorState extends State<Workingdoctor> {
                                 ),
                                 ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: Color(0xFF0561DD),
-                                      fixedSize: Size(200, 60),
+                                      backgroundColor: const Color(0xFF0561DD),
+                                      fixedSize: const Size(200, 60),
                                     ).copyWith(
                                       shape: MaterialStateProperty.all(
                                         RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(100),
-                                          side: BorderSide(
+                                          side: const BorderSide(
                                               color: Color(0xFF0561DD),
                                               width: 2.0),
                                         ),
@@ -254,8 +261,8 @@ class _WorkingdoctorState extends State<Workingdoctor> {
                                             Widget? child) {
                                           return Theme(
                                             data: ThemeData.light().copyWith(
-                                              textTheme: TextTheme(
-                                                caption: TextStyle(
+                                              textTheme: const TextTheme(
+                                                bodySmall: TextStyle(
                                                     fontSize:
                                                         24), // Adjust the font size
                                               ),
@@ -267,7 +274,7 @@ class _WorkingdoctorState extends State<Workingdoctor> {
                                       if (newDate == null) return;
                                       setState(() => dateTime = newDate);
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       "Select Date",
                                       style: TextStyle(
                                         color: Colors.white,
@@ -280,8 +287,8 @@ class _WorkingdoctorState extends State<Workingdoctor> {
                                   children: [
                                     Container(
                                       padding:
-                                          EdgeInsets.only(left: 20, bottom: 70),
-                                      child: Text(
+                                          const EdgeInsets.only(left: 20, bottom: 70),
+                                      child: const Text(
                                         "Duration ",
                                         style: TextStyle(
                                           color: Color.fromARGB(
@@ -294,14 +301,14 @@ class _WorkingdoctorState extends State<Workingdoctor> {
                                     ),
                                     Container(
                                       padding:
-                                          EdgeInsets.only(left: 10, top: 30),
+                                          const EdgeInsets.only(left: 10, top: 30),
                                       width: 80,
                                       height: 200,
                                       child: TextField(
                                         controller: durationController,
                                         keyboardType: TextInputType.number,
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(fontSize: 30),
+                                        style: const TextStyle(fontSize: 30),
                                         decoration: InputDecoration(
                                           border: OutlineInputBorder(
                                             borderRadius:
@@ -315,7 +322,7 @@ class _WorkingdoctorState extends State<Workingdoctor> {
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 40,
                             ),
                             Padding(
@@ -324,14 +331,14 @@ class _WorkingdoctorState extends State<Workingdoctor> {
                                 children: [
                                   ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: Color(0xFF0561DD),
-                                      fixedSize: Size(200, 60),
+                                      backgroundColor: const Color(0xFF0561DD),
+                                      fixedSize: const Size(200, 60),
                                     ).copyWith(
                                       shape: MaterialStateProperty.all(
                                         RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(100),
-                                          side: BorderSide(
+                                          side: const BorderSide(
                                               color: Color(0xFF0561DD),
                                               width: 2.0),
                                         ),
@@ -349,7 +356,7 @@ class _WorkingdoctorState extends State<Workingdoctor> {
                                       );
                                       setState(() => dateTime = newDate);
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       "Start Time",
                                       style: TextStyle(
                                         color: Colors.white,
@@ -359,19 +366,19 @@ class _WorkingdoctorState extends State<Workingdoctor> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 40,
                                   ),
                                   ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: Color(0xFF0561DD),
-                                      fixedSize: Size(200, 60),
+                                      backgroundColor: const Color(0xFF0561DD),
+                                      fixedSize: const Size(200, 60),
                                     ).copyWith(
                                       shape: MaterialStateProperty.all(
                                         RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(100),
-                                          side: BorderSide(
+                                          side: const BorderSide(
                                               color: Color(0xFF0561DD),
                                               width: 2.0),
                                         ),
@@ -389,7 +396,7 @@ class _WorkingdoctorState extends State<Workingdoctor> {
                                       );
                                       setState(() => dateTime2 = newDate);
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       " End  Time ",
                                       style: TextStyle(
                                         color: Colors.white,
@@ -406,18 +413,18 @@ class _WorkingdoctorState extends State<Workingdoctor> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF0561DD),
-                        fixedSize: Size(500, 60),
+                        backgroundColor: const Color(0xFF0561DD),
+                        fixedSize: const Size(500, 60),
                       ).copyWith(
                         shape: MaterialStateProperty.all(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(100),
-                            side: BorderSide(
+                            side: const BorderSide(
                                 color: Color(0xFF0561DD), width: 2.0),
                           ),
                         ),
@@ -425,7 +432,7 @@ class _WorkingdoctorState extends State<Workingdoctor> {
                       onPressed: () {
                         createSchedule();
                       },
-                      child: Text(
+                      child: const Text(
                         "Save",
                         style: TextStyle(
                           color: Colors.white,

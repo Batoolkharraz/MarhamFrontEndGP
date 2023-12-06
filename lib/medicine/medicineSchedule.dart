@@ -1,17 +1,12 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_4/Home/homePage.dart';
-import 'package:flutter_application_4/profile/profile.dart';
-import 'package:flutter_application_4/unit/dateList.dart';
 import 'package:flutter_application_4/unit/medicine.dart';
 import 'package:flutter_application_4/unit/time.dart';
-import 'package:http/http.dart' as http;
 
 class medicineSchedule extends StatefulWidget {
   final List<dynamic> medicines;
 
-  medicineSchedule({required this.medicines});
+  const medicineSchedule({super.key, required this.medicines});
 
   @override
   State<medicineSchedule> createState() => _medicineScheduleState();
@@ -54,12 +49,12 @@ class _medicineScheduleState extends State<medicineSchedule> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE8EEFA),
+      backgroundColor: const Color(0xFFE8EEFA),
       appBar: AppBar(
         toolbarHeight: 90,
-        backgroundColor:  Color(0xFF0561DD),
+        backgroundColor:  const Color(0xFF0561DD),
         elevation: 1,
-        title: Center(
+        title: const Center(
           child: Text("Medicine Schedule",
            style: TextStyle(
                   fontSize: 30,
@@ -76,10 +71,10 @@ class _medicineScheduleState extends State<medicineSchedule> {
         child: Column(
           children: [
           Center(
-            child: Container(
+            child: SizedBox(
               height: 100,
               child: ListView.builder(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 itemCount: times.length,
                 itemBuilder: (context, index) {
@@ -100,7 +95,7 @@ class _medicineScheduleState extends State<medicineSchedule> {
               ),
             ),
           ),
-          filteredMedicines == null || filteredMedicines.isEmpty
+          filteredMedicines.isEmpty
               ? Padding(
                 padding: const EdgeInsets.only(top: 150),
                 child: Column(
@@ -108,8 +103,8 @@ class _medicineScheduleState extends State<medicineSchedule> {
                     Container(
                       child: Image.asset('assets/med.png'),
                     ),
-                    SizedBox(height: 20,),
-                    Text(
+                    const SizedBox(height: 20,),
+                    const Text(
                       'No medicine for YOU in this Time!',
                       style: TextStyle(
                         fontFamily: 'salsa',
@@ -122,7 +117,7 @@ class _medicineScheduleState extends State<medicineSchedule> {
               )
               : Expanded(
                   child: ListView.builder(
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
                     itemCount: filteredMedicines.length,

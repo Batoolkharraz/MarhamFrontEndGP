@@ -1,7 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:flutter_application_4/Home/homePage.dart';
 import 'package:flutter_application_4/onboarding/introduction.dart';
 
 class splashScreen extends StatefulWidget {
@@ -16,10 +15,10 @@ class _splashScreenState extends State<splashScreen> {
   void initState() {
     super.initState();
     // Delay for 3 minutes (180,000 milliseconds) and then navigate to the home page.
-    Future.delayed(Duration(milliseconds:180000), () {
+    Future.delayed(const Duration(milliseconds:180000), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (BuildContext context) => Introduction(),
+          builder: (BuildContext context) => const Introduction(),
         ),
       );
     });
@@ -28,7 +27,7 @@ class _splashScreenState extends State<splashScreen> {
   @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
-      splash: SingleChildScrollView(
+      splash: const SingleChildScrollView(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -42,8 +41,8 @@ class _splashScreenState extends State<splashScreen> {
           ),
         ),
       ),
-      backgroundColor: Color(0xFF37B6FF),
-      nextScreen: Introduction(),
+      backgroundColor: const Color(0xFF37B6FF),
+      nextScreen: const Introduction(),
       splashIconSize: 300,
       duration: 2000,
       pageTransitionType: PageTransitionType.leftToRightWithFade,

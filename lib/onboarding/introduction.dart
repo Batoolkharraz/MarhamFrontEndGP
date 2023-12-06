@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/Login/login.dart';
-import 'package:flutter_application_4/Auth/signup/signup.dart';
 import 'package:flutter_application_4/onboarding/intro_screen1.dart';
 import 'package:flutter_application_4/onboarding/intro_screen2.dart';
 import 'package:flutter_application_4/onboarding/intro_screen3.dart';
@@ -14,7 +13,7 @@ class Introduction extends StatefulWidget {
 }
 
 class _IntroductionState extends State<Introduction> {
-  PageController _controller = PageController();
+  final PageController _controller = PageController();
   bool onLastPage = false;
 
   @override
@@ -29,14 +28,14 @@ class _IntroductionState extends State<Introduction> {
                 onLastPage = (index == 2);
               });
             },
-            children: [
+            children: const [
               IntroPage2(),
               IntroPage1(),
               IntroPage3(),
             ],
           ),
           Align(
-            alignment: Alignment(0, 0.75),
+            alignment: const Alignment(0, 0.75),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -44,7 +43,7 @@ class _IntroductionState extends State<Introduction> {
                   onTap: () {
                     _controller.jumpToPage(2); // Jump to the last page
                   },
-                  child: Text(
+                  child: const Text(
                     'Skip',
                     style: TextStyle(
                       fontSize: 30,
@@ -63,23 +62,23 @@ class _IntroductionState extends State<Introduction> {
                           showDialog(
                             context: context,
                             builder: (context) {
-                              return Center(child: CircularProgressIndicator());
+                              return const Center(child: CircularProgressIndicator());
                             },
                           );
 
-                          Future.delayed(Duration(seconds: 2), () {
+                          Future.delayed(const Duration(seconds: 2), () {
                             Navigator.of(context)
                                 .pop(); // Close the loading dialog
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) {
-                                  return Login(); // Navigate to the Signup page
+                                  return const Login(); // Navigate to the Signup page
                                 },
                               ),
                             );
                           });
                         },
-                        child: Text(
+                        child: const Text(
                           'Done',
                           style: TextStyle(
                             fontSize: 30,
@@ -91,11 +90,11 @@ class _IntroductionState extends State<Introduction> {
                     : GestureDetector(
                         onTap: () {
                           _controller.nextPage(
-                            duration: Duration(milliseconds: 500),
+                            duration: const Duration(milliseconds: 500),
                             curve: Curves.easeIn,
                           );
                         },
-                        child: Text(
+                        child: const Text(
                           'Next',
                           style: TextStyle(
                             fontSize: 30,

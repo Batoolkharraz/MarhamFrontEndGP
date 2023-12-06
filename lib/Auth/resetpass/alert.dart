@@ -5,16 +5,16 @@ void showalertt(BuildContext context) {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          content: Container(
+          content: SizedBox(
     width: 400, // Set the width as desired
     height: 400, // Set the height as desired
     child: Center(
       child: Column(
         children: [
-          SizedBox(height: 40,),
+          const SizedBox(height: 40,),
           Image.asset("assets/Animation - 1697148558453.gif"),
-          SizedBox(height: 40,),
-          Text(
+          const SizedBox(height: 40,),
+          const Text(
             "Password Changed!",
             style: TextStyle(
               color: Colors.black,
@@ -22,14 +22,14 @@ void showalertt(BuildContext context) {
               fontFamily: 'Salsa',
             ),
           ),
-          SizedBox(height: 50,),
+          const SizedBox(height: 50,),
             Center(
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF0561DD),
-                fixedSize: Size(400, 50),
+                backgroundColor: const Color(0xFF0561DD),
+                fixedSize: const Size(400, 50),
               ),
-              child: Text(
+              child: const Text(
                 'OK',
                 style: TextStyle(
                   color: Colors.white,
@@ -40,7 +40,7 @@ void showalertt(BuildContext context) {
               onPressed: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                               builder: (context) {
-                                return Login();
+                                return const Login();
                               },
                             ));// Close the alert dialog
               },

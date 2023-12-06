@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Home/cancleuser.dart';
 import 'package:flutter_application_4/Home/completeuser.dart';
 import 'package:flutter_application_4/Home/upcompleteuser.dart';
-import 'package:flutter_application_4/doctorSide/cancle.dart';
-import 'package:flutter_application_4/doctorSide/complete.dart';
-import 'package:flutter_application_4/doctorSide/upcoming.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:http/http.dart' as http;
@@ -21,13 +18,13 @@ class UserDaily extends StatefulWidget {
 
 
 class _UserDailyState extends State<UserDaily> {
-    final storage = FlutterSecureStorage();
+    final storage = const FlutterSecureStorage();
 
  Future<String> getTokenFromStorage() async {
     final token = await storage.read(key: 'jwt');
     if (token != null) {
       final String userId = getUserIdFromToken(token);
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       return userId;
     } else {
       print('Token not found in local storage.');
@@ -49,7 +46,7 @@ class _UserDailyState extends State<UserDaily> {
 
   Future getAllAppointment() async {
     String id = await getTokenFromStorage();
-    var url = "https://marham-backend.onrender.com/schedule/byUser/all/654bbfeb25275580d9d2aed0${Id}";
+    var url = "https://marham-backend.onrender.com/schedule/byUser/all/654bbfeb25275580d9d2aed0$id";
 
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
@@ -70,9 +67,9 @@ class _UserDailyState extends State<UserDaily> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 90,
-        backgroundColor:  Color(0xFF0561DD),
+        backgroundColor:  const Color(0xFF0561DD),
         elevation: 1,
-        title: Center(
+        title: const Center(
           child: Text("Appointment",
            style: TextStyle(
                   fontSize: 30,
@@ -93,12 +90,12 @@ class _UserDailyState extends State<UserDaily> {
                 color: Colors.white,
                 child: TabBar(
                   physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
-                  unselectedLabelColor:Color(0xFF0561DD),
+                  padding: const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
+                  unselectedLabelColor:const Color(0xFF0561DD),
                   indicatorSize: TabBarIndicatorSize.label,
                   indicator: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
-                    color: Color(0xFF0561DD)
+                    color: const Color(0xFF0561DD)
                   ),
                   tabs: [
                     Tab(
@@ -106,9 +103,9 @@ class _UserDailyState extends State<UserDaily> {
                         height: 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                          border: Border.all(color: Color(0xFF0561DD), width: 1)
+                          border: Border.all(color: const Color(0xFF0561DD), width: 1)
                         ),
-                        child: Align(
+                        child: const Align(
                           alignment: Alignment.center,
                           child: Text("upcoming"
                          , style: TextStyle(
@@ -125,9 +122,9 @@ class _UserDailyState extends State<UserDaily> {
                         height: 50,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            border: Border.all(color:Color(0xFF0561DD), width: 1)
+                            border: Border.all(color:const Color(0xFF0561DD), width: 1)
                         ),
-                        child: Align(
+                        child: const Align(
                           alignment: Alignment.center,
                           child: Text("complete",
                           
@@ -144,9 +141,9 @@ class _UserDailyState extends State<UserDaily> {
                         height: 50,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            border: Border.all(color: Color(0xFF0561DD), width: 1)
+                            border: Border.all(color: const Color(0xFF0561DD), width: 1)
                         ),
-                        child: Align(
+                        child: const Align(
                           alignment: Alignment.center,
                           child: Text("cancle",
                           style: TextStyle(
@@ -170,11 +167,11 @@ class _UserDailyState extends State<UserDaily> {
                 child: ListView.builder(
                   itemBuilder: (context, int i) {
                     return 
-                    schedualupcomplete();
+                    const schedualupcomplete();
                   },
                   itemCount: 5,
                   scrollDirection: Axis.vertical,
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.all(8),
                 ),
                   ),
@@ -182,11 +179,11 @@ class _UserDailyState extends State<UserDaily> {
                     
                      child: ListView.builder(
                   itemBuilder: (context, int i) {
-                    return completeuser();
+                    return const completeuser();
                   },
                   itemCount: 5,
                   scrollDirection: Axis.vertical,
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.all(8),
                 ),
                     
@@ -195,11 +192,11 @@ class _UserDailyState extends State<UserDaily> {
                     
                      child: ListView.builder(
                   itemBuilder: (context, int i) {
-                    return cancleuser();
+                    return const cancleuser();
                   },
                   itemCount: 5,
                   scrollDirection: Axis.vertical,
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.all(8),
                 ),
                   ),

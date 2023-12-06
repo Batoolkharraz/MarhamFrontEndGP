@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "83162653876",
+    "project_id": "marhamchatting",
+    "storage_bucket": "marhamchatting.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:83162653876:android:23f18ef16b746f4b4a63e1",
+        "android_client_info": {
+          "package_name": "at.Marham.MARHAMFRONTGP"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8YV_S5tqEHO4BKF_UHnAaFYaginak8k0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

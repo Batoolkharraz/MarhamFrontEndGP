@@ -1,10 +1,8 @@
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/updateinformation/upmail.dart';
 import 'package:flutter_application_4/Auth/updateinformation/test.dart';
 import 'package:flutter_application_4/Auth/updateinformation/uploadimage.dart';
-import 'package:flutter_application_4/profile/profile.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_application_4/Auth/updateinformation/upphone.dart';
 import 'package:flutter_application_4/Auth/updateinformation/uppass.dart';
@@ -18,7 +16,7 @@ class EditUser extends StatefulWidget {
 
 class _EditUserState extends State<EditUser> {
   final myController = TextEditingController();
-  bool _isUsernameEditing = false;
+  final bool _isUsernameEditing = false;
   var username, phone, email, password, cpassword;
   Uint8List? image;
   final GlobalKey<FormState> signstate = GlobalKey<FormState>();
@@ -35,7 +33,7 @@ class _EditUserState extends State<EditUser> {
 
   void saveData() {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         backgroundColor: Color(0xFF0561DD),
         content: 
         Center(
@@ -58,14 +56,14 @@ class _EditUserState extends State<EditUser> {
       key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70.0),
+        preferredSize: const Size.fromHeight(70.0),
         child: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Color(0xFF0561DD),
+          backgroundColor: const Color(0xFF0561DD),
           toolbarHeight: 90,
           elevation: 0,
           centerTitle: true,
-          title: Text(
+          title: const Text(
             'Edit Profile',
             style: TextStyle(
               fontSize: 30.0,
@@ -76,7 +74,7 @@ class _EditUserState extends State<EditUser> {
           leading: Padding(
             padding: const EdgeInsets.only(left: 15.0),
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back,
                 color: Colors.white,
                 size: 25,
@@ -90,7 +88,7 @@ class _EditUserState extends State<EditUser> {
             Padding(
               padding: const EdgeInsets.only(right: 25,top: 5),
               child: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.save,
                   color: Colors.white,
                   size: 40,
@@ -107,7 +105,7 @@ class _EditUserState extends State<EditUser> {
         child: Container(
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 width: 600,
                 height: 250,
                 child: Stack(
@@ -122,14 +120,14 @@ class _EditUserState extends State<EditUser> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: Color(0xFF0561DD), // Blue border color
+                                  color: const Color(0xFF0561DD), // Blue border color
                                   width: 3, // Adjust the border width as needed
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Color(0xFF0561DD)
+                                    color: const Color(0xFF0561DD)
                                         .withOpacity(0.3), // Shadow color
-                                    offset: Offset(0, 4), // Shadow position
+                                    offset: const Offset(0, 4), // Shadow position
                                     blurRadius: 15, // Shadow blur radius
                                   ),
                                 ],
@@ -154,14 +152,14 @@ class _EditUserState extends State<EditUser> {
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Color(0xFF0561DD)
+                                    color: const Color(0xFF0561DD)
                                         .withOpacity(0.3), // Shadow color
-                                    offset: Offset(0, 4), // Shadow position
+                                    offset: const Offset(0, 4), // Shadow position
                                     blurRadius: 15, // Shadow blur radius
                                   ),
                                 ],
                               ),
-                              child: CircleAvatar(
+                              child: const CircleAvatar(
                                 radius: 90,
                                 backgroundImage:
                                     AssetImage("assets/5bbc3519d674c.jpg"),
@@ -169,20 +167,20 @@ class _EditUserState extends State<EditUser> {
                             ),
                           ),
                     Positioned(
+                        bottom: 30,
+                        left: 325,
                         child: IconButton(
                           onPressed: selectImage,
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.add_a_photo,
                             size: 35,
                             color: Color(0xFF0561DD),
                           ),
-                        ),
-                        bottom: 30,
-                        left: 325),
+                        )),
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Padding(
@@ -194,7 +192,7 @@ class _EditUserState extends State<EditUser> {
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.3), // Shadow color
-                        offset: Offset(0, 4), // Shadow position
+                        offset: const Offset(0, 4), // Shadow position
                         blurRadius: 20, // Shadow blur radius
                       ),
                     ],
@@ -205,7 +203,7 @@ class _EditUserState extends State<EditUser> {
                     child: Form(
                       child: Column(
                         children: [
-                          Container(
+                          const SizedBox(
                             width: 460,
                             child: Text(
                               "Personal Infromation",
@@ -216,23 +214,23 @@ class _EditUserState extends State<EditUser> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
-                              fixedSize: Size(600, 80),
+                              fixedSize: const Size(600, 80),
                             ).copyWith(
                               shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(100),
-                                  side: BorderSide(
+                                  side: const BorderSide(
                                       color: Colors.grey, width: 2.0),
                                 ),
                               ),
                             ),
-                            child: Text(
+                            child: const Text(
                               "User Name",
                               style: TextStyle(
                                 color: Colors.black,
@@ -243,23 +241,23 @@ class _EditUserState extends State<EditUser> {
                             onPressed: () =>
                                 {showTextDialog(context), print("username")},
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
-                              fixedSize: Size(600, 80),
+                              fixedSize: const Size(600, 80),
                             ).copyWith(
                               shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(100),
-                                  side: BorderSide(
+                                  side: const BorderSide(
                                       color: Colors.grey, width: 2.0),
                                 ),
                               ),
                             ),
-                            child: Text(
+                            child: const Text(
                               "Email",
                               style: TextStyle(
                                 color: Colors.black,
@@ -270,23 +268,23 @@ class _EditUserState extends State<EditUser> {
                             onPressed: () =>
                                 {showemailDialog(context), print("Email")},
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
-                              fixedSize: Size(600, 80),
+                              fixedSize: const Size(600, 80),
                             ).copyWith(
                               shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(100),
-                                  side: BorderSide(
+                                  side: const BorderSide(
                                       color: Colors.grey, width: 2.0),
                                 ),
                               ),
                             ),
-                            child: Text(
+                            child: const Text(
                               "Phone Number",
                               style: TextStyle(
                                 color: Colors.black,
@@ -297,23 +295,23 @@ class _EditUserState extends State<EditUser> {
                             onPressed: () =>
                                 {showPhoneDialog(context), print("Phone")},
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
-                              fixedSize: Size(600, 80),
+                              fixedSize: const Size(600, 80),
                             ).copyWith(
                               shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(100),
-                                  side: BorderSide(
+                                  side: const BorderSide(
                                       color: Colors.grey, width: 2.0),
                                 ),
                               ),
                             ),
-                            child: Text(
+                            child: const Text(
                               "Password",
                               style: TextStyle(
                                 color: Colors.black,
@@ -326,7 +324,7 @@ class _EditUserState extends State<EditUser> {
                               print("Password")
                             },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 50,
                           ),
                         ],

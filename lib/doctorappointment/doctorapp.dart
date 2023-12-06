@@ -1,10 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/Auth/chat/mk.dart';
 import 'package:flutter_application_4/doctorappointment/appTime.dart';
 import 'package:flutter_application_4/unit/appOfDate.dart';
-import 'package:flutter_application_4/doctorappointment/workinghour.dart';
-import 'package:flutter_application_4/unit/doctor.dart';
 import 'package:http/http.dart' as http;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -12,7 +11,7 @@ import 'package:intl/intl.dart';
 class appointment extends StatefulWidget {
   final Map<String, dynamic> doctor;
 
-  appointment({required this.doctor});
+  const appointment({super.key, required this.doctor});
   @override
   _appointmentState createState() => _appointmentState();
 }
@@ -68,6 +67,7 @@ class _appointmentState extends State<appointment> {
   void initState() {
     super.initState();
     getApps();
+
   }
 
   @override
@@ -75,7 +75,7 @@ class _appointmentState extends State<appointment> {
     return Scaffold(
       appBar: AppBar(
        toolbarHeight: 90,
-        backgroundColor:  Color(0xFF0561DD),
+        backgroundColor:  const Color(0xFF0561DD),
         
         leading: BackButton(
           onPressed: () => {Navigator.of(context).pop()},
@@ -115,13 +115,13 @@ class _appointmentState extends State<appointment> {
                       padding: const EdgeInsets.only(
                         top: 60,
                       ),
-                      child: Container(
+                      child: SizedBox(
                         width: 290,
                         height: 400,
                         child: Column(
                           children: [
                             Text(widget.doctor['name'],
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 35,
                                     fontWeight: FontWeight.w500,
@@ -133,7 +133,7 @@ class _appointmentState extends State<appointment> {
                                   width:
                                       50, // Adjust the width and height as needed to make it circular
                                   height: 50,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     shape: BoxShape
                                         .circle, // This makes the container circular
                                     color: Color(0xFF0561DD),
@@ -141,22 +141,29 @@ class _appointmentState extends State<appointment> {
                                   ),
                                   child: Center(
                                       child: InkWell(
-                                    child: FaIcon(
-                                      FontAwesomeIcons.commentMedical,
+                                    child: const FaIcon(
+                                      FontAwesomeIcons.comment,
                                       size: 28.0,
                                       color: Colors.white,
                                     ),
-                                    onTap: () => {print("message")},
+                                    onTap: () => {
+                                       Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChatScreen(ruseremail: widget.doctor['email']),
+          ),
+        )
+                                    },
                                   )),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Container(
                                   width:
                                       50, // Adjust the width and height as needed to make it circular
                                   height: 50,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     shape: BoxShape
                                         .circle, // This makes the container circular
                                     color: Color(
@@ -164,19 +171,19 @@ class _appointmentState extends State<appointment> {
                                   ),
                                   child: Center(
                                       child: InkWell(
-                                    child: FaIcon(FontAwesomeIcons.video,
+                                    child: const FaIcon(FontAwesomeIcons.video,
                                         color: Colors.white, size: 25.0),
                                     onTap: () => {print("video call")},
                                   )),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Container(
                                   width:
                                       50, // Adjust the width and height as needed to make it circular
                                   height: 50,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     shape: BoxShape
                                         .circle, // This makes the container circular
                                     color: Color(
@@ -184,7 +191,7 @@ class _appointmentState extends State<appointment> {
                                   ),
                                   child: Center(
                                       child: InkWell(
-                                    child: FaIcon(FontAwesomeIcons.phone,
+                                    child: const FaIcon(FontAwesomeIcons.phone,
                                         color: Colors.white, size: 25.0),
                                     onTap: () => {print("phone call")},
                                   )),
@@ -201,10 +208,10 @@ class _appointmentState extends State<appointment> {
               Container(
                 child: Column(
                   children: [
-                    Padding(
+                    const Padding(
                       padding:
-                          const EdgeInsets.only(left: 20, bottom: 15, top: 15),
-                      child: Container(
+                          EdgeInsets.only(left: 20, bottom: 15, top: 15),
+                      child: SizedBox(
                         width: 600,
                         child: Text("Availability",
                             style: TextStyle(
@@ -216,12 +223,12 @@ class _appointmentState extends State<appointment> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.only(top: 5),
+                      padding: const EdgeInsets.only(top: 5),
                       width: 510,
                       height: 50,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
-                        color: Color(0xFF0561DD),
+                        color: const Color(0xFF0561DD),
                         border: Border.all(
                           color: Colors.grey, // Set the border color here
                           width: 2.0, // Set the border width
@@ -229,7 +236,7 @@ class _appointmentState extends State<appointment> {
                       ),
                       child: Text("Address:    " + widget.doctor['address'],
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.white,
                               fontSize: 25,
                               fontWeight: FontWeight.bold
@@ -240,7 +247,7 @@ class _appointmentState extends State<appointment> {
                   ],
                 ),
               ),
-              appointmentDates==null|| appointmentDates.isEmpty?
+              appointmentDates.isEmpty?
 
                Padding(
                 padding: const EdgeInsets.only(top: 150),
@@ -249,8 +256,8 @@ class _appointmentState extends State<appointment> {
                     Container(
                       child: Image.asset('assets/time.png'),
                     ),
-                    SizedBox(height: 20,),
-                    Text(
+                    const SizedBox(height: 20,),
+                    const Text(
                       'No Appointment date added until Now!',
                       style: TextStyle(
                         fontFamily: 'salsa',
@@ -263,7 +270,7 @@ class _appointmentState extends State<appointment> {
               )
 
               :
-              Container(
+              SizedBox(
                 height: 900,
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -294,7 +301,7 @@ class _appointmentState extends State<appointment> {
                                 content: Center(
                                   child: Text(
                                     "No Appointment available for $selectedDate",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontFamily: 'salsa',
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold,
@@ -302,7 +309,7 @@ class _appointmentState extends State<appointment> {
                                     ),
                                   ),
                                 ),
-                                duration: Duration(
+                                duration: const Duration(
                                     seconds:
                                         2), // The duration it will be displayed
                               ),
@@ -312,7 +319,7 @@ class _appointmentState extends State<appointment> {
                       );
                     },
                     itemCount: appointmentDates.length,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.all(8),
                   ),
                 ),

@@ -7,7 +7,7 @@ class doctor extends StatelessWidget {
   final String doctorCat;
   final VoidCallback onTap;
 
-  doctor({
+  const doctor({super.key, 
     required this.doctorPic,
     required this.doctorRate,
     required this.doctorName,
@@ -45,39 +45,39 @@ class doctor extends StatelessWidget {
                 //name
                 Text(
                   doctorName,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 23,
                     fontFamily: 'Salsa',
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 //category
                 Text(
                   doctorCat,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                     fontFamily: 'Salsa',
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 //rate
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.star,
                       color: Color.fromARGB(255, 227, 212, 142),
                     ),
-                    SizedBox(height: 15,),
+                    const SizedBox(height: 15,),
                     Text(
                       doctorRate,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                         fontFamily: 'Salsa',

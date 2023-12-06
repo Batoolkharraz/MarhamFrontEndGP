@@ -8,13 +8,13 @@ import 'package:flutter_application_4/Auth/updateinformation/updatenow.dart';
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Enter Your Phone Number',
+        title: const Text('Enter Your Phone Number',
         style: TextStyle(
               color: Colors.black,
               fontSize: 25,
               fontFamily: 'Salsa',
             ),),
-        content:Container(
+        content:SizedBox(
          
           width: 300, // Set the width as desired
     height:80, 
@@ -24,17 +24,17 @@ import 'package:flutter_application_4/Auth/updateinformation/updatenow.dart';
                           keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                           labelText: 'Phone Number',
-                          labelStyle: TextStyle(
+                          labelStyle: const TextStyle(
                             fontSize: 28,
                           ),
                           border: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Colors.grey,
                             ),
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                          style: TextStyle(
+                          style: const TextStyle(
               color: Colors.black,
               fontSize: 25,
               fontFamily: 'Salsa',
@@ -43,12 +43,14 @@ import 'package:flutter_application_4/Auth/updateinformation/updatenow.dart';
                               phone = text;
                             },
                             validator: (text){
-                              if (text == null || text.isEmpty)
-                              return "please fill all information";
+                              if (text == null || text.isEmpty) {
+                                return "please fill all information";
+                              }
                                final RegExp phoneRegex = RegExp(r'^\d{10}$');
                               if (!phoneRegex.hasMatch(text)) {
                                 return 'Invalid phone number';
                               }
+                              return null;
                             },
                
           ),
@@ -56,7 +58,7 @@ import 'package:flutter_application_4/Auth/updateinformation/updatenow.dart';
         ),
         actions: <Widget>[
           TextButton(
-            child: Text('Cancel',
+            child: const Text('Cancel',
             style: TextStyle(
               color: Colors.blue,
               fontSize: 25,
@@ -67,7 +69,7 @@ import 'package:flutter_application_4/Auth/updateinformation/updatenow.dart';
             },
           ),
           TextButton(
-            child: Text('OK',
+            child: const Text('OK',
             style: TextStyle(
               color: Colors.blue,
               fontSize: 25,

@@ -4,7 +4,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/medicine/medicineSchedule.dart';
-import 'package:flutter_application_4/unit/appointmentList.dart';
 import 'package:flutter_application_4/unit/medicineList.dart';
 import 'package:intl/intl.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -20,7 +19,7 @@ class profile extends StatefulWidget {
 class _profileState extends State<profile> {
   List prescriptions = [];
   Map<String, dynamic> User = {};
-  final storage = FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
   String userId = '';
 
   @override
@@ -34,7 +33,7 @@ class _profileState extends State<profile> {
     final token = await storage.read(key: 'jwt');
     if (token != null) {
       final String userId = getUserIdFromToken(token);
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       return userId;
     } else {
       print('Token not found in local storage.');
@@ -55,7 +54,7 @@ class _profileState extends State<profile> {
 
   Future getPrescription() async {
     String id = await getTokenFromStorage();
-    var url = "https://marham-backend.onrender.com/prescription/forUser/${id}";
+    var url = "https://marham-backend.onrender.com/prescription/forUser/$id";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var responceBody = response.body.toString();
@@ -88,7 +87,7 @@ class _profileState extends State<profile> {
 
   Future getUserInfo() async {
     String userid = await getTokenFromStorage();
-    var url = "https://marham-backend.onrender.com/giveme/getUser/${userid}";
+    var url = "https://marham-backend.onrender.com/giveme/getUser/$userid";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var responceBody = response.body.toString();
@@ -114,7 +113,7 @@ class _profileState extends State<profile> {
 
 Future getAppointment() async {
     String id = await getTokenFromStorage();
-    var url = "https://marham-backend.onrender.com/prescription/forUser/${id}";
+    var url = "https://marham-backend.onrender.com/prescription/forUser/$id";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var responceBody = response.body.toString();
@@ -150,7 +149,7 @@ Future getAppointment() async {
   Widget build(BuildContext context) {
     return Scaffold(
       
-      backgroundColor: Color.fromARGB(255, 231, 233, 237),
+      backgroundColor: const Color.fromARGB(255, 231, 233, 237),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
@@ -159,7 +158,7 @@ Future getAppointment() async {
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.edit_note_sharp,
                 color: Color(0xFF0561DD),
                 size: 40,
@@ -167,7 +166,7 @@ Future getAppointment() async {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => EditUser(),
+                    builder: (context) => const EditUser(),
                   ),
                 );
               },
@@ -178,14 +177,14 @@ Future getAppointment() async {
       body: Column(
         children: [
           //head
-          User.isEmpty || User == null
-              ? Container(
+          User.isEmpty
+              ? const SizedBox(
                   height: 270,
                   child: Center(
                     child: CircularProgressIndicator(),
                   ),
                 )
-              : Container(
+              : SizedBox(
                   height: 270,
                   child: Column(
                     children: [
@@ -198,14 +197,14 @@ Future getAppointment() async {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: Color(0xFF0561DD), // Blue border color
+                              color: const Color(0xFF0561DD), // Blue border color
                               width: 3, // Adjust the border width as needed
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: Color(0xFF0561DD)
+                                color: const Color(0xFF0561DD)
                                     .withOpacity(0.3), // Shadow color
-                                offset: Offset(0, 4), // Shadow position
+                                offset: const Offset(0, 4), // Shadow position
                                 blurRadius: 15, // Shadow blur radius
                               ),
                             ],
@@ -217,25 +216,25 @@ Future getAppointment() async {
                                       NetworkImage(User['image']['secure_url']),
                                   radius: 90,
                                 )
-                              : CircleAvatar(
+                              : const CircleAvatar(
                                   backgroundImage:
                                       AssetImage('assets/5bbc3519d674c.jpg'),
-                                  radius: 100,
+                                  radius: 90,
                                 ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
                         User['username'] ?? 'userName',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Salsa',
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       Text(
@@ -251,14 +250,14 @@ Future getAppointment() async {
                   ),
                 ),
 
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
 
           //my appointment
           Container(
             height: 655,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(50.0),
@@ -267,14 +266,129 @@ Future getAppointment() async {
             ),
             child: Padding(
               padding: const EdgeInsets.only(left: 30, right: 30, top: 40),
-              child:
+              child: Column(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //title
+                     
+                          const Text(
+                            'Personal Information',
+                            style: TextStyle(
+                              color: Color(0xFF0561DD),
+                              fontSize: 28,
+                              fontFamily: 'salsa',
+                            ),
+                          ),
+                          
+                      
+
+                      const SizedBox(
+                        height: 10,
+                      ),
+
+                      //appointment
+                      User.isEmpty
+              ? const SizedBox(
+                  height: 270,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ):
+                      SizedBox(
+                        height:
+                            210, // Set a fixed height or use a different value based on your design
+                        child: ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: 1,
+                          itemBuilder: (context, index) {
+                            //  final appointment = appointmentList[index];
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child:Container(
+                                
+                                height: 200,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                            width: 2,
+                            color: const Color(0xFF0561DD),
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                                ),
+                                
+                                child: Column(
+                                  children: [
+                                    const SizedBox(height: 25,),
+                                    Row(
+                                      children: [
+                                        const SizedBox(width: 25,),
+                                        const FaIcon(FontAwesomeIcons.user,
+                                  color: Colors.blue, size: 30.0),
+                                   const SizedBox(width: 10,),
+                                  Text(User['username']?? 'not found',
+                                  style: const TextStyle(
+                               color: Colors.black,
+                                fontSize: 26,
+                                fontFamily: 'salsa',
+                              ),
+                                  )
+                                      ],
+                                    ),
+                                    const SizedBox(height: 15,),
+                                    Row(
+                                      children: [
+                                        const SizedBox(width: 25,),
+                                        const FaIcon(FontAwesomeIcons.at,
+                                  color: Colors.blue, size: 30.0),
+                                   const SizedBox(width: 10,),
+                                  Text(User['email'] ?? 'not found',
+                                  style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 26,
+                                fontFamily: 'salsa',
+                              ),
+                                  )
+                                      ],
+                                    ),
+                                     const SizedBox(height:15,),
+                                    Row(
+                                      children: [
+                                        const SizedBox(width: 25,),
+                                        const FaIcon(FontAwesomeIcons.mobileScreen,
+                                  color: Colors.blue, size: 30.0),
+                                   const SizedBox(width: 10,),
+                                  Text(User['phone'] ?? 'not found',
+                                  style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 26,
+                                fontFamily: 'salsa',
+                              ),
+                                  )
+                                      ],
+                                    ),
+                                    
+                                  ],
+                                ),
+                              )
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
                   Container(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         //title
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
@@ -296,14 +410,14 @@ Future getAppointment() async {
                           ],
                         ),
 
-                        prescriptions == null || prescriptions.isEmpty
+                        prescriptions.isEmpty
                             ? Center(
                                 child: Column(
                                   children: [
                                     Container(
                                       child: Image.asset('assets/medicine.png'),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Text(
@@ -318,10 +432,9 @@ Future getAppointment() async {
                                 ),
                               )
                             :
-                             Container(
-                                height: 500,
+                             SizedBox(
+                                height: 250,
                                 child: ListView.builder(
-                                    physics: BouncingScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount: prescriptions.length,
                                   itemBuilder: (context, index) {
@@ -361,15 +474,16 @@ Future getAppointment() async {
                                       },
                                     );
                                   },
+                                  physics: const BouncingScrollPhysics(),
                                 ),
                               ),
                       ],
                     ),
                   ),
-                
+                ],
               ),
             ),
-          
+          ),
         ],
       ),
     );

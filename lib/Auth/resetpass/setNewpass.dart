@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/Login/ValidateForm.dart';
 import 'package:flutter_application_4/Auth/Login/login.dart';
-import 'package:flutter_application_4/Auth/resetpass/alert.dart';
 import 'package:flutter_application_4/Auth/resetpass/update.dart';
 class NewPassword extends StatefulWidget {
-  NewPassword({Key? key}) : super(key: key);
+  const NewPassword({Key? key}) : super(key: key);
 
   @override
   _NewPasswordState createState() => _NewPasswordState();
@@ -12,8 +11,8 @@ class NewPassword extends StatefulWidget {
 
 class _NewPasswordState extends State<NewPassword> {
   GlobalKey<FormState> formState = GlobalKey<FormState>();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
   var Password;
   var cPassword;
 
@@ -27,18 +26,18 @@ class _NewPasswordState extends State<NewPassword> {
             child: Column(children: [
               Padding(
                 padding: const EdgeInsets.only(top: 10, left: 25),
-                child: Container(
-                  child: Image.asset("assets/image (16).png"),
+                child: SizedBox(
                   width:
                       600.0, // Set the width and height to make it a perfect circle
                   height: 600.0,
+                  child: Image.asset("assets/image (16).png"),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
-                child: Center(
+                child: const Center(
                   child: Text("Set Your New Password !",
                       style: TextStyle(
                           color: Colors.black,
@@ -57,12 +56,12 @@ class _NewPasswordState extends State<NewPassword> {
                         TextFormField(
                           controller:_passwordController,
                           obscureText: true,
-                          style: TextStyle(
+                          style: const TextStyle(
                             // Set the style for the entered text
                             fontSize: 25,
                             // Adjust the font size as per your preference
                           ),
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               labelText: "Password",
                               hintText: "*************",
                               
@@ -74,17 +73,18 @@ class _NewPasswordState extends State<NewPassword> {
                             ),
                             ),
                           validator: (value) {
-                            if (value == null)
+                            if (value == null) {
                               return "please fill all information";
-                            else if (value.length < 8) {
+                            } else if (value.length < 8) {
                               return "Password sholud be at least 8 characters";
                             }
+                            return null;
                           },
                           onSaved: (value) {
                             Password = value;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         TextFormField(
@@ -99,9 +99,10 @@ class _NewPasswordState extends State<NewPassword> {
                             if (text != _passwordController.text) {
                               return 'Passwords do not match.';
                             }
+                            return null;
                           },
                           obscureText: true,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: "Confirm password",
                             hintText: "*************",
                             labelStyle: TextStyle(
@@ -111,24 +112,24 @@ class _NewPasswordState extends State<NewPassword> {
                               fontSize: 25,
                             ),
                           ),
-                          style: TextStyle(
+                          style: const TextStyle(
                             // Set the style for the entered text
                             fontSize: 25,
                             // Adjust the font size as per your preference
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 45,
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFF0561DD),
-                            fixedSize: Size(600, 80),
+                            backgroundColor: const Color(0xFF0561DD),
+                            fixedSize: const Size(600, 80),
                           ).copyWith(
                             shape: MaterialStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(100),
-                                side: BorderSide(
+                                side: const BorderSide(
                                     color: Color(0xFF0561DD), width: 2.0),
                               ),
                             ),
@@ -142,7 +143,7 @@ class _NewPasswordState extends State<NewPassword> {
                               print('Invalid');
                             }
                           },
-                          child: Text('Confirm',
+                          child: const Text('Confirm',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 30,
@@ -150,9 +151,9 @@ class _NewPasswordState extends State<NewPassword> {
                                   fontFamily: 'Salsa')),
                         ),
                         Container(
-                            padding: EdgeInsets.only(top: 20, left: 80),
+                            padding: const EdgeInsets.only(top: 20, left: 80),
                             child: InkWell(
-                              child: Row(
+                              child: const Row(
                                 children: [
                                   Icon(
                                     Icons.arrow_back,
@@ -169,7 +170,7 @@ class _NewPasswordState extends State<NewPassword> {
                               onTap: () => {
                                  Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) {
-                                return Login();
+                                return const Login();
                               },
                             ))//
                               },

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/Login/ValidateForm.dart';
 import 'package:flutter_application_4/Auth/Login/login.dart';
-import 'package:flutter_application_4/Auth/resetpass/checkemail.dart';
 import 'package:flutter_application_4/Auth/resetpass/onpressed.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ResetPassword extends StatefulWidget {
-  ResetPassword({Key? key}) : super(key: key);
+  const ResetPassword({Key? key}) : super(key: key);
 
   @override
   State<ResetPassword> createState() => _ResetPasswordState();
@@ -27,15 +25,15 @@ class _ResetPasswordState extends State<ResetPassword> {
             Padding(
               padding: const EdgeInsets.only(top:10,left: 25),
               child: 
-              Container(
-                child:Image.asset("assets/image (14).png"),
+              SizedBox(
                 width:600.0, // Set the width and height to make it a perfect circle
                 height: 600.0,
+                child:Image.asset("assets/image (14).png"),
               ),
             ),
-            SizedBox(height:10,),
+            const SizedBox(height:10,),
             Container(
-              child: Center(
+              child: const Center(
                 child: Text("Forgot your Password ?",
                     style: TextStyle(
                         color: Colors.black,
@@ -44,11 +42,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                         fontFamily: 'Salsa')),
               ),
             ),
-            Container(
+            const SizedBox(
               width: 398,
               child: Text("Enter Your email to reset it!",
                   style: TextStyle(
-                      color: const Color.fromARGB(255, 110, 106, 106),
+                      color: Color.fromARGB(255, 110, 106, 106),
                       fontSize: 23,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Salsa')),
@@ -60,12 +58,12 @@ class _ResetPasswordState extends State<ResetPassword> {
                   child: Column(
                     children: [
                       TextFormField(
-                        style: TextStyle(
+                        style: const TextStyle(
                             // Set the style for the entered text
                             fontSize: 25,
                             // Adjust the font size as per your preference
                           ),
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             labelText: 'E-mail',
                             hintText: 'test@email.com',
                             labelStyle: TextStyle(fontSize: 25),
@@ -90,16 +88,16 @@ class _ResetPasswordState extends State<ResetPassword> {
                           email = value;
                         },
                       ),
-                      SizedBox(height: 45,),
+                      const SizedBox(height: 45,),
                       ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF0561DD),
-    fixedSize: Size(600, 80),
+                        backgroundColor: const Color(0xFF0561DD),
+    fixedSize: const Size(600, 80),
   ).copyWith(
     shape: MaterialStateProperty.all(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(100),
-        side: BorderSide(color: Color(0xFF0561DD), width: 2.0),
+        side: const BorderSide(color: Color(0xFF0561DD), width: 2.0),
       ),
     ),
   ),
@@ -110,7 +108,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                 }
                 else{
                   ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text(
             'Somthing is wrong',
             style: TextStyle(
@@ -124,7 +122,7 @@ class _ResetPasswordState extends State<ResetPassword> {
       );
                 }
               },
-              child: Text('Confirm',
+              child: const Text('Confirm',
                style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 30,
@@ -136,9 +134,9 @@ class _ResetPasswordState extends State<ResetPassword> {
                   ),
                 )),
                 Container(
-                  padding: EdgeInsets.only(top:50,left: 140),
+                  padding: const EdgeInsets.only(top:50,left: 140),
                   child: InkWell(
-                    child: Row(
+                    child: const Row(
                     children: [
                       Icon(Icons.arrow_back,size: 30,),
                       Text("Return to Login page"
@@ -154,7 +152,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   onTap: () => {
                      Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) {
-                                return Login();
+                                return const Login();
                               },
                             ))//
                   },

@@ -1,18 +1,15 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_4/Home/home.dart';
 import 'package:flutter_application_4/doctorappointment/doctorapp.dart';
-import 'package:flutter_application_4/profile/profile.dart';
 import 'package:flutter_application_4/unit/category.dart';
 import 'package:flutter_application_4/unit/doctor.dart';
 import 'package:flutter_application_4/Home/homePage.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:http/http.dart' as http;
 
 class DoctorsPage extends StatefulWidget {
   final String categoryId;
 
-  DoctorsPage({required this.categoryId});
+  const DoctorsPage({super.key, required this.categoryId});
 
   @override
   _DoctorsPageState createState() => _DoctorsPageState();
@@ -38,7 +35,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
   }
 
   Future<String> getCategory(String catId) async {
-    var url = "https://marham-backend.onrender.com/category/${catId}";
+    var url = "https://marham-backend.onrender.com/category/$catId";
     var response = await http.get(Uri.parse(url));
     var responceBody = response.body.toString();
     responceBody = responceBody.trim();
@@ -50,7 +47,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
 
   Future<List<dynamic>> getDoctorsByCategory(String catId) async {
     var url =
-        "https://marham-backend.onrender.com/doctor/doctorByCategory/${catId}";
+        "https://marham-backend.onrender.com/doctor/doctorByCategory/$catId";
     if (catId == '') {
       url = "https://marham-backend.onrender.com/doctor/";
     }
@@ -86,12 +83,12 @@ class _DoctorsPageState extends State<DoctorsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE8EEFA),
+      backgroundColor: const Color(0xFFE8EEFA),
       appBar: AppBar(
         toolbarHeight: 90,
-        backgroundColor:  Color(0xFF0561DD),
+        backgroundColor:  const Color(0xFF0561DD),
         elevation: 1,
-        title: Center(
+        title: const Center(
           child: Text("Doctor List",
            style: TextStyle(
                   fontSize: 30,
@@ -105,7 +102,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
           leading: Padding(
             padding: const EdgeInsets.only(left:14.0),
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back,
                 color: Colors.white,
                 size: 25,
@@ -113,7 +110,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => homePage(),
+                    builder: (context) => const homePage(),
                   ),
                 );
               },
@@ -123,7 +120,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
             Padding(
               padding: const EdgeInsets.only(right: 24.0),
               child: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.search,
                   color: Colors.white,
                   size: 40,
@@ -143,7 +140,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
             // other category
             Padding(
               padding: const EdgeInsets.only(top: 20),
-              child: Container(
+              child: SizedBox(
                 height: 130.0,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
@@ -157,11 +154,11 @@ class _DoctorsPageState extends State<DoctorsPage> {
                       ),
                     );
                   },
-                   physics:BouncingScrollPhysics(),
+                   physics:const BouncingScrollPhysics(),
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30.0,
             ),
 
@@ -173,7 +170,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
                   onTap: () {
                     navigateToNextPageWithCategory('');
                   },
-                  child: Text('see all',
+                  child: const Text('see all',
                       style: TextStyle(
                           color: Colors.black54,
                           fontSize: 25,
@@ -182,22 +179,22 @@ class _DoctorsPageState extends State<DoctorsPage> {
               ],
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 15.0,
             ),
-            doctors == null || doctors.isEmpty
+            doctors.isEmpty
                 ? Center(
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 150),
+                      padding: const EdgeInsets.only(top: 15.0),
                       child: Column(
                         children: [
                           Container(
                             child: Image.asset('assets/doctor_category.png'),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
-                          Text(
+                          const Text(
                             'There is No Doctor Added Yet!',
                             style: TextStyle(
                               fontFamily: 'salsa',
@@ -214,8 +211,8 @@ class _DoctorsPageState extends State<DoctorsPage> {
                 Expanded(
                   
                     child: GridView.builder(
-                     physics:BouncingScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                     physics:const BouncingScrollPhysics(),
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         mainAxisSpacing: 15.0,
                         childAspectRatio: 0.77,

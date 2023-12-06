@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/Login/login.dart';
 import 'package:flutter_application_4/Auth/signup/signuppost.dart';
-void onPressed(BuildContext context, String username, String   email, String   phone, String   password) async {
-    String loginSuccessful = await addPOST(username,  email,  phone,  password);
-    if (loginSuccessful=="false1") {
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+void onPressed(BuildContext context, String username, String email,
+    String phone, String password) async {
+  try {
+    final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    String loginSuccessful = await addPOST(username, email, phone, password);
+
+    if (loginSuccessful == "false1") {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text(
             'This username is already used',
             style: TextStyle(
@@ -17,11 +26,9 @@ void onPressed(BuildContext context, String username, String   email, String   p
           duration: Duration(seconds: 3),
         ),
       );
-    }
-    else if(loginSuccessful =="false2")
-    {
-        ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+    } else if (loginSuccessful == "false2") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
           content: Text(
             'This email is already used',
             style: TextStyle(
@@ -33,25 +40,36 @@ void onPressed(BuildContext context, String username, String   email, String   p
           duration: Duration(seconds: 3),
         ),
       );
+    } else {
+      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      final user = credential.user;
+      if (user != null) {
+  print(user.email);
+  firestore
+      .collection('users')
+      .doc(user.uid)
+      .set({'uid': user.uid, 'email': email});
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const Login()),
+  );
+}
+else print("user is null");
     }
-    else{
-              ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Success',
-            style: TextStyle(
-              fontSize: 25,
-              fontFamily: 'Helvetica',
-            ),
+  } catch (e) {
+    print('Error during user registration: ${e.toString()}');
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'An error occurred. Please try again later.',
+          style: TextStyle(
+            fontSize: 25,
+            fontFamily: 'Helvetica',
           ),
-          backgroundColor: Color.fromARGB(255, 25, 150, 212),
-          duration: Duration(seconds: 3),
         ),
-      );
-       Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => Login()),
+        backgroundColor: Colors.red,
+        duration: Duration(seconds: 3),
+      ),
     );
-    }
-  
+  }
 }

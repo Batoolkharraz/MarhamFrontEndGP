@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/resetpass/alert.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:convert' as convert;
  void update(context,String password) async{
-  var url = await Uri.parse("https://marham-backend.onrender.com/updatePassword/User");
+  var url = Uri.parse("https://marham-backend.onrender.com/updatePassword/User");
     try {
     var response = await http.post(
       url,

@@ -1,15 +1,13 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
 pickImage(ImageSource source) async {
-  final ImagePicker _imagePicker = ImagePicker();
-  XFile? file = await _imagePicker.pickImage(source: source);
+  final ImagePicker imagePicker = ImagePicker();
+  XFile? file = await imagePicker.pickImage(source: source);
   if (file != null) {
     return await file.readAsBytes();
   }
@@ -17,18 +15,18 @@ pickImage(ImageSource source) async {
 }
 
 Future<XFile?> fileImage(ImageSource source) async {
-  final ImagePicker _imagePicker = ImagePicker();
-  XFile? image = await _imagePicker.pickImage(source: source);
+  final ImagePicker imagePicker = ImagePicker();
+  XFile? image = await imagePicker.pickImage(source: source);
   return image; 
 }
 
 getImagePath(ImageSource source) async {
-  final ImagePicker _imagePicker = ImagePicker();
-  XFile? file = await _imagePicker.pickImage(source: source);
+  final ImagePicker imagePicker = ImagePicker();
+  XFile? file = await imagePicker.pickImage(source: source);
   if (file != null) {
     // The file path of the picked image
     String imagePath = file.path;
-    return await imagePath;
+    return imagePath;
 
     // Now you can use this imagePath to upload or display the image.
   } else {
@@ -42,7 +40,7 @@ Future<void> updateUserInformation(XFile? imageFile) async {
         Uri.parse("https://marham-backend.onrender.com/update/userinformation");
 
     // Create a new multipart request
-    final storage = FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     String? token = await storage.read(key: 'jwt');
     var request = http.MultipartRequest("PATCH", uri);
     request.headers['Authorization'] = 'Alaa__$token';

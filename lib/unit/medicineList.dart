@@ -7,7 +7,7 @@ class medicineList extends StatelessWidget {
   final String writtenBy;
   final VoidCallback onTap;
 
-  medicineList({
+  const medicineList({super.key, 
     required this.diagnosis,
     required this.from,
     required this.to,
@@ -25,7 +25,7 @@ class medicineList extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(
-              color: Color(0xFF0561DD),
+              color: const Color(0xFF0561DD),
               width: 3,
             ),
             borderRadius: BorderRadius.circular(10),
@@ -45,7 +45,7 @@ class medicineList extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Diagnosis
-                        Text(
+                        const Text(
                           'Diagnosis',
                           style: TextStyle(
                             fontSize: 25,
@@ -53,13 +53,13 @@ class medicineList extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 12,
                         ),
                         // Diagnosis
                         Text(
                           diagnosis,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                             fontFamily: 'salsa',
                             fontWeight: FontWeight.bold,
@@ -69,7 +69,7 @@ class medicineList extends StatelessWidget {
                     ),
                   ),
       
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
       
@@ -81,7 +81,7 @@ class medicineList extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Date
-                        Text(
+                        const Text(
                           'Due to',
                           style: TextStyle(
                             fontSize: 25,
@@ -89,14 +89,14 @@ class medicineList extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
       
                         // from
                         Text(
                           from,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                             fontFamily: 'salsa',
                             fontWeight: FontWeight.bold,
@@ -105,7 +105,7 @@ class medicineList extends StatelessWidget {
                         // to
                         Text(
                           to,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                             fontFamily: 'salsa',
                             fontWeight: FontWeight.bold,
@@ -123,7 +123,7 @@ class medicineList extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'By : Dr.',
                       style: TextStyle(
                         fontFamily: 'salsa',
@@ -131,12 +131,12 @@ class medicineList extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     Text(
                       writtenBy,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'salsa',
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

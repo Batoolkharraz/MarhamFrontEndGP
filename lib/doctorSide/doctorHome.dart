@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/doctorSide/dailyapp.dart';
 import 'package:flutter_application_4/doctorSide/patientRecord.dart';
+import 'package:flutter_application_4/doctorSide/updateyours.dart';
 import 'package:flutter_application_4/doctorSide/working.dart';
 import 'dart:typed_data';
 import 'package:flutter_application_4/doctorSide/writePrescription.dart';
@@ -28,7 +30,7 @@ class _doctorHomeState extends State<doctorHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 231, 233, 237),
+        backgroundColor: const Color.fromARGB(255, 231, 233, 237),
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
@@ -37,27 +39,27 @@ class _doctorHomeState extends State<doctorHome> {
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
               child: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.edit_note_sharp,
                   color: Color(0xFF0561DD),
                   size: 40,
                 ),
                 onPressed: () {
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //     builder: (context) => EditUser(),
-                  //   ),
-                  // );
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const EditDoctor(),
+                    ),
+                  );
                 },
               ),
             )
           ],
         ),
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Container(
             child: Column(children: [
-              Container(
+              SizedBox(
                 width: 600,
                 height: 200,
                 child: Stack(
@@ -74,14 +76,14 @@ class _doctorHomeState extends State<doctorHome> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: Color(0xFF0561DD), // Blue border color
+                                  color: const Color(0xFF0561DD), // Blue border color
                                   width: 3, // Adjust the border width as needed
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Color(0xFF0561DD)
+                                    color: const Color(0xFF0561DD)
                                         .withOpacity(0.3), // Shadow color
-                                    offset: Offset(0, 4), // Shadow position
+                                    offset: const Offset(0, 4), // Shadow position
                                     blurRadius: 15, // Shadow blur radius
                                   ),
                                 ],
@@ -106,14 +108,14 @@ class _doctorHomeState extends State<doctorHome> {
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Color(0xFF0561DD)
+                                    color: const Color(0xFF0561DD)
                                         .withOpacity(0.3), // Shadow color
-                                    offset: Offset(0, 4), // Shadow position
+                                    offset: const Offset(0, 4), // Shadow position
                                     blurRadius: 15, // Shadow blur radius
                                   ),
                                 ],
                               ),
-                              child: CircleAvatar(
+                              child: const CircleAvatar(
                                 radius: 90,
                                 backgroundImage:
                                     AssetImage("assets/5bbc3519d674c.jpg"),
@@ -124,7 +126,7 @@ class _doctorHomeState extends State<doctorHome> {
                 ),
               ),
 
-              Text(
+              const Text(
                 "Dr Name family",
                 style: TextStyle(
                   fontSize: 30,
@@ -141,13 +143,13 @@ class _doctorHomeState extends State<doctorHome> {
                   fontFamily: 'Salsa',
                 ),
               ),
-              SizedBox(height: 40.0),
+              const SizedBox(height: 40.0),
 
               //check patient record
 
               Container(
-                padding: EdgeInsets.only(top: 50, left: 30, right: 30),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.only(top: 50, left: 30, right: 30),
+                decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(50.0),
@@ -160,7 +162,7 @@ class _doctorHomeState extends State<doctorHome> {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => Workingdoctor(),
+                            builder: (context) => const Workingdoctor(),
                           ),
                         );
                       },
@@ -169,10 +171,10 @@ class _doctorHomeState extends State<doctorHome> {
                           color: Colors.white,
                           border: Border.all(
                             width: 2,
-                            color: Color(0xFF0561DD),
+                            color: const Color(0xFF0561DD),
                           ),
                           borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               color: Colors.grey, // Shadow color
                               offset: Offset(0, 0), // Offset of the shadow
@@ -182,11 +184,11 @@ class _doctorHomeState extends State<doctorHome> {
                         ),
                         child: Row(
                           children: [
-                            Container(
+                            SizedBox(
                               width: 150,
                               child: Image.asset('assets/calendar.png'),
                             ),
-                            Text(
+                            const Text(
                               'Make Your Schedule',
                               style: TextStyle(
                                 color: Color(0xFF0561DD),
@@ -199,7 +201,7 @@ class _doctorHomeState extends State<doctorHome> {
                       ),
                     ),
                     
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
 
@@ -207,7 +209,7 @@ class _doctorHomeState extends State<doctorHome> {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => patientRecord(),
+                            builder: (context) => const patientRecord(),
                           ),
                         );
                       },
@@ -216,10 +218,10 @@ class _doctorHomeState extends State<doctorHome> {
                           color: Colors.white,
                           border: Border.all(
                             width: 2,
-                            color: Color(0xFF0561DD),
+                            color: const Color(0xFF0561DD),
                           ),
                           borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               color: Colors.grey, // Shadow color
                               offset: Offset(0, 0), // Offset of the shadow
@@ -229,11 +231,11 @@ class _doctorHomeState extends State<doctorHome> {
                         ),
                         child: Row(
                           children: [
-                            Container(
+                            SizedBox(
                               width: 150,
                               child: Image.asset('assets/patient_icon.png'),
                             ),
-                            Text(
+                            const Text(
                               'Check patient record',
                               style: TextStyle(
                                 color: Color(0xFF0561DD),
@@ -246,7 +248,7 @@ class _doctorHomeState extends State<doctorHome> {
                       ),
                     ),
 
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
 
@@ -255,7 +257,7 @@ class _doctorHomeState extends State<doctorHome> {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => writePrescription(),
+                            builder: (context) => const writePrescription(),
                           ),
                         );
                       },
@@ -264,10 +266,10 @@ class _doctorHomeState extends State<doctorHome> {
                           color: Colors.white,
                           border: Border.all(
                             width: 2,
-                            color: Color(0xFF0561DD),
+                            color: const Color(0xFF0561DD),
                           ),
                           borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               color: Colors.grey, // Shadow color
                               offset: Offset(0, 0), // Offset of the shadow
@@ -280,12 +282,12 @@ class _doctorHomeState extends State<doctorHome> {
                             Padding(
                               padding:
                                   const EdgeInsets.only(left: 10),
-                              child: Container(
+                              child: SizedBox(
                                 width: 150,
                                 child: Image.asset('assets/prescription.png'),
                               ),
                             ),
-                            Text(
+                            const Text(
                               'Write Prescription',
                               style: TextStyle(
                                 color: Color(0xFF0561DD),
@@ -297,18 +299,30 @@ class _doctorHomeState extends State<doctorHome> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
-                    Container(
+                    InkWell
+                    (onTap: () => {
+
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const AppointmentPage(),
+                          ),
+                        )
+                      
+                    }
+                      ,child:
+                      Container(
+                    
                       decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(
                           width: 2,
-                          color: Color(0xFF0561DD),
+                          color: const Color(0xFF0561DD),
                         ),
                         borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.grey, // Shadow color
                             offset: Offset(0, 0), // Offset of the shadow
@@ -320,12 +334,12 @@ class _doctorHomeState extends State<doctorHome> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(top: 10, bottom: 10),
-                            child: Container(
+                            child: SizedBox(
                               width: 150,
                               child: Image.asset('assets/image (18).png'),
                             ),
                           ),
-                          Text(
+                          const Text(
                             'Daily Appointment',
                             style: TextStyle(
                               color: Color(0xFF0561DD),
@@ -335,7 +349,7 @@ class _doctorHomeState extends State<doctorHome> {
                           ),
                         ],
                       ),
-                    ),
+                    ),)
                   ],
                 ),
               )

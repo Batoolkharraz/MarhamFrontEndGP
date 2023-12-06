@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/Auth/chat/chatpage.dart';
 import 'package:flutter_application_4/doctorappointment/doctorapp.dart';
 import 'package:flutter_application_4/search/searchDoctor.dart';
 import 'package:flutter_application_4/unit/category.dart';
 import 'package:flutter_application_4/unit/doctor.dart';
 import 'package:flutter_application_4/doctors/doctors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:http/http.dart' as http;
 
 class home extends StatefulWidget {
@@ -34,7 +34,7 @@ class _homeState extends State<home> {
   }
 
   Future<String> getCategory(String catId) async {
-    var url = "https://marham-backend.onrender.com/category/${catId}";
+    var url = "https://marham-backend.onrender.com/category/$catId";
     var response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
@@ -98,7 +98,7 @@ class _homeState extends State<home> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
+                    const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -118,30 +118,38 @@ class _homeState extends State<home> {
                       ],
                     ),
                     Container(
-                      padding: EdgeInsets.all(4),
-                      margin: EdgeInsets.only(right: 5.0),
+                      padding: const EdgeInsets.all(4),
+                      margin: const EdgeInsets.only(right: 5.0),
                       child: Row(
                         children: [
                           IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               FontAwesomeIcons.search,
                               size: 30.0,
                             ),
                             onPressed: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => searchDoctor(),
+                                  builder: (context) => const searchDoctor(),
                                 ),
                               );
                             },
                           ),
-                          SizedBox(width: 20.0),
+                          const SizedBox(width: 20.0),
                           IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               FontAwesomeIcons.commentDots,
                               size: 30.0,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                               Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return const ChatPage(); // Navigate to the home page
+            },
+          ),
+        );
+                            },
                           ),
                         ],
                       ),
@@ -149,26 +157,26 @@ class _homeState extends State<home> {
                   ],
                 ),
               ),
-              SizedBox(height: 15.0),
+              const SizedBox(height: 15.0),
 ///////////////////////////////////////////////////////////////////cards
 
               Container(
                 decoration: BoxDecoration(
-                  color: Color(0xFF0561DD),
+                  color: const Color(0xFF0561DD),
                   borderRadius:
                       BorderRadius.circular(29), // Set the border radius here
                 ),
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 height: 260,
-                margin: EdgeInsets.only(left: 10, right: 10),
+                margin: const EdgeInsets.only(left: 10, right: 10),
                 child: Row(
                   children: [
                     Container(
-                      color: Color(0xFF0561DD),
+                      color: const Color(0xFF0561DD),
                       width: 280,
                       height: 250,
-                      padding: EdgeInsets.only(top: 20),
-                      child: Column(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: const Column(
                         children: [
                           Text(
                             "Looking For Your derired doctor specialist?",
@@ -188,11 +196,11 @@ class _homeState extends State<home> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 20,
                     ),
                     Container(
-                      color: Color(0xFF0561DD),
+                      color: const Color(0xFF0561DD),
                       width: 190,
                       height: 250,
                       child: Image.asset("assets/copy.png", fit: BoxFit.cover),
@@ -203,18 +211,18 @@ class _homeState extends State<home> {
 
               //category
               Container(
-                margin: EdgeInsets.all(13),
+                margin: const EdgeInsets.all(13),
                 width: 500,
-                child: Text(
+                child: const Text(
                   "Categories",
                   textAlign: TextAlign.start,
                   style: TextStyle(fontSize: 25.0, fontFamily: 'Salsa'),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: 130.0,
                 child: ListView.builder(
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     itemCount: categories.length,
                     itemBuilder: (context, index) {
@@ -226,16 +234,16 @@ class _homeState extends State<home> {
                       );
                     }),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
               //doc
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Avilable Doctor',
+                    Text('Suggestion',
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 25,
@@ -243,13 +251,13 @@ class _homeState extends State<home> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
-              Container(
+              SizedBox(
                 height: 335.0,
                 child: ListView.builder(
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     itemCount: doctors.length,
                     itemBuilder: (context, index) {

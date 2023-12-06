@@ -4,7 +4,7 @@ class patientRec extends StatelessWidget {
   final String diagnosis;
   final String from;
 
-  patientRec({
+  const patientRec({super.key, 
     required this.diagnosis,
     required this.from,
   });
@@ -18,10 +18,10 @@ class patientRec extends StatelessWidget {
           color: Colors.white,
           border: Border.all(
             width: 2,
-            color: Color(0xFF0561DD),
+            color: const Color(0xFF0561DD),
           ),
           borderRadius: BorderRadius.circular(10),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Colors.grey, // Shadow color
               offset: Offset(0, 0), // Offset of the shadow
@@ -35,22 +35,22 @@ class patientRec extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.date_range_outlined,
                           color: Color(0xFF0561DD),
                           size: 50,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
-                        Text(
+                        const Text(
                           'at Date:',
                           style: TextStyle(
                             fontSize: 25,
@@ -58,12 +58,12 @@ class patientRec extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Text(
                           from,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 25,
                             fontFamily: 'salsa',
                             fontWeight: FontWeight.bold,
@@ -76,14 +76,14 @@ class patientRec extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 40),
                     child: Text(
                       diagnosis,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 30,
                         fontFamily: 'salsa',
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                 ],
