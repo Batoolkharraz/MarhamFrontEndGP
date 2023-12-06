@@ -48,13 +48,15 @@ class _todayUserState extends State<todayUser> {
                   SizedBox(
                     width: 25,
                   ),
-                  Text( widget.doctorName,
+                  Text('Dr. ' + widget.doctorName,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 30,
                           fontWeight: FontWeight.w500,
                           fontFamily: 'Salsa')),
-                  
+                  SizedBox(
+                    width: 230,
+                  ),
                 ],
               ),
               SizedBox(

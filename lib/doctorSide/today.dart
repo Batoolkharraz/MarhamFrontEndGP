@@ -4,12 +4,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class today extends StatelessWidget {
   @override
   final String Id;
+  final String userId;
   final String userName;
   final String date;
   final String time;
 
   today({
     required this.Id,
+    required this.userId,
     required this.userName,
     required this.date,
     required this.time,

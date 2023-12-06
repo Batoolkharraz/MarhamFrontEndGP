@@ -121,7 +121,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
     }
   }
 
-  Future<void> getTodayAppointment() async {
+ Future<void> getTodayAppointment() async {
     try {
       //String Id = await getTokenFromStorage();
       String Id = '651c58f32cd651e7a27ac12f';
@@ -132,7 +132,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
       if (response.statusCode == 200) {
         var responseBody = response.body.toString();
         responseBody = responseBody.trim();
-        responseBody = responseBody.substring(12, responseBody.length - 1);
+        responseBody = responseBody.substring(19, responseBody.length - 1);
         var allApp = jsonDecode(responseBody);
 
         setState(() {
@@ -146,37 +146,36 @@ class _AppointmentPageState extends State<AppointmentPage> {
     }
   }
 
-  Future<Map<String, String>> getAppInfo(String appId, String userId) async {
-    var url =
-        "https://marham-backend.onrender.com/schedule/doctorAppointment/$appId/$userId";
-    var response = await http.get(Uri.parse(url));
+ Future<Map<String, String>> getAppInfo(String appId, String userId) async {
+  var url = "https://marham-backend.onrender.com/schedule/doctorAppointment/$appId/$userId";
+  var response = await http.get(Uri.parse(url));
 
-    if (response.statusCode == 200) {
-      var responseBody = response.body.toString();
-      var responseData = jsonDecode(responseBody);
+  if (response.statusCode == 200) {
+    var responseBody = response.body.toString();
+    var responseData = jsonDecode(responseBody);
 
-      // Check if the "apps" field is present and not empty
-      if (responseData.containsKey("apps") &&
-          responseData["apps"] is List &&
-          responseData["apps"].isNotEmpty) {
-        var app = responseData["apps"][0];
+    // Check if the "apps" field is present and not empty
+    if (responseData.containsKey("apps") &&
+        responseData["apps"] is List &&
+        responseData["apps"].isNotEmpty) {
+      var app = responseData["apps"][0];
 
-        // Extract date and time from the response
-        String date = app['scheduleByDay']['date'];
-        String time = app['scheduleByDay']['timeSlots']
-            ['time']; // Use index to access timeSlots
-        String userName = responseData['userName'];
+      // Extract date and time from the response
+      String date = app['scheduleByDay']['date'];
+      String time = app['scheduleByDay']['timeSlots']['time']; // Use index to access timeSlots
+      String userName = responseData['userName'];
 
-        return {'date': date, 'time': time, 'userName': userName};
-      } else {
-        print("No data found for the given appointment ID");
-        return {};
-      }
+      return {'date': date, 'time': time, 'userName': userName};
     } else {
-      print("Failed to load appointment info");
+      print("No data found for the given appointment ID");
       return {};
     }
+  } else {
+    print("Failed to load appointment info");
+    return {};
   }
+}
+
 
   @override
   void initState() {
@@ -324,66 +323,118 @@ class _AppointmentPageState extends State<AppointmentPage> {
                           ),
                         )
                       :
-                      //today appointment
+                      //all appointment
                       Container(
                           child: ListView.builder(
                             itemBuilder: (context, int i) {
                               if (todayAppointment != null &&
                                   todayAppointment.isNotEmpty) {
-                                var appointments =
+                                List<dynamic> appointmentInfo =
                                     todayAppointment[i];
-                                if (appointments != null ) {
-                                  return Column(
-                                    children: [
-                                        FutureBuilder<Map<String, String>>(
-                                          future: getAppInfo(
-                                            appointments['bookId'],
-                                            appointments['userId'],
-                                          ),
-                                          builder: (context, snapshot) {
-                                            if (snapshot.connectionState ==
-                                                    ConnectionState.done &&
-                                                snapshot.hasData) {
-                                              String docName =
-                                                  snapshot.data!['userName'] ??
-                                                      '';
-                                              String date =
-                                                  snapshot.data!['date'] ?? '';
-                                              String time =
-                                                  snapshot.data!['time'] ?? '';
-                                              return today(
-                                                Id: appointments['bookId'],
-                                                userName: docName,
-                                                date: date,
-                                                time: time,
-                                              );
-                                            } else if (snapshot
-                                                    .connectionState ==
-                                                ConnectionState.waiting) {
-                                              // While the future is not complete, you can return a loading indicator or placeholder
-                                              return Center(
-                                                child:
-                                                    CircularProgressIndicator(),
-                                              );
-                                              // Replace with your loading indicator
-                                            } else if (snapshot.data == null) {
-                                              // Once the delay is complete, display the image and text
-                                              return Container();
-                                            } else {
-                                              return Container(
-                                              );
-                                            }
-                                          },
-                                        ),
-                                    ],
-                                  );
-                                } else {
-                                  // Handle the case where appointments is not a List
-                                  return Container();
-                                }
+                                return Column(
+                                  children: [
+                                    for (var j = 0;
+                                        j < appointmentInfo.length;
+                                        j++)
+                                      FutureBuilder<Map<String, String>>(
+                                        future: getAppInfo(
+                                            appointmentInfo[j]['bookId'],
+                                            appointmentInfo[j]['userId']),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                                  ConnectionState.done &&
+                                              snapshot.hasData) {
+                                            String userName =
+                                                snapshot.data!['userName'] ??
+                                                    '';
+                                            String date =
+                                                snapshot.data!['date'] ?? '';
+                                            String time =
+                                                snapshot.data!['time'] ?? '';
+                                            return today(
+                                              Id: appointmentInfo[j]['bookId'],
+                                              userId: appointmentInfo[j]
+                                                  ['userId'],
+                                              userName: userName,
+                                              date: date,
+                                              time: time,
+                                            );
+                                          } else if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            // While the future is not complete, you can return a loading indicator or placeholder
+                                            return Center(
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Column(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                bottom: 25),
+                                                        child: SizedBox(
+                                                          width: 70,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width:
+                                                            40, // Adjust the width as needed
+                                                        height:
+                                                            40, // Adjust the height as needed
+                                                        child:
+                                                            CircularProgressIndicator(),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                            // Replace with your loading indicator
+                                          } else if (snapshot.data == null) {
+                                            // Once the delay is complete, display the image and text
+                                            return Column(
+                                              children: [
+                                                Container(
+                                                  child: Image.asset(
+                                                      'assets/appointment.png'),
+                                                ),
+                                              ],
+                                            );
+                                          } else {
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 150),
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    child: Image.asset(
+                                                        'assets/appointment.png'),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          }
+                                        },
+                                      ),
+                                  ],
+                                );
                               } else {
-                                // Handle the case where todayAppointment[i] is null or empty
-                                return Container();
+                                // Handle the case where allAppointment[i] is not a List<dynamic>
+                                return Padding(
+                                  padding: const EdgeInsets.only(top: 150),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        child: Image.asset(
+                                            'assets/appointment.png'),
+                                      ),
+                                    ],
+                                  ),
+                                );
                               }
                             },
                             itemCount: todayAppointment?.length ?? 1,
@@ -435,8 +486,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                             String time =
                                                 snapshot.data!['time'] ?? '';
                                             return schedual(
-                                              bookId: appointmentInfo[j]
-                                                  ['bookId'],
+                                              bookId: appointmentInfo[j]['bookId'],
                                               userId: appointmentInfo[j]
                                                   ['userId'],
                                               userName: userName,

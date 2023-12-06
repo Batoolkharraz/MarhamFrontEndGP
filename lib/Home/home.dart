@@ -2,14 +2,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/chat/chatpage.dart';
 import 'package:flutter_application_4/doctorappointment/doctorapp.dart';
-import 'package:flutter_application_4/doctors/doctorsfF.dart';
 import 'package:flutter_application_4/search/searchDoctor.dart';
 import 'package:flutter_application_4/unit/category.dart';
 import 'package:flutter_application_4/unit/doctor.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_application_4/doctors/doctors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:jwt_decoder/jwt_decoder.dart';
 
 class home extends StatefulWidget {
   const home({super.key});
@@ -21,52 +19,18 @@ class home extends StatefulWidget {
 class _homeState extends State<home> {
   List categories = [];
   List doctors = [];
-  final storage = FlutterSecureStorage();
 
-  Future<String> getTokenFromStorage() async {
-    final token = await storage.read(key: 'jwt');
-    if (token != null) {
-      final String userId = getUserIdFromToken(token);
-      await Future.delayed(Duration(seconds: 2));
-      return userId;
-    } else {
-      print('Token not found in local storage.');
-      return '';
-    }
-  }
-
-  String getUserIdFromToken(String token) {
-    try {
-      final Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-      final String userId = decodedToken['id'];
-      return userId;
-    } catch (e) {
-      print('Error decoding token: $e');
-      return '';
-    }
-  }
-  Future<void> getCategories() async {
+  Future getCategories() async {
     var url = "https://marham-backend.onrender.com/category/";
+    var response = await http.get(Uri.parse(url));
+    var responceBody = response.body.toString();
+    responceBody = responceBody.trim();
+    responceBody = responceBody.substring(14, responceBody.length - 1);
+    var cat = jsonDecode(responceBody);
 
-    try {
-      var response = await http.get(Uri.parse(url));
-
-      if (response.statusCode == 200) {
-        var responceBody = response.body.toString();
-        responceBody = responceBody.trim();
-        responceBody = responceBody.substring(14, responceBody.length - 1);
-        var cat = jsonDecode(responceBody);
-        setState(() {
-          categories.addAll(cat);
-        });
-      } else {
-        // Handle the error when the HTTP request fails
-        print('Error: ${response.statusCode}');
-      }
-    } catch (error) {
-      // Handle other types of errors, such as network errors
-      print('Error: $error');
-    }
+    setState(() {
+      categories.addAll(cat);
+    });
   }
 
   Future<String> getCategory(String catId) async {
@@ -84,9 +48,6 @@ class _homeState extends State<home> {
         if (cat.containsKey('name')) {
           return cat['name'];
         }
-        else{
-           return "";
-        }
       }
     }
 
@@ -95,24 +56,17 @@ class _homeState extends State<home> {
   }
 
   Future getDoctor() async {
-    String userId = await getTokenFromStorage();
-    try {
-      var url = "https://marham-backend.onrender.com/doctor/Usersearch/$userId";
-      var response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        var responceBody = response.body.toString();
-        responceBody = responceBody.trim();
-        var doc = jsonDecode(responceBody);
+    var url = "https://marham-backend.onrender.com/doctor/";
+    var response = await http.get(Uri.parse(url));
+    var responceBody = response.body.toString();
+    responceBody = responceBody.trim();
+    responceBody = responceBody.substring(11, responceBody.length - 1);
+    var doc = jsonDecode(responceBody);
 
-        setState(() {
-          //print(getCategory(doc[0]['categoryId']));
-          doctors.addAll(doc);
-        });
-      }
-    } catch (error) {
-      print("Error fetching today appointments: $error");
-      // Handle the error accordingly
-    }
+    setState(() {
+      //print(getCategory(doc[0]['categoryId']));
+      doctors.addAll(doc);
+    });
   }
 
   void navigateToNextPageWithCategory(String categoryId) {
@@ -127,6 +81,7 @@ class _homeState extends State<home> {
   void initState() {
     // TODO: implement initState
     getCategories();
+    //getCategory();
     getDoctor();
     super.initState();
   }

@@ -121,30 +121,31 @@ class schedualupcomplete extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 25,right: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text( doctorName,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 30,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Salsa')),
-                    
-                    InkWell(
-                      child: FaIcon(
-                        FontAwesomeIcons.circleXmark,
-                        size: 26.0,
-                        color: Colors.blue,
-                      ),
-                      onTap: () {
-                        cancelAppointment(bookId,doctorId);
-                      },
+              Row(
+                children: [
+                  SizedBox(
+                    width: 25,
+                  ),
+                  Text('Dr. ' + doctorName,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Salsa')),
+                  SizedBox(
+                    width: 230,
+                  ),
+                  InkWell(
+                    child: FaIcon(
+                      FontAwesomeIcons.circleXmark,
+                      size: 26.0,
+                      color: Colors.blue,
                     ),
-                  ],
-                ),
+                    onTap: () {
+                      cancelAppointment(bookId,doctorId);
+                    },
+                  )
+                ],
               ),
               SizedBox(
                 height: 10,
