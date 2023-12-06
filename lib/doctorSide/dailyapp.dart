@@ -330,51 +330,48 @@ class _AppointmentPageState extends State<AppointmentPage> {
                             itemBuilder: (context, int i) {
                               if (todayAppointment != null &&
                                   todayAppointment.isNotEmpty) {
-                                var appointments =
-                                    todayAppointment[i];
-                                if (appointments != null ) {
+                                var appointments = todayAppointment[i];
+                                if (appointments != null) {
                                   return Column(
                                     children: [
-                                        FutureBuilder<Map<String, String>>(
-                                          future: getAppInfo(
-                                            appointments['bookId'],
-                                            appointments['userId'],
-                                          ),
-                                          builder: (context, snapshot) {
-                                            if (snapshot.connectionState ==
-                                                    ConnectionState.done &&
-                                                snapshot.hasData) {
-                                              String docName =
-                                                  snapshot.data!['userName'] ??
-                                                      '';
-                                              String date =
-                                                  snapshot.data!['date'] ?? '';
-                                              String time =
-                                                  snapshot.data!['time'] ?? '';
-                                              return today(
-                                                Id: appointments['bookId'],
-                                                userName: docName,
-                                                date: date,
-                                                time: time,
-                                              );
-                                            } else if (snapshot
-                                                    .connectionState ==
-                                                ConnectionState.waiting) {
-                                              // While the future is not complete, you can return a loading indicator or placeholder
-                                              return Center(
-                                                child:
-                                                    CircularProgressIndicator(),
-                                              );
-                                              // Replace with your loading indicator
-                                            } else if (snapshot.data == null) {
-                                              // Once the delay is complete, display the image and text
-                                              return Container();
-                                            } else {
-                                              return Container(
-                                              );
-                                            }
-                                          },
+                                      FutureBuilder<Map<String, String>>(
+                                        future: getAppInfo(
+                                          appointments['bookId'],
+                                          appointments['userId'],
                                         ),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                                  ConnectionState.done &&
+                                              snapshot.hasData) {
+                                            String docName =
+                                                snapshot.data!['userName'] ??
+                                                    '';
+                                            String date =
+                                                snapshot.data!['date'] ?? '';
+                                            String time =
+                                                snapshot.data!['time'] ?? '';
+                                            return today(
+                                              Id: appointments['bookId'],
+                                              userName: docName,
+                                              date: date,
+                                              time: time,
+                                            );
+                                          } else if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            // While the future is not complete, you can return a loading indicator or placeholder
+                                            return Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            );
+                                            // Replace with your loading indicator
+                                          } else if (snapshot.data == null) {
+                                            // Once the delay is complete, display the image and text
+                                            return Container();
+                                          } else {
+                                            return Container();
+                                          }
+                                        },
+                                      ),
                                     ],
                                   );
                                 } else {
