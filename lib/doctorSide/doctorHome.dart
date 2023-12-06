@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/doctorSide/dailyapp.dart';
 import 'package:flutter_application_4/doctorSide/patientRecord.dart';
+import 'package:flutter_application_4/doctorSide/searchUser.dart';
 import 'package:flutter_application_4/doctorSide/working.dart';
 import 'dart:typed_data';
 import 'package:flutter_application_4/doctorSide/writePrescription.dart';
@@ -208,7 +209,7 @@ class _doctorHomeState extends State<doctorHome> {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => patientRecord(),
+                            builder: (context) => searchUser(),
                           ),
                         );
                       },
@@ -235,7 +236,7 @@ class _doctorHomeState extends State<doctorHome> {
                               child: Image.asset('assets/patient_icon.png'),
                             ),
                             Text(
-                              'Check patient record',
+                              'search for patient',
                               style: TextStyle(
                                 color: Color(0xFF0561DD),
                                 fontSize: 27,
@@ -250,7 +251,7 @@ class _doctorHomeState extends State<doctorHome> {
                     SizedBox(
                       height: 30,
                     ),
-
+/*
                     //write prescription
                     GestureDetector(
                       onTap: () {
@@ -298,6 +299,7 @@ class _doctorHomeState extends State<doctorHome> {
                         ),
                       ),
                     ),
+                    */
                     SizedBox(
                       height: 30,
                     ),

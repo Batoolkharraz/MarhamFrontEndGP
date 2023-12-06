@@ -13,7 +13,7 @@ Future<bool> postLogin(String username, String password) async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode({
-      "username": username,
+      "email": username,
       "password": password,
     }),
   );

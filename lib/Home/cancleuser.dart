@@ -35,7 +35,7 @@ class cancleuser extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Dr. '+doctorName,
+                  Text(doctorName,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 30,

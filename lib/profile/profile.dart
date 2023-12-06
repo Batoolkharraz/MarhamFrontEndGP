@@ -101,18 +101,33 @@ class _profileState extends State<profile> {
   }
 
   Future<String> getDoctor(String docId) async {
-    var url =
-        "https://marham-backend.onrender.com/doctor/651c58f32cd651e7a27ac12f";
-    var response = await http.get(Uri.parse(url));
-    var responceBody = response.body.toString();
-    responceBody = responceBody.trim();
-    responceBody = responceBody.substring(10, responceBody.length - 1);
-    var doc = jsonDecode(responceBody);
+    try {
+      var url = "https://marham-backend.onrender.com/doctor/$docId";
+      var response = await http.get(Uri.parse(url));
 
-    return doc['name'];
+      if (response.statusCode == 200) {
+        // Parse the response body
+        var doc = jsonDecode(response.body);
+
+        // Check if the 'name' key is present in the response
+        if (doc.containsKey('name')) {
+          return doc['name'];
+        } else {
+          print("Name not found in the response");
+          return "";
+        }
+      } else {
+        print("Failed to load doctor: ${response.statusCode}");
+        return "";
+      }
+    } catch (error) {
+      // Handle any errors that occurred during the HTTP request
+      print("Error in getDoctor: $error");
+      return "";
+    }
   }
 
-Future getAppointment() async {
+  Future getAppointment() async {
     String id = await getTokenFromStorage();
     var url = "https://marham-backend.onrender.com/prescription/forUser/${id}";
     var response = await http.get(Uri.parse(url));
@@ -145,11 +160,9 @@ Future getAppointment() async {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       backgroundColor: Color.fromARGB(255, 231, 233, 237),
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -267,109 +280,104 @@ Future getAppointment() async {
             ),
             child: Padding(
               padding: const EdgeInsets.only(left: 30, right: 30, top: 40),
-              child:
-                  Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    //title
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        //title
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Your medicine',
-                              style: TextStyle(
-                                color: Color(0xFF0561DD),
-                                fontSize: 30,
-                                fontFamily: 'salsa',
-                              ),
-                            ),
-                            Text(
-                              'see all',
-                              style: TextStyle(
-                                color: Color(0xFF0561DD),
-                                fontSize: 20,
-                                fontFamily: 'salsa',
-                              ),
-                            ),
-                          ],
+                        Text(
+                          'Your medicine',
+                          style: TextStyle(
+                            color: Color(0xFF0561DD),
+                            fontSize: 30,
+                            fontFamily: 'salsa',
+                          ),
                         ),
-
-                        prescriptions == null || prescriptions.isEmpty
-                            ? Center(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      child: Image.asset('assets/medicine.png'),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      'No Prescription written for You Yet!',
-                                      style: TextStyle(
-                                        color: Colors.grey[600],
-                                        fontFamily: 'salsa',
-                                        fontSize: 25,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            :
-                             Container(
-                                height: 500,
-                                child: ListView.builder(
-                                    physics: BouncingScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: prescriptions.length,
-                                  itemBuilder: (context, index) {
-                                    return FutureBuilder(
-                                      future: getDoctor(
-                                          '${prescriptions[index]['writtenBy']}'),
-                                      builder: (context, categorySnapshot) {
-                                        if (categorySnapshot.hasError) {
-                                          return Text(
-                                              'Error: ${categorySnapshot.error}');
-                                        } else {
-                                          return Container(
-                                            child: medicineList(
-                                              diagnosis: prescriptions[index]
-                                                  ['diagnosis'],
-                                              from: prescriptions[index]
-                                                  ['dateFrom'],
-                                              to: prescriptions[index]
-                                                  ['dateTo'],
-                                              writtenBy: categorySnapshot.data
-                                                  .toString(),
-                                              onTap: () {
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        medicineSchedule(
-                                                      medicines:
-                                                          prescriptions[index]
-                                                              ['medicines'],
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          );
-                                        }
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
+                        Text(
+                          'see all',
+                          style: TextStyle(
+                            color: Color(0xFF0561DD),
+                            fontSize: 20,
+                            fontFamily: 'salsa',
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                
+
+                    prescriptions == null || prescriptions.isEmpty
+                        ? Center(
+                            child: Column(
+                              children: [
+                                Container(
+                                  child: Image.asset('assets/medicine.png'),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  'No Prescription written for You Yet!',
+                                  style: TextStyle(
+                                    color: Colors.grey[600],
+                                    fontFamily: 'salsa',
+                                    fontSize: 25,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : Container(
+                            height: 500,
+                            child: ListView.builder(
+                              physics: BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: prescriptions.length,
+                              itemBuilder: (context, index) {
+                                return FutureBuilder(
+                                  future: getDoctor(
+                                      '${prescriptions[index]['writtenBy']}'),
+                                  builder: (context, categorySnapshot) {
+                                    if (categorySnapshot.hasError) {
+                                      return Text(
+                                          'Error: ${categorySnapshot.error}');
+                                    } else {
+                                      return Container(
+                                        child: medicineList(
+                                          diagnosis: prescriptions[index]
+                                              ['diagnosis'],
+                                          from: prescriptions[index]
+                                              ['dateFrom'],
+                                          to: prescriptions[index]['dateTo'],
+                                          writtenBy:
+                                              categorySnapshot.data.toString(),
+                                          onTap: () {
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    medicineSchedule(
+                                                  medicines:
+                                                      prescriptions[index]
+                                                          ['medicines'],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    }
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                  ],
+                ),
               ),
             ),
-          
+          ),
         ],
       ),
     );

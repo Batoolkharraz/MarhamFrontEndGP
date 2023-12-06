@@ -52,41 +52,45 @@ class _appTimeState extends State<appTime> {
     );
 
     if (response.statusCode == 200) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: Color(0xFF0561DD),
-          content: Center(
-            child: Text(
-              "your appointment has been booked!",
-              style: TextStyle(
-                fontFamily: 'salsa',
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Color(0xFF0561DD),
+            content: Center(
+              child: Text(
+                "your appointment has been booked!",
+                style: TextStyle(
+                  fontFamily: 'salsa',
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
             ),
+            duration: Duration(seconds: 1), // The duration it will be displayed
           ),
-          duration: Duration(seconds: 1), // The duration it will be displayed
-        ),
-      );
+        );
+      }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.red,
-          content: Center(
-            child: Text(
-              "Something Went Wrong, Please try again!",
-              style: TextStyle(
-                fontFamily: 'salsa',
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.red,
+            content: Center(
+              child: Text(
+                "Something Went Wrong, Please try again!",
+                style: TextStyle(
+                  fontFamily: 'salsa',
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
             ),
+            duration: Duration(seconds: 1), // The duration it will be displayed
           ),
-          duration: Duration(seconds: 1), // The duration it will be displayed
-        ),
-      );
+        );
+      }
     }
   }
 
@@ -125,10 +129,12 @@ class _appTimeState extends State<appTime> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 10,right: 10),
+        padding: const EdgeInsets.only(left: 10, right: 10),
         child: Column(
           children: [
-            SizedBox(height: 25,),
+            SizedBox(
+              height: 25,
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 15),
               child: Container(

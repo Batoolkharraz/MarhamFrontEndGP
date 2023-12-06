@@ -27,7 +27,10 @@ class medicine_info {
 }
 
 class writePrescription extends StatefulWidget {
-  const writePrescription({Key? key}) : super(key: key);
+  final String userId;
+  final String userName;
+
+  writePrescription({required this.userId, required this.userName});
 
   @override
   _writePrescriptionState createState() => _writePrescriptionState();
@@ -49,6 +52,17 @@ class _writePrescriptionState extends State<writePrescription> {
   Future<TimeOfDay?> pickTime() => showTimePicker(
       context: context, initialTime: TimeOfDay(hour: 12, minute: 00));
 
+  String getUserIdFromToken(String token) {
+    try {
+      final Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+      final String userId = decodedToken['id'];
+      return userId;
+    } catch (e) {
+      print('Error decoding token: $e');
+      return '';
+    }
+  }
+
   Future<String> getTokenFromStorage() async {
     final token = await storage.read(key: 'jwt');
     if (token != null) {
@@ -61,96 +75,90 @@ class _writePrescriptionState extends State<writePrescription> {
     }
   }
 
-  String getUserIdFromToken(String token) {
-    try {
-      final Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-      final String userId = decodedToken['id'];
-      return userId;
-    } catch (e) {
-      print('Error decoding token: $e');
-      return '';
-    }
-  }
-
-   void createPrescription() async {
+  void createPrescription() async {
     //String id = await getTokenFromStorage();
-    String id = '652080079045ad81c357024f';
-  final startDate = '${selectedStartDate.year}-${selectedStartDate.month}-${selectedStartDate.day}';
-  final endDate = '${selectedEndDate.year}-${selectedEndDate.month}-${selectedEndDate.day}';
-  final diagnosis = diagnosisController.text;
-  final email = emailController.text;
+    String id = '656bb1954b14538a5797a185';
+    final startDate =
+        '${selectedStartDate.year}-${selectedStartDate.month}-${selectedStartDate.day}';
+    final endDate =
+        '${selectedEndDate.year}-${selectedEndDate.month}-${selectedEndDate.day}';
+    final diagnosis = diagnosisController.text;
+    final email = emailController.text;
 
-  // Convert medicine_info objects to maps using toMap()
-  List<Map<String, dynamic>> medList = medicineList.map((medicine) => medicine.toMap()).toList();
+    // Convert medicine_info objects to maps using toMap()
+    List<Map<String, dynamic>> medList =
+        medicineList.map((medicine) => medicine.toMap()).toList();
 
-  if (selectedEndDate.isBefore(selectedStartDate)) {
-    // Show the error dialog for invalid time selection
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          // Your dialog content
-        );
-      },
-    );
-  } else {
-    final prescription = {
-      "email": email,
-      "diagnosis": diagnosis,
-      "dateFrom": startDate,
-      "dateTo": endDate,
-      "medicines": medList,
-    };
-
-    final response = await http.post(
-      Uri.parse('https://marham-backend.onrender.com/prescription/$id'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(prescription),
-    );
-
-    if (response.statusCode == 201) {
-      // Show a success message
-      ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: Color(0xFF0561DD),
-        content: 
-        Center(
-          child: Text("Prescription Details have been saved",
-          style: TextStyle(
-            fontFamily: 'salsa',
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),),
-        ),
-        duration: Duration(seconds: 1), // The duration it will be displayed
-      ),
-    );
+    if (selectedEndDate.isBefore(selectedStartDate)) {
+      // Show the error dialog for invalid time selection
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+              // Your dialog content
+              );
+        },
+      );
     } else {
-      // Handle the error when the HTTP request fails
-      ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: Colors.red,
-        content: 
-        Center(
-          child: Text("Please Check the data again!",
-          style: TextStyle(
-            fontFamily: 'salsa',
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),),
-        ),
-        duration: Duration(seconds: 2), // The duration it will be displayed
-      ),
-    );
+      final prescription = {
+        "email": email,
+        "diagnosis": diagnosis,
+        "dateFrom": startDate,
+        "dateTo": endDate,
+        "medicines": medList,
+      };
 
+      final response = await http.post(
+        Uri.parse(
+            'https://marham-backend.onrender.com/prescription/${widget.userId}'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(prescription),
+      );
+
+      if (response.statusCode == 201) {
+        // Show a success message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Color(0xFF0561DD),
+            content: Center(
+              child: Text(
+                "Prescription Details have been saved",
+                style: TextStyle(
+                  fontFamily: 'salsa',
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            duration: Duration(seconds: 1), // The duration it will be displayed
+          ),
+        );
+      } else {
+        // Handle the error when the HTTP request fails
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.red,
+            content: Center(
+              child: Text(
+                "Please Check the data again!",
+                style: TextStyle(
+                  fontFamily: 'salsa',
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            duration: Duration(seconds: 2), // The duration it will be displayed
+          ),
+        );
+      }
     }
   }
-}
- 
+
   void saveMedicineDetails(
       int index, String name, String description, String time) {
     medicine_info medicine = medicine_info(
@@ -214,7 +222,7 @@ class _writePrescriptionState extends State<writePrescription> {
                   TextField(
                     controller: medDesController,
                     decoration: InputDecoration(
-                      labelText: 'Description (2 times after eat)',
+                      labelText: 'Description (2 PillS after eat)',
                       labelStyle: TextStyle(fontSize: 25, fontFamily: 'Salsa'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
@@ -315,10 +323,9 @@ class _writePrescriptionState extends State<writePrescription> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0),
         child: AppBar(
-
           automaticallyImplyLeading: false,
-         toolbarHeight: 90,
-        backgroundColor:  Color(0xFF0561DD),
+          toolbarHeight: 90,
+          backgroundColor: Color(0xFF0561DD),
           elevation: 0,
           centerTitle: true,
           title: Text(
@@ -335,7 +342,7 @@ class _writePrescriptionState extends State<writePrescription> {
               icon: Icon(
                 Icons.arrow_back,
                 color: Colors.white,
-                size:25,
+                size: 25,
               ),
               onPressed: () {
                 Navigator.of(context).push(
@@ -371,19 +378,17 @@ class _writePrescriptionState extends State<writePrescription> {
             SizedBox(
               height: 30,
             ),
-            // user email
-            TextFormField(
-              controller: emailController,
-              decoration: InputDecoration(
-                labelText: 'Enter Patient Email',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                prefixIcon: Icon(Icons.email),
+            // write pres for user ....
+            Container(
+              child: Text(
+                'Writing Prescription for ' + widget.userName+"kharraz",
+                style: TextStyle(
+                    fontFamily: 'salsa',
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold),
               ),
-              style: TextStyle(fontSize: 25, fontFamily: 'Salsa'),
-              onChanged: (value) {},
             ),
+
             //Diagnosis
             Container(
               padding: EdgeInsets.only(top: 20, left: 10),
@@ -403,6 +408,7 @@ class _writePrescriptionState extends State<writePrescription> {
                 controller: diagnosisController,
                 style: TextStyle(fontSize: 30, fontFamily: 'Salsa'),
                 decoration: InputDecoration(
+                  hintText: "Enter the patient's diagnosis",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
                   ),
@@ -573,7 +579,7 @@ class _writePrescriptionState extends State<writePrescription> {
             // Display the generated combination widgets
             Expanded(
               child: ListView(
-                  physics: BouncingScrollPhysics(),
+                physics: BouncingScrollPhysics(),
                 children: combinationWidgets,
               ),
             ),

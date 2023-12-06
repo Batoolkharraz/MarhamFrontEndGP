@@ -21,48 +21,49 @@ class _appointmentState extends State<appointment> {
   List apps = [];
   List<String> appointmentDates = [];
   Map<String, List<Map<String, dynamic>>> dateToTimeSlots = {};
+Future getApps() async {
+  var url = "https://marham-backend.onrender.com/schedule/${widget.doctor['_id']}";
+  var response = await http.get(Uri.parse(url));
 
-  Future getApps() async {
-    var url =
-        "https://marham-backend.onrender.com/schedule/${widget.doctor['_id']}";
-    var response = await http.get(Uri.parse(url));
+  if (response.statusCode == 200) {
+    var responceBody = response.body.toString();
+    responceBody = responceBody.trim();
+    responceBody = responceBody.substring(13, responceBody.length - 1);
+    var app = jsonDecode(responceBody);
+    final dateFormatter = DateFormat("yyyy/MM/dd");
 
-    if (response.statusCode == 200) {
-      var responceBody = response.body.toString();
-      responceBody = responceBody.trim();
-      responceBody = responceBody.substring(13, responceBody.length - 1);
-      var app = jsonDecode(responceBody);
-      final dateFormatter = DateFormat("yyyy/MM/dd"); // Create a date formatter
+    setState(() {
+      apps.add(app);
 
-      setState(() {
-        apps.addAll(app);
-        for (var appointment in apps) {
-          var scheduleByDay = appointment['scheduleByDay'];
-          for (var schedule in scheduleByDay) {
-            var date = dateFormatter.parse(schedule['date']);
-            final formattedDate = DateFormat('dd MMM yyyy').format(date);
+      for (var appointment in apps) {
+        var scheduleByDay = appointment['scheduleByDay'] as List<dynamic>;
 
-            // Create a list of time slots for the date
-            var timeSlots = <Map<String, dynamic>>[];
+        for (var schedule in scheduleByDay) {
+          var date = dateFormatter.parse(schedule['date'] as String);
+          final formattedDate = DateFormat('dd MMM yyyy').format(date);
 
-            if (schedule['timeSlots'] != null) {
-              timeSlots = (schedule['timeSlots'] as List<dynamic>)
-                  .map((slot) => {
-                        'time': slot['time'] as String,
-                        'is_booked': slot['is_booked'] as bool,
-                        '_id':slot['_id'] as String,
-                      })
-                  .toList();
-            }
+          // Create a list of time slots for the date
+          var timeSlots = <Map<String, dynamic>>[];
 
-// Add the time slots to the map
-            dateToTimeSlots[formattedDate] = timeSlots;
+          if (schedule['timeSlots'] != null) {
+            timeSlots = (schedule['timeSlots'] as List<dynamic>)
+                .map((slot) => {
+                      'time': slot['time'] as String,
+                      'is_booked': slot['is_booked'] as bool,
+                      '_id': slot['_id'] as String,
+                    })
+                .toList();
           }
+
+          // Add the time slots to the map
+          dateToTimeSlots[formattedDate] = timeSlots;
         }
-        appointmentDates = dateToTimeSlots.keys.toList()..sort();
-      });
-    }
+      }
+
+      appointmentDates = dateToTimeSlots.keys.toList()..sort();
+    });
   }
+}
 
   @override
   void initState() {
@@ -74,9 +75,8 @@ class _appointmentState extends State<appointment> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-       toolbarHeight: 90,
-        backgroundColor:  Color(0xFF0561DD),
-        
+        toolbarHeight: 90,
+        backgroundColor: Color(0xFF0561DD),
         leading: BackButton(
           onPressed: () => {Navigator.of(context).pop()},
         ),
@@ -240,83 +240,83 @@ class _appointmentState extends State<appointment> {
                   ],
                 ),
               ),
-              appointmentDates==null|| appointmentDates.isEmpty?
-
-               Padding(
-                padding: const EdgeInsets.only(top: 150),
-                child: Column(
-                  children: [
-                    Container(
-                      child: Image.asset('assets/time.png'),
-                    ),
-                    SizedBox(height: 20,),
-                    Text(
-                      'No Appointment date added until Now!',
-                      style: TextStyle(
-                        fontFamily: 'salsa',
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
+              appointmentDates == null || appointmentDates.isEmpty
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 150),
+                      child: Column(
+                        children: [
+                          Container(
+                            child: Image.asset('assets/time.png'),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'No Appointment date added until Now!',
+                            style: TextStyle(
+                              fontFamily: 'salsa',
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-              )
+                    )
+                  : Container(
+                      height: 900,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: ListView.builder(
+                          // Number of items in each row
 
-              :
-              Container(
-                height: 900,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: ListView.builder( // Number of items in each row
-                    
-                    itemBuilder: (context, int index) {
-                      return appOfDate(
-                        date: appointmentDates[index],
-                        onTap: () {
-                          // Print the list of time slots for the selected date
-                          final selectedDate = appointmentDates[index];
-                          final timeSlots = dateToTimeSlots[selectedDate];
-                          if (timeSlots != null && timeSlots.isNotEmpty) {
-                            // Navigate to the appTime page
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => appTime(
-                                  docId: apps[0]['writtenBy'],
-                                  date: selectedDate,
-                                  timeSlots: timeSlots,
-                                ),
-                              ),
-                            );
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                backgroundColor: Colors.red,
-                                content: Center(
-                                  child: Text(
-                                    "No Appointment available for $selectedDate",
-                                    style: TextStyle(
-                                      fontFamily: 'salsa',
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
+                          itemBuilder: (context, int index) {
+                            return appOfDate(
+                              date: appointmentDates[index],
+                              onTap: () {
+                                // Print the list of time slots for the selected date
+                                final selectedDate = appointmentDates[index];
+                                final timeSlots = dateToTimeSlots[selectedDate];
+                                if (timeSlots != null && timeSlots.isNotEmpty) {
+                                  // Navigate to the appTime page
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => appTime(
+                                        docId: apps[0]['writtenBy'],
+                                        date: selectedDate,
+                                        timeSlots: timeSlots,
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                duration: Duration(
-                                    seconds:
-                                        2), // The duration it will be displayed
-                              ),
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: Center(
+                                        child: Text(
+                                          "No Appointment available for $selectedDate",
+                                          style: TextStyle(
+                                            fontFamily: 'salsa',
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      duration: Duration(
+                                          seconds:
+                                              2), // The duration it will be displayed
+                                    ),
+                                  );
+                                }
+                              },
                             );
-                          }
-                        },
-                      );
-                    },
-                    itemCount: appointmentDates.length,
-                    physics: BouncingScrollPhysics(),
-                    padding: const EdgeInsets.all(8),
-                  ),
-                ),
-              )
+                          },
+                          itemCount: appointmentDates.length,
+                          physics: BouncingScrollPhysics(),
+                          padding: const EdgeInsets.all(8),
+                        ),
+                      ),
+                    )
             ],
           ),
         ),
