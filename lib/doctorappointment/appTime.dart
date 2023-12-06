@@ -9,20 +9,20 @@ class appTime extends StatefulWidget {
   final String date;
   final List<Map<String, dynamic>> timeSlots;
 
-  const appTime({super.key, required this.timeSlots, required this.date, required this.docId});
+  appTime({required this.timeSlots, required this.date, required this.docId});
 
   @override
   State<appTime> createState() => _appTimeState();
 }
 
 class _appTimeState extends State<appTime> {
-  final storage = const FlutterSecureStorage();
+  final storage = FlutterSecureStorage();
 
   Future<String> getTokenFromStorage() async {
     final token = await storage.read(key: 'jwt');
     if (token != null) {
       final String userId = getUserIdFromToken(token);
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(Duration(seconds: 2));
       return userId;
     } else {
       print('Token not found in local storage.');
@@ -45,63 +45,67 @@ class _appTimeState extends State<appTime> {
     String id = await getTokenFromStorage();
     final response = await http.post(
       Uri.parse(
-          'https://marham-backend.onrender.com/schedule/$id/$appId/${widget.docId}'), // Replace with your server URL
+          'https://marham-backend.onrender.com/schedule/${id}/${appId}/${widget.docId}'), // Replace with your server URL
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
     );
 
     if (response.statusCode == 200) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Color(0xFF0561DD),
-          content: Center(
-            child: Text(
-              "your appointment has been booked!",
-              style: TextStyle(
-                fontFamily: 'salsa',
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Color(0xFF0561DD),
+            content: Center(
+              child: Text(
+                "your appointment has been booked!",
+                style: TextStyle(
+                  fontFamily: 'salsa',
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
             ),
+            duration: Duration(seconds: 1), // The duration it will be displayed
           ),
-          duration: Duration(seconds: 1), // The duration it will be displayed
-        ),
-      );
+        );
+      }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.red,
-          content: Center(
-            child: Text(
-              "Something Went Wrong, Please try again!",
-              style: TextStyle(
-                fontFamily: 'salsa',
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.red,
+            content: Center(
+              child: Text(
+                "Something Went Wrong, Please try again!",
+                style: TextStyle(
+                  fontFamily: 'salsa',
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
             ),
+            duration: Duration(seconds: 1), // The duration it will be displayed
           ),
-          duration: Duration(seconds: 1), // The duration it will be displayed
-        ),
-      );
+        );
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE8EEFA),
+      backgroundColor: Color(0xFFE8EEFA),
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80.0),
+        preferredSize: Size.fromHeight(80.0),
         child: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: const Color(0xFF0561DD),
+          backgroundColor: Color(0xFF0561DD),
           elevation: 0,
           centerTitle: true,
-          title: const Text(
+          title: Text(
             'Available Appointment Time',
             style: TextStyle(
               fontSize: 30.0,
@@ -112,7 +116,7 @@ class _appTimeState extends State<appTime> {
           leading: Padding(
             padding: const EdgeInsets.only(left: 24.0),
             child: IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.arrow_back,
                 color: Colors.white,
                 size: 40,
@@ -125,15 +129,17 @@ class _appTimeState extends State<appTime> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 10,right: 10),
+        padding: const EdgeInsets.only(left: 10, right: 10),
         child: Column(
           children: [
-            const SizedBox(height: 25,),
+            SizedBox(
+              height: 25,
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 15),
               child: Container(
                 alignment: Alignment.centerLeft,
-                child: const Text(
+                child: Text(
                   'Here are the appointments for this day:',
                   style: TextStyle(
                     fontSize: 25,
@@ -143,7 +149,7 @@ class _appTimeState extends State<appTime> {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             Expanded(
               child: ListView.separated(
                 itemBuilder: (context, int index) {
@@ -155,7 +161,7 @@ class _appTimeState extends State<appTime> {
                     onTap: () {
                       if (slot['is_booked']) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
+                          SnackBar(
                             backgroundColor: Colors.red,
                             content: Center(
                               child: Text(
@@ -178,7 +184,7 @@ class _appTimeState extends State<appTime> {
                   );
                 },
                 separatorBuilder: (context, index) =>
-                    const Divider(), // Add a divider between items
+                    Divider(), // Add a divider between items
                 itemCount: widget.timeSlots.length,
                 padding: const EdgeInsets.all(8),
               ),
