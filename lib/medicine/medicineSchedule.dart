@@ -103,6 +103,7 @@ class _medicineScheduleState extends State<medicineSchedule> {
                     Container(
                       child: Image.asset('assets/med.png'),
                     ),
+
                     const SizedBox(height: 20,),
                     const Text(
                       'No medicine for YOU in this Time!',
@@ -112,6 +113,7 @@ class _medicineScheduleState extends State<medicineSchedule> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+
                   ],
                 ),
               )

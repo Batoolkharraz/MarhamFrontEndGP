@@ -6,13 +6,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 
-class completeuser extends StatefulWidget {
+class todayUser extends StatefulWidget {
   final String id;
   final String doctorName;
   final String date;
   final String time;
 
-  completeuser({
+  todayUser({
     required this.id,
     required this.doctorName,
     required this.date,
@@ -20,10 +20,10 @@ class completeuser extends StatefulWidget {
   });
 
   @override
-  _completeuserState createState() => _completeuserState();
+  _todayUserState createState() => _todayUserState();
 }
 
-class _completeuserState extends State<completeuser> {
+class _todayUserState extends State<todayUser> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -57,16 +57,6 @@ class _completeuserState extends State<completeuser> {
                   SizedBox(
                     width: 230,
                   ),
-                  InkWell(
-                    child: FaIcon(
-                      FontAwesomeIcons.circleCheck,
-                      size: 26.0,
-                      color: Colors.green,
-                    ),
-                    onTap: () {
-                      print(widget.id);
-                    },
-                  )
                 ],
               ),
               SizedBox(

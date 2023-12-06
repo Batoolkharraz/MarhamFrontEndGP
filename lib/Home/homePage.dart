@@ -17,8 +17,6 @@ class homePage extends StatefulWidget {
 class _homePageState extends State<homePage> {
   List<Widget> page = [const home(), const profile(), const UserDaily()];
   int selectedIndex = 0;
-  List categories = [];
-  List doctors = [];
 
   void navigateBottomBar(int index) {
     setState(() {

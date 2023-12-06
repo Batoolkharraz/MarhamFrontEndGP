@@ -13,7 +13,7 @@ class searchDoctor extends StatefulWidget {
 }
 
 class _searchDoctorState extends State<searchDoctor> {
-  final List _doctors = [];
+  List _doctors = [];
 
   List _foundedDoctors = [];
 
@@ -55,16 +55,16 @@ class _searchDoctorState extends State<searchDoctor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE8EEFA),
+      backgroundColor: Color(0xFFE8EEFA),
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80.0),
+        preferredSize: Size.fromHeight(80.0),
         child: AppBar(
           toolbarHeight: 90,
-        backgroundColor:  const Color(0xFF0561DD),
+        backgroundColor:  Color(0xFF0561DD),
           automaticallyImplyLeading: false,
           elevation: 0,
           centerTitle: true,
-          title: const Text(
+          title: Text(
             'Find Your Doctor',
             style: TextStyle(
               fontSize: 30.0,
@@ -74,7 +74,7 @@ class _searchDoctorState extends State<searchDoctor> {
           leading: Padding(
             padding: const EdgeInsets.only(left: 15.0),
             child: IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.arrow_back,
                 color: Colors.white,
                 size: 25,
@@ -90,11 +90,11 @@ class _searchDoctorState extends State<searchDoctor> {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(25.0),
+              padding: EdgeInsets.all(25.0),
               child: Container(
                 child: TextField(
                   onChanged: (value) => onSearch(value),
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Doctor Name',
                     labelStyle: TextStyle(
                         fontSize: 27,
@@ -107,7 +107,7 @@ class _searchDoctorState extends State<searchDoctor> {
                     ),
                     prefixIcon: Icon(Icons.search),
                   ),
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontSize: 20,
                       fontFamily: 'salsa',
                       fontWeight: FontWeight.bold),
@@ -116,7 +116,7 @@ class _searchDoctorState extends State<searchDoctor> {
               ),
             ),
             Expanded(
-                child: _foundedDoctors.isEmpty
+                child: _foundedDoctors.isEmpty || _foundedDoctors == null
                     ? Center(
                         child: Padding(
                           padding: const EdgeInsets.only(top: 150),
@@ -126,17 +126,17 @@ class _searchDoctorState extends State<searchDoctor> {
                                 child:
                                     Image.asset('assets/doctor_category.png'),
                               ),
-                              const SizedBox(
+                              /*SizedBox(
                                 height: 10,
                               ),
-                              const Text(
+                              Text(
                                 'There is No Doctor With This Name!',
                                 style: TextStyle(
                                   fontFamily: 'salsa',
                                   fontSize: 30,
                                   fontWeight: FontWeight.bold,
                                 ),
-                              ),
+                              ),*/
                             ],
                           ),
                         ),
@@ -145,7 +145,7 @@ class _searchDoctorState extends State<searchDoctor> {
                         itemCount: _foundedDoctors.length,
                         itemBuilder: (context, index) {
                           return Slidable(
-                            actionPane: const SlidableDrawerActionPane(),
+                            actionPane: SlidableDrawerActionPane(),
                             actionExtentRatio: 0.25,
                             child: findDoctorList(
                               doctorPic:

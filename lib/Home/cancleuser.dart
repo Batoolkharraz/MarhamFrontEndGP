@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class cancleuser extends StatelessWidget {
-  const cancleuser({super.key});
+    final String Id;
+    final String doctorName;
+  final String date;
+  final String time;
+
+  cancleuser({
+    required this.Id,
+    required this.doctorName,
+    required this.date,
+    required this.time,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,42 +29,39 @@ class cancleuser extends StatelessWidget {
         width: 600,
         height: 150,
         child: Padding(
-          padding: const EdgeInsets.only(top:10),
+          padding: const EdgeInsets.only(top:10,left: 15,right: 15),
           child: Column(
             children: [
-              const Row(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
-                    width: 25,
-                  ),
-                  Text("Dr Name Family",
+                  Text('Dr. '+doctorName,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 30,
                           fontWeight: FontWeight.w500,
                           fontFamily: 'Salsa')),
-                          SizedBox(
-                    width: 150,
-                  ),
-                           Text("cancled",
+                          
+                           Text("canceled",
                       style: TextStyle(
                           color: Colors.red,
                           fontSize: 30,
                           fontWeight: FontWeight.w500,
                           fontFamily: 'Salsa')),
+                  
 
                 ],
               ),
-              const SizedBox(height: 10,),
+              SizedBox(height: 10,),
               Row(
                 children: [
-                  const SizedBox(
+                  SizedBox(
                     width: 22,
                   ),
                  Container(
                   decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          color:  const Color.fromARGB(255, 228, 235, 248),
+          color:  Color.fromARGB(255, 228, 235, 248),
           border: Border.all(
             color: const Color.fromARGB(255, 194, 186, 186), // Set the border color here
             width: 2.0, // Set the border width
@@ -63,7 +70,7 @@ class cancleuser extends StatelessWidget {
                   
                   width: 450,
                   height: 70,
-                  child: const Row(
+                  child: Row(
                     children: [
                       SizedBox(width: 15,),
                       FaIcon(
@@ -72,7 +79,7 @@ class cancleuser extends StatelessWidget {
                                       color: Color(0xFF0561DD),
                                     ),
                                     SizedBox(width: 10,),
-                      Text("Sat,11/28/2023",
+                      Text(date,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 25,
@@ -85,7 +92,7 @@ class cancleuser extends StatelessWidget {
                                       color: Color(0xFF0561DD),
                                     ),
                                     SizedBox(width:10,),
-                                    Text("2:30 PM",
+                                    Text(time,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 25,

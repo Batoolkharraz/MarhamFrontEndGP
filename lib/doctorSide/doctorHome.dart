@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/doctorSide/dailyapp.dart';
 import 'package:flutter_application_4/doctorSide/patientRecord.dart';
-import 'package:flutter_application_4/doctorSide/updateyours.dart';
 import 'package:flutter_application_4/doctorSide/working.dart';
 import 'dart:typed_data';
 import 'package:flutter_application_4/doctorSide/writePrescription.dart';
@@ -30,7 +29,7 @@ class _doctorHomeState extends State<doctorHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 231, 233, 237),
+        backgroundColor: Color.fromARGB(255, 231, 233, 237),
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
@@ -39,27 +38,27 @@ class _doctorHomeState extends State<doctorHome> {
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
               child: IconButton(
-                icon: const Icon(
+                icon: Icon(
                   Icons.edit_note_sharp,
                   color: Color(0xFF0561DD),
                   size: 40,
                 ),
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const EditDoctor(),
-                    ),
-                  );
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) => EditUser(),
+                  //   ),
+                  // );
                 },
               ),
             )
           ],
         ),
         body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+          physics: BouncingScrollPhysics(),
           child: Container(
             child: Column(children: [
-              SizedBox(
+              Container(
                 width: 600,
                 height: 200,
                 child: Stack(
@@ -76,14 +75,14 @@ class _doctorHomeState extends State<doctorHome> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: const Color(0xFF0561DD), // Blue border color
+                                  color: Color(0xFF0561DD), // Blue border color
                                   width: 3, // Adjust the border width as needed
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: const Color(0xFF0561DD)
+                                    color: Color(0xFF0561DD)
                                         .withOpacity(0.3), // Shadow color
-                                    offset: const Offset(0, 4), // Shadow position
+                                    offset: Offset(0, 4), // Shadow position
                                     blurRadius: 15, // Shadow blur radius
                                   ),
                                 ],
@@ -108,14 +107,14 @@ class _doctorHomeState extends State<doctorHome> {
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: const Color(0xFF0561DD)
+                                    color: Color(0xFF0561DD)
                                         .withOpacity(0.3), // Shadow color
-                                    offset: const Offset(0, 4), // Shadow position
+                                    offset: Offset(0, 4), // Shadow position
                                     blurRadius: 15, // Shadow blur radius
                                   ),
                                 ],
                               ),
-                              child: const CircleAvatar(
+                              child: CircleAvatar(
                                 radius: 90,
                                 backgroundImage:
                                     AssetImage("assets/5bbc3519d674c.jpg"),
@@ -126,7 +125,7 @@ class _doctorHomeState extends State<doctorHome> {
                 ),
               ),
 
-              const Text(
+              Text(
                 "Dr Name family",
                 style: TextStyle(
                   fontSize: 30,
@@ -143,13 +142,13 @@ class _doctorHomeState extends State<doctorHome> {
                   fontFamily: 'Salsa',
                 ),
               ),
-              const SizedBox(height: 40.0),
+              SizedBox(height: 40.0),
 
               //check patient record
 
               Container(
-                padding: const EdgeInsets.only(top: 50, left: 30, right: 30),
-                decoration: const BoxDecoration(
+                padding: EdgeInsets.only(top: 50, left: 30, right: 30),
+                decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(50.0),
@@ -162,7 +161,7 @@ class _doctorHomeState extends State<doctorHome> {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => const Workingdoctor(),
+                            builder: (context) => Workingdoctor(),
                           ),
                         );
                       },
@@ -171,10 +170,10 @@ class _doctorHomeState extends State<doctorHome> {
                           color: Colors.white,
                           border: Border.all(
                             width: 2,
-                            color: const Color(0xFF0561DD),
+                            color: Color(0xFF0561DD),
                           ),
                           borderRadius: BorderRadius.circular(10),
-                          boxShadow: const [
+                          boxShadow: [
                             BoxShadow(
                               color: Colors.grey, // Shadow color
                               offset: Offset(0, 0), // Offset of the shadow
@@ -184,11 +183,11 @@ class _doctorHomeState extends State<doctorHome> {
                         ),
                         child: Row(
                           children: [
-                            SizedBox(
+                            Container(
                               width: 150,
                               child: Image.asset('assets/calendar.png'),
                             ),
-                            const Text(
+                            Text(
                               'Make Your Schedule',
                               style: TextStyle(
                                 color: Color(0xFF0561DD),
@@ -201,7 +200,7 @@ class _doctorHomeState extends State<doctorHome> {
                       ),
                     ),
                     
-                    const SizedBox(
+                    SizedBox(
                       height: 30,
                     ),
 
@@ -209,7 +208,7 @@ class _doctorHomeState extends State<doctorHome> {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => const patientRecord(),
+                            builder: (context) => patientRecord(),
                           ),
                         );
                       },
@@ -218,10 +217,10 @@ class _doctorHomeState extends State<doctorHome> {
                           color: Colors.white,
                           border: Border.all(
                             width: 2,
-                            color: const Color(0xFF0561DD),
+                            color: Color(0xFF0561DD),
                           ),
                           borderRadius: BorderRadius.circular(10),
-                          boxShadow: const [
+                          boxShadow: [
                             BoxShadow(
                               color: Colors.grey, // Shadow color
                               offset: Offset(0, 0), // Offset of the shadow
@@ -231,11 +230,11 @@ class _doctorHomeState extends State<doctorHome> {
                         ),
                         child: Row(
                           children: [
-                            SizedBox(
+                            Container(
                               width: 150,
                               child: Image.asset('assets/patient_icon.png'),
                             ),
-                            const Text(
+                            Text(
                               'Check patient record',
                               style: TextStyle(
                                 color: Color(0xFF0561DD),
@@ -248,7 +247,7 @@ class _doctorHomeState extends State<doctorHome> {
                       ),
                     ),
 
-                    const SizedBox(
+                    SizedBox(
                       height: 30,
                     ),
 
@@ -257,7 +256,7 @@ class _doctorHomeState extends State<doctorHome> {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => const writePrescription(),
+                            builder: (context) => writePrescription(),
                           ),
                         );
                       },
@@ -266,10 +265,10 @@ class _doctorHomeState extends State<doctorHome> {
                           color: Colors.white,
                           border: Border.all(
                             width: 2,
-                            color: const Color(0xFF0561DD),
+                            color: Color(0xFF0561DD),
                           ),
                           borderRadius: BorderRadius.circular(10),
-                          boxShadow: const [
+                          boxShadow: [
                             BoxShadow(
                               color: Colors.grey, // Shadow color
                               offset: Offset(0, 0), // Offset of the shadow
@@ -282,12 +281,12 @@ class _doctorHomeState extends State<doctorHome> {
                             Padding(
                               padding:
                                   const EdgeInsets.only(left: 10),
-                              child: SizedBox(
+                              child: Container(
                                 width: 150,
                                 child: Image.asset('assets/prescription.png'),
                               ),
                             ),
-                            const Text(
+                            Text(
                               'Write Prescription',
                               style: TextStyle(
                                 color: Color(0xFF0561DD),
@@ -299,57 +298,56 @@ class _doctorHomeState extends State<doctorHome> {
                         ),
                       ),
                     ),
-                    const SizedBox(
+                    SizedBox(
                       height: 30,
                     ),
-                    InkWell
-                    (onTap: () => {
 
+                    //daily appointment
+                    GestureDetector(
+                      onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => const AppointmentPage(),
+                            builder: (context) => AppointmentPage(),
                           ),
-                        )
-                      
-                    }
-                      ,child:
-                      Container(
-                    
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          width: 2,
-                          color: const Color(0xFF0561DD),
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            width: 2,
+                            color: Color(0xFF0561DD),
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey, // Shadow color
+                              offset: Offset(0, 0), // Offset of the shadow
+                              blurRadius: 15, // Spread of the shadow
+                            ),
+                          ],
                         ),
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.grey, // Shadow color
-                            offset: Offset(0, 0), // Offset of the shadow
-                            blurRadius: 15, // Spread of the shadow
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10),
-                            child: SizedBox(
-                              width: 150,
-                              child: Image.asset('assets/image (18).png'),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10, bottom: 10),
+                              child: Container(
+                                width: 150,
+                                child: Image.asset('assets/image (18).png'),
+                              ),
                             ),
-                          ),
-                          const Text(
-                            'Daily Appointment',
-                            style: TextStyle(
-                              color: Color(0xFF0561DD),
-                              fontSize: 27,
-                              fontFamily: 'salsa',
+                            Text(
+                              'Daily Appointment',
+                              style: TextStyle(
+                                color: Color(0xFF0561DD),
+                                fontSize: 27,
+                                fontFamily: 'salsa',
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),)
+                    ),
                   ],
                 ),
               )
