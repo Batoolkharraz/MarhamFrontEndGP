@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class complete extends StatelessWidget {
-  const complete({super.key});
-
   @override
   final String Id;
   final String userName;
@@ -34,7 +32,6 @@ class complete extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10),
           child: Column(
             children: [
-<<<<<<< HEAD
               Row(
                 children: [
                   const SizedBox(
@@ -63,7 +60,6 @@ class complete extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10,),
-=======
               Padding(
                 padding: const EdgeInsets.only(left: 25,right: 25),
                 child: Row(
@@ -90,13 +86,11 @@ class complete extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
->>>>>>> 324feb04bb9fe7f1dfc68cb863f5abb06b971722
               Row(
                 children: [
                   const SizedBox(
                     width: 22,
                   ),
-<<<<<<< HEAD
                  Container(
                   decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
@@ -140,8 +134,7 @@ class complete extends StatelessWidget {
 
                     ],
                   ),
-                 )
-=======
+                 ),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
@@ -193,7 +186,6 @@ class complete extends StatelessWidget {
                       ],
                     ),
                   )
->>>>>>> 324feb04bb9fe7f1dfc68cb863f5abb06b971722
                 ],
               )
             ],

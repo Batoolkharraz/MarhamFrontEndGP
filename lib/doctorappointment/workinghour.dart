@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class working extends StatefulWidget {
   final String date;
@@ -6,7 +7,7 @@ class working extends StatefulWidget {
   final String is_booked;
   final VoidCallback onTap;
 
-  const working({super.key, 
+  working({
     required this.date,
     required this.time,
     required this.is_booked,
@@ -57,35 +58,45 @@ class _WorkingState extends State<working> {
             children: [
               Row(
                 children: [
-                  const SizedBox(
-                    width: 25,
-                  ),
-                  
-                  Text(formattedDate,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 30,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Salsa')),
                   SizedBox(
                     width: 25,
                   ),
-                  Text(time,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 50,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Salsa')),
+                  Text(
+                    formattedDate,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Salsa',
+                    ),
+                  ),
+                  SizedBox(
+                    width: 25,
+                  ),
+                  Text(
+                    widget.time,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 50,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Salsa',
+                    ),
+                  ),
                   SizedBox(
                     width: 70,
                   ),
                   InkWell(
+                    onTap: widget.onTap,
+                    onTapDown: (_) {
+                      setState(() {
+                        buttonText = 'booked';
+                        buttonColor = Colors.red;
+                      });
+                    },
                     child: Text(
                       buttonText,
                       style: TextStyle(
-                        color: is_booked == 'true'
-                            ? Colors.red
-                            : Color(0xFF0561DD),
+                        color: buttonColor,
                         fontSize: 35,
                         fontWeight: FontWeight.w500,
                         fontFamily: 'Salsa',
