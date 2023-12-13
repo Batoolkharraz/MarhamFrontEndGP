@@ -47,9 +47,20 @@ class _AppointmentPageState extends State<AppointmentPage> {
     }
   }
 
+  Future<String> getDoctorId() async {
+    String Id = await getTokenFromStorage();
+    var url = "https://marham-backend.onrender.com/doctor/findId/$Id";
+    var response = await http.get(Uri.parse(url));
+    var responceBody = response.body.toString();
+    responceBody = responceBody.trim();
+    var id = jsonDecode(responceBody);
+
+    return id;
+  }
+
   Future<void> getAllAppointment() async {
     try {
-      String Id = await getTokenFromStorage();
+      String Id = await getDoctorId();
       var url =
           "https://marham-backend.onrender.com/schedule/byDoctor/all/${Id}";
 
@@ -72,7 +83,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
 
   Future<void> getDoneAppointment() async {
     try {
-      String Id = await getTokenFromStorage();
+      String Id = await getDoctorId();
       var url =
           "https://marham-backend.onrender.com/schedule/byDoctor/done/${Id}";
 
@@ -96,7 +107,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
 
   Future<void> getcancelAppointment() async {
     try {
-      String Id = await getTokenFromStorage();
+      String Id = await getDoctorId();
       var url =
           "https://marham-backend.onrender.com/schedule/byDoctor/cancel/${Id}";
 
@@ -120,7 +131,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
 
   Future<void> getTodayAppointment() async {
     try {
-      String Id = await getTokenFromStorage();
+      String Id = await getDoctorId();
       var url =
           "https://marham-backend.onrender.com/schedule/byDoctor/today/${Id}";
 

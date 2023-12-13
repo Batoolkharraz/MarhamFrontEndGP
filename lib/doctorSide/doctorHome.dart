@@ -26,7 +26,8 @@ class _doctorHomeState extends State<doctorHome> {
   final storage = FlutterSecureStorage();
   Map<String, dynamic> Doctor = {};
   Uint8List? image;
-  final GlobalKey<FormState> signstate = GlobalKey<FormState>();
+ // final GlobalKey<FormState> signstate = GlobalKey<FormState>();
+
 
   void selectImage() async {
     XFile? file = await fileImage(ImageSource.gallery);
@@ -37,27 +38,12 @@ class _doctorHomeState extends State<doctorHome> {
     });
   }
 
-  Future getDoctorrInfo() async {
-    //String id = await getTokenFromStorage();
-    String id = '656baed54b14538a5797a153';
-    var url = "https://marham-backend.onrender.com/doctor/${id}";
-    var response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      var responceBody = response.body.toString();
-      responceBody = responceBody.trim();
-      var user = jsonDecode(responceBody);
-      setState(() {
-        Doctor = user;
-        print(Doctor['_id']);
-      });
-    }
-  }
 
   Future<String> getTokenFromStorage() async {
     final token = await storage.read(key: 'jwt');
     if (token != null) {
       final String userId = getUserIdFromToken(token);
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       return userId;
     } else {
       print('Token not found in local storage.');
@@ -73,6 +59,20 @@ class _doctorHomeState extends State<doctorHome> {
     } catch (e) {
       print('Error decoding token: $e');
       return '';
+    }
+  }
+
+  Future getDoctorrInfo() async {
+    String id = await getTokenFromStorage();
+    var url = "https://marham-backend.onrender.com/doctor/find/${id}";
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var responceBody = response.body.toString();
+      responceBody = responceBody.trim();
+      var user = jsonDecode(responceBody);
+      setState(() {
+        Doctor.addAll(user);
+      });
     }
   }
 
@@ -100,11 +100,11 @@ class _doctorHomeState extends State<doctorHome> {
                   size: 40,
                 ),
                 onPressed: () {
-                   Navigator.of(context).push(
-                     MaterialPageRoute(
-                       builder: (context) => EditDoctor(),
-                     ),
-                   );
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => EditDoctor(),
+                    ),
+                  );
                 },
               ),
             )
@@ -189,7 +189,7 @@ class _doctorHomeState extends State<doctorHome> {
               ),
 
               Text(
-                Doctor['name']==null?'':Doctor['name'],
+                Doctor['name'] == null ? '' : Doctor['name'],
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -197,7 +197,7 @@ class _doctorHomeState extends State<doctorHome> {
                 ),
               ),
               Text(
-                Doctor['email']==null?'':Doctor['email'],
+                Doctor['email'] == null ? '' : Doctor['email'],
                 style: TextStyle(
                   fontSize: 23,
                   color: Colors.grey[600],

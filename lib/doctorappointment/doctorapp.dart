@@ -251,14 +251,7 @@ Future getApps() async {
                           SizedBox(
                             height: 20,
                           ),
-                          Text(
-                            'No Appointment date added until Now!',
-                            style: TextStyle(
-                              fontFamily: 'salsa',
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                      
                         ],
                       ),
                     )

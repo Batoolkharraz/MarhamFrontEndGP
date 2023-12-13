@@ -69,7 +69,7 @@ Future.delayed(const Duration(seconds: 2), () {
 
       }
 
-      if (roleofuser == "doctor;") {
+      if (roleofuser == "doctor") {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) {
