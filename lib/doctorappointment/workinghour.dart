@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/payment/payment.dart';
 import 'package:intl/intl.dart';
 
 class working extends StatefulWidget {
@@ -71,7 +72,7 @@ class _WorkingState extends State<working> {
                     ),
                   ),
                   SizedBox(
-                    width: 25,
+                    width: 70,
                   ),
                   Text(
                     widget.time,
@@ -83,15 +84,16 @@ class _WorkingState extends State<working> {
                     ),
                   ),
                   SizedBox(
-                    width: 70,
+                    width: 80,
                   ),
                   InkWell(
                     onTap: widget.onTap,
                     onTapDown: (_) {
-                      setState(() {
-                        buttonText = 'booked';
-                        buttonColor = Colors.red;
-                      });
+                      showalertt(context);
+                      // setState(() {
+                      //   buttonText = 'booked';
+                      //   buttonColor = Colors.red;
+                      // });
                     },
                     child: Text(
                       buttonText,

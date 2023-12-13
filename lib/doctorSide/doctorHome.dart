@@ -1,11 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/doctorSide/dailyapp.dart';
 import 'package:flutter_application_4/doctorSide/patientRecord.dart';
+import 'package:flutter_application_4/doctorSide/searchUser.dart';
+import 'package:flutter_application_4/doctorSide/updateyours.dart';
 import 'package:flutter_application_4/doctorSide/working.dart';
 import 'dart:typed_data';
 import 'package:flutter_application_4/doctorSide/writePrescription.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_application_4/Auth/updateinformation/uploadimage.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class doctorHome extends StatefulWidget {
   const doctorHome({super.key});
@@ -15,8 +23,11 @@ class doctorHome extends StatefulWidget {
 }
 
 class _doctorHomeState extends State<doctorHome> {
+  final storage = FlutterSecureStorage();
+  Map<String, dynamic> Doctor = {};
   Uint8List? image;
   final GlobalKey<FormState> signstate = GlobalKey<FormState>();
+
   void selectImage() async {
     XFile? file = await fileImage(ImageSource.gallery);
     Uint8List img = await pickImage(ImageSource.gallery);
@@ -24,6 +35,51 @@ class _doctorHomeState extends State<doctorHome> {
     setState(() {
       image = img;
     });
+  }
+
+  Future getDoctorrInfo() async {
+    //String id = await getTokenFromStorage();
+    String id = '656baed54b14538a5797a153';
+    var url = "https://marham-backend.onrender.com/doctor/${id}";
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var responceBody = response.body.toString();
+      responceBody = responceBody.trim();
+      var user = jsonDecode(responceBody);
+      setState(() {
+        Doctor = user;
+        print(Doctor['_id']);
+      });
+    }
+  }
+
+  Future<String> getTokenFromStorage() async {
+    final token = await storage.read(key: 'jwt');
+    if (token != null) {
+      final String userId = getUserIdFromToken(token);
+      await Future.delayed(Duration(seconds: 2));
+      return userId;
+    } else {
+      print('Token not found in local storage.');
+      return '';
+    }
+  }
+
+  String getUserIdFromToken(String token) {
+    try {
+      final Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+      final String userId = decodedToken['id'];
+      return userId;
+    } catch (e) {
+      print('Error decoding token: $e');
+      return '';
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getDoctorrInfo();
   }
 
   @override
@@ -44,11 +100,11 @@ class _doctorHomeState extends State<doctorHome> {
                   size: 40,
                 ),
                 onPressed: () {
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //     builder: (context) => EditUser(),
-                  //   ),
-                  // );
+                   Navigator.of(context).push(
+                     MaterialPageRoute(
+                       builder: (context) => EditDoctor(),
+                     ),
+                   );
                 },
               ),
             )
@@ -114,11 +170,18 @@ class _doctorHomeState extends State<doctorHome> {
                                   ),
                                 ],
                               ),
-                              child: CircleAvatar(
-                                radius: 90,
-                                backgroundImage:
-                                    AssetImage("assets/5bbc3519d674c.jpg"),
-                              ),
+                              child: Doctor['image'] != null
+                                  ? CircleAvatar(
+                                      backgroundColor: Colors.transparent,
+                                      backgroundImage: NetworkImage(
+                                          Doctor['image']['secure_url']),
+                                      radius: 90,
+                                    )
+                                  : CircleAvatar(
+                                      backgroundImage: AssetImage(
+                                          'assets/5bbc3519d674c.jpg'),
+                                      radius: 100,
+                                    ),
                             ),
                           ),
                   ],
@@ -126,7 +189,7 @@ class _doctorHomeState extends State<doctorHome> {
               ),
 
               Text(
-                "Dr Name family",
+                Doctor['name']==null?'':Doctor['name'],
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -134,7 +197,7 @@ class _doctorHomeState extends State<doctorHome> {
                 ),
               ),
               Text(
-                "email address",
+                Doctor['email']==null?'':Doctor['email'],
                 style: TextStyle(
                   fontSize: 23,
                   color: Colors.grey[600],
@@ -157,6 +220,105 @@ class _doctorHomeState extends State<doctorHome> {
                 height: 800,
                 child: Column(
                   children: [
+                    //daily appointment
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AppointmentPage(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            width: 2,
+                            color: Color(0xFF0561DD),
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey, // Shadow color
+                              offset: Offset(0, 0), // Offset of the shadow
+                              blurRadius: 15, // Spread of the shadow
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 10, bottom: 10),
+                              child: Container(
+                                width: 150,
+                                child: Image.asset('assets/image (18).png'),
+                              ),
+                            ),
+                            Text(
+                              'Daily Appointment',
+                              style: TextStyle(
+                                color: Color(0xFF0561DD),
+                                fontSize: 27,
+                                fontFamily: 'salsa',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: 30,
+                    ),
+
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => searchUser(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            width: 2,
+                            color: Color(0xFF0561DD),
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey, // Shadow color
+                              offset: Offset(0, 0), // Offset of the shadow
+                              blurRadius: 15, // Spread of the shadow
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 150,
+                              child: Image.asset('assets/patient_icon.png'),
+                            ),
+                            Text(
+                              'search for patient',
+                              style: TextStyle(
+                                color: Color(0xFF0561DD),
+                                fontSize: 27,
+                                fontFamily: 'salsa',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: 30,
+                    ),
+
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(
@@ -199,154 +361,9 @@ class _doctorHomeState extends State<doctorHome> {
                         ),
                       ),
                     ),
-                    
-                    SizedBox(
-                      height: 30,
-                    ),
-
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => patientRecord(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            width: 2,
-                            color: Color(0xFF0561DD),
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey, // Shadow color
-                              offset: Offset(0, 0), // Offset of the shadow
-                              blurRadius: 15, // Spread of the shadow
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 150,
-                              child: Image.asset('assets/patient_icon.png'),
-                            ),
-                            Text(
-                              'Check patient record',
-                              style: TextStyle(
-                                color: Color(0xFF0561DD),
-                                fontSize: 27,
-                                fontFamily: 'salsa',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
 
                     SizedBox(
                       height: 30,
-                    ),
-
-                    //write prescription
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => writePrescription(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            width: 2,
-                            color: Color(0xFF0561DD),
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey, // Shadow color
-                              offset: Offset(0, 0), // Offset of the shadow
-                              blurRadius: 15, // Spread of the shadow
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10),
-                              child: Container(
-                                width: 150,
-                                child: Image.asset('assets/prescription.png'),
-                              ),
-                            ),
-                            Text(
-                              'Write Prescription',
-                              style: TextStyle(
-                                color: Color(0xFF0561DD),
-                                fontSize: 27,
-                                fontFamily: 'salsa',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-
-                    //daily appointment
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => AppointmentPage(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            width: 2,
-                            color: Color(0xFF0561DD),
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey, // Shadow color
-                              offset: Offset(0, 0), // Offset of the shadow
-                              blurRadius: 15, // Spread of the shadow
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10, bottom: 10),
-                              child: Container(
-                                width: 150,
-                                child: Image.asset('assets/image (18).png'),
-                              ),
-                            ),
-                            Text(
-                              'Daily Appointment',
-                              style: TextStyle(
-                                color: Color(0xFF0561DD),
-                                fontSize: 27,
-                                fontFamily: 'salsa',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                     ),
                   ],
                 ),

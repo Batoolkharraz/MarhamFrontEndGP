@@ -215,7 +215,11 @@ class _patientRecordState extends State<patientRecord> {
                       itemBuilder: (context, index) {
                         return patientRec(
                             diagnosis: prescriptions[index]['diagnosis'],
-                            from: prescriptions[index]['dateFrom']);
+                            from: prescriptions[index]['dateFrom'],
+                            onTap:(){
+                              
+                            });
+                            
                       },
                     ),
             ],

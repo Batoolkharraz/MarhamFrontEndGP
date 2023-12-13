@@ -341,10 +341,10 @@ Future getAppointment() async {
                                     Row(
                                       children: [
                                         const SizedBox(width: 25,),
-                                        const FaIcon(FontAwesomeIcons.at,
+                                        const FaIcon(FontAwesomeIcons.locationDot,
                                   color: Colors.blue, size: 30.0),
                                    const SizedBox(width: 10,),
-                                  Text(User['email'] ?? 'not found',
+                                  Text('nablus',
                                   style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 26,
