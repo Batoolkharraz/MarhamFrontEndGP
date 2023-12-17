@@ -39,8 +39,7 @@ void onButtonPressed(
     );
       String? roleofuser = await storage.read(key: 'role');
 
-      print("role is + roleofuser");
-      print(roleofuser);
+      print("role is + $roleofuser");
 
       if (roleofuser == "user") {
         showDialog(
@@ -69,16 +68,32 @@ Future.delayed(const Duration(seconds: 2), () {
 
       }
 
-      if (roleofuser == "doctor;") {
-        Navigator.of(context).pushReplacement(
+      if (roleofuser == "doctor") {
+        showDialog(
+  context: context,
+  builder: (BuildContext context) {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  },
+);
+
+Future.delayed(const Duration(seconds: 2), () {
+  Navigator.pop(context); // Close the loading dialog
+  Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) {
-              return const doctorHome(); // Navigate to the home page
-            },
-          ),
+              return WillPopScope(
+                onWillPop: () async => false, // Disable back button
+                child: const doctorHome(), // Navigate to the home page
+              );}
+          )
         );
+});
+
       }
-    } else {
+    }
+     else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(

@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/doctorappointment/appTime.dart';
 import 'package:flutter_application_4/unit/appOfDate.dart';
-import 'package:flutter_application_4/doctorappointment/workinghour.dart';
-import 'package:flutter_application_4/unit/doctor.dart';
+import 'package:flutter_application_4/unit/print.dart';
 import 'package:http/http.dart' as http;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -186,7 +185,7 @@ Future getApps() async {
                                       child: InkWell(
                                     child: FaIcon(FontAwesomeIcons.phone,
                                         color: Colors.white, size: 25.0),
-                                    onTap: () => {print("phone call")},
+                                    onTap: () => {printing()},
                                   )),
                                 ),
                               ]),

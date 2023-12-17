@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CardAlertDialog extends StatelessWidget {
-  const CardAlertDialog({
+class CardNotAlertDialog extends StatelessWidget {
+  const CardNotAlertDialog({
     Key? key,
   }) : super(key: key);
 
@@ -15,7 +15,7 @@ class CardAlertDialog extends StatelessWidget {
           right: 150.0,
           top: -90.0,
           child: Image.asset(
-            'assets/checked.png',
+            'assets/delete_3389152.png',
             height: 90,
             width: 90,
           ),
@@ -28,7 +28,7 @@ class CardAlertDialog extends StatelessWidget {
               Navigator.of(context).pop();
             },
             child: const CircleAvatar(
-              backgroundColor: Colors.green,
+              backgroundColor: Colors.red,
               child: Icon(Icons.close, color: Colors.white),
             ),
           ),
@@ -39,7 +39,7 @@ class CardAlertDialog extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                'Your card was accepted',
+                'Your card was not accepted',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -50,7 +50,7 @@ class CardAlertDialog extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                'You can now use your card to make payments, Thank you',
+                'You can not this card to make payments, Thank you',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
             ),

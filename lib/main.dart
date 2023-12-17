@@ -1,40 +1,33 @@
-import 'dart:async';
-
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/Login/login.dart';
-import 'package:flutter_application_4/Auth/signup/signup.dart';
-import 'package:flutter_application_4/Home/checktime.dart';
-import 'package:flutter_application_4/Home/homePage.dart';
 import 'package:flutter_application_4/firebase_options.dart';
-
+import 'package:flutter_application_4/unit/print.dart';
 // import 'package:flutter_application_4/notification.dart';
-
 
 void  main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await AwesomeNotifications().initialize(null, [
-    NotificationChannel(
-      channelGroupKey: "basic_channel_group",
-      channelKey: "basic_channel",
-      channelName: "Basic Notification",
-      channelDescription: "Basic notifications channel",
-    )
-  ], channelGroups: [
-    NotificationChannelGroup(
-      channelGroupKey: "basic_channel_group",
-      channelGroupName: "Basic Group",
-    )
-  ]
+  // await AwesomeNotifications().initialize(null, [
+  //   NotificationChannel(
+  //     channelGroupKey: "basic_channel_group",
+  //     channelKey: "basic_channel",
+  //     channelName: "Basic Notification",
+  //     channelDescription: "Basic notifications channel",
+  //   )
+  // ], channelGroups: [
+  //   NotificationChannelGroup(
+  //     channelGroupKey: "basic_channel_group",
+  //     channelGroupName: "Basic Group",
+  //   )
+  // ]
+  // );
   
-  );
-  bool isAllowedToSendNotification =
-      await AwesomeNotifications().isNotificationAllowed();
-  if (!isAllowedToSendNotification) {
-    AwesomeNotifications().requestPermissionToSendNotifications();
-  }
+  // bool isAllowedToSendNotification =
+  //     await AwesomeNotifications().isNotificationAllowed();
+  // if (!isAllowedToSendNotification) {
+  //   AwesomeNotifications().requestPermissionToSendNotifications();
+  // }
 
   runApp(MyApp());
 }
@@ -43,10 +36,10 @@ void  main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context){
-// startTimer();
+printing();
     return MaterialApp(
       debugShowCheckedModeBanner: false,//عند الدراور
-      home:Signup(),
+      home:Login(),
     );
 }
 

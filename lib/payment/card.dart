@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_application_4/payment/components/card_alert_dialog.dart';
 import 'package:flutter_application_4/payment/components/card_input_formatter.dart';
 import 'package:flutter_application_4/payment/components/card_month_input_formatter.dart';
+import 'package:flutter_application_4/payment/components/notvalid.dart';
 class SecondScreen extends StatefulWidget {
   const SecondScreen({Key? key}) : super(key: key);
 
@@ -16,6 +17,8 @@ class _SecondScreenState extends State<SecondScreen> {
   final TextEditingController cardExpiryDateController =
       TextEditingController();
   final TextEditingController cardCvvController = TextEditingController();
+   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor: Colors.white,
@@ -255,18 +258,52 @@ class _SecondScreenState extends State<SecondScreen> {
                       minimumSize:
                           Size(MediaQuery.of(context).size.width / 1.12, 55),
                     ),
-                    onPressed: () {
-                      Future.delayed(const Duration(milliseconds: 300), () {
-                        showDialog(
-                            context: context,
-                            builder: (context) => const CardAlertDialog());
-                        cardCvvController.clear();
-                        cardExpiryDateController.clear();
-                        cardHolderNameController.clear();
-                        cardNumberController.clear();
-                     
-                      });
-                    },
+                    onPressed: (){
+                       
+                      
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    },
+  );
+
+  
+if (_formKey.currentState?.validate() ?? false) { 
+  Future.delayed(const Duration(seconds: 2), () {
+    Navigator.of(context).pop(); // Close the CircularProgressIndicator dialog
+
+    showDialog(
+      context: context,
+      builder: (context) => const CardAlertDialog(),
+    );
+
+    // Clear the controllers
+    cardCvvController.clear();
+    cardExpiryDateController.clear();
+    cardHolderNameController.clear();
+    cardNumberController.clear();
+  });
+}
+if (_formKey.currentState?.validate() ?? true) 
+{Future.delayed(const Duration(seconds: 2), () {
+    Navigator.of(context).pop(); // Close the CircularProgressIndicator dialog
+
+    showDialog(
+      context: context,
+      builder: (context) => const CardNotAlertDialog(),
+    );
+
+    // Clear the controllers
+    cardCvvController.clear();
+    cardExpiryDateController.clear();
+    cardHolderNameController.clear();
+    cardNumberController.clear();
+  });
+                    }},
+
                     child: Text(
                       'Add Card'.toUpperCase(),
                       style: const TextStyle(
