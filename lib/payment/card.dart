@@ -39,23 +39,23 @@ class _SecondScreenState extends State<SecondScreen> {
             padding: const EdgeInsets.only(top:30),
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Container(
+                const Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: SizedBox(
                     width: 500,
                     child: Text(
                       'Card Detalis',
                       style: TextStyle(
                         fontSize: 30,
                         fontFamily: 'salsa',
-                        color:  const Color(0xFF0561DD),
+                        color:  Color(0xFF0561DD),
                         ),
                     ),
                   ),
                 ),
                 
                 const SizedBox(height: 40),
-                Container(
+                SizedBox(
                   width: 475,
                   child: Column(children: [
                     Container(
@@ -66,7 +66,7 @@ class _SecondScreenState extends State<SecondScreen> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: TextFormField(
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 28
                       ),
                       controller: cardNumberController,
@@ -113,7 +113,7 @@ class _SecondScreenState extends State<SecondScreen> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: TextFormField(
-                       style: TextStyle(
+                       style: const TextStyle(
                         fontSize: 28
                       ),
                       controller: cardHolderNameController,
@@ -157,7 +157,7 @@ class _SecondScreenState extends State<SecondScreen> {
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: TextFormField(
-                           style: TextStyle(
+                           style: const TextStyle(
                         fontSize: 28
                       ),
                           controller: cardExpiryDateController,
@@ -204,7 +204,7 @@ class _SecondScreenState extends State<SecondScreen> {
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: TextFormField(
-                           style: TextStyle(
+                           style: const TextStyle(
                         fontSize: 28
                       ),
                           controller: cardCvvController,

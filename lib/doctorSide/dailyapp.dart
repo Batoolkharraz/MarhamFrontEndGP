@@ -17,7 +17,7 @@ class AppointmentPage extends StatefulWidget {
 }
 
 class _AppointmentPageState extends State<AppointmentPage> {
-  final storage = FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
   List allAppointment = [];
   List doneAppointment = [];
   List cancelAppointment = [];
@@ -28,7 +28,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
     final token = await storage.read(key: 'jwt');
     if (token != null) {
       final String userId = getUserIdFromToken(token);
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       return userId;
     } else {
       print('Token not found in local storage.');
@@ -62,7 +62,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
     try {
       String Id = await getDoctorId();
       var url =
-          "https://marham-backend.onrender.com/schedule/byDoctor/all/${Id}";
+          "https://marham-backend.onrender.com/schedule/byDoctor/all/$Id";
 
       var response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -85,7 +85,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
     try {
       String Id = await getDoctorId();
       var url =
-          "https://marham-backend.onrender.com/schedule/byDoctor/done/${Id}";
+          "https://marham-backend.onrender.com/schedule/byDoctor/done/$Id";
 
       var response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -109,7 +109,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
     try {
       String Id = await getDoctorId();
       var url =
-          "https://marham-backend.onrender.com/schedule/byDoctor/cancel/${Id}";
+          "https://marham-backend.onrender.com/schedule/byDoctor/cancel/$Id";
 
       var response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -133,7 +133,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
     try {
       String Id = await getDoctorId();
       var url =
-          "https://marham-backend.onrender.com/schedule/byDoctor/today/${Id}";
+          "https://marham-backend.onrender.com/schedule/byDoctor/today/$Id";
 
       var response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -199,9 +199,9 @@ class _AppointmentPageState extends State<AppointmentPage> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 90,
-        backgroundColor: Color(0xFF0561DD),
+        backgroundColor: const Color(0xFF0561DD),
         elevation: 1,
-        title: Center(
+        title: const Center(
           child: Text(
             "Appointment",
             style: TextStyle(
@@ -224,12 +224,12 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 child: TabBar(
                   physics: const ClampingScrollPhysics(),
                   padding:
-                      EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
-                  unselectedLabelColor: Color(0xFF0561DD),
+                      const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
+                  unselectedLabelColor: const Color(0xFF0561DD),
                   indicatorSize: TabBarIndicatorSize.label,
                   indicator: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: Color(0xFF0561DD)),
+                      color: const Color(0xFF0561DD)),
                   tabs: [
                     Tab(
                       child: Container(
@@ -237,8 +237,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             border:
-                                Border.all(color: Color(0xFF0561DD), width: 1)),
-                        child: Align(
+                                Border.all(color: const Color(0xFF0561DD), width: 1)),
+                        child: const Align(
                           alignment: Alignment.center,
                           child: Text(
                             "today",
@@ -257,8 +257,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             border:
-                                Border.all(color: Color(0xFF0561DD), width: 1)),
-                        child: Align(
+                                Border.all(color: const Color(0xFF0561DD), width: 1)),
+                        child: const Align(
                           alignment: Alignment.center,
                           child: Text(
                             "upcoming",
@@ -277,8 +277,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             border:
-                                Border.all(color: Color(0xFF0561DD), width: 1)),
-                        child: Align(
+                                Border.all(color: const Color(0xFF0561DD), width: 1)),
+                        child: const Align(
                           alignment: Alignment.center,
                           child: Text(
                             "complete",
@@ -297,8 +297,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             border:
-                                Border.all(color: Color(0xFF0561DD), width: 1)),
-                        child: Align(
+                                Border.all(color: const Color(0xFF0561DD), width: 1)),
+                        child: const Align(
                           alignment: Alignment.center,
                           child: Text(
                             "cancle",
@@ -319,7 +319,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
               child: TabBarView(
                 children: [
                   //today appointment
-                  todayAppointment == null || todayAppointment.isEmpty
+                  todayAppointment.isEmpty
                       ? Padding(
                           padding: const EdgeInsets.only(top: 200),
                           child: Column(
@@ -335,8 +335,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                       Container(
                           child: ListView.builder(
                             itemBuilder: (context, int i) {
-                              if (todayAppointment != null &&
-                                  todayAppointment.isNotEmpty) {
+                              if (todayAppointment.isNotEmpty) {
                                 var appointments = todayAppointment[i];
                                 if (appointments != null) {
                                   return Column(
@@ -366,7 +365,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                           } else if (snapshot.connectionState ==
                                               ConnectionState.waiting) {
                                             // While the future is not complete, you can return a loading indicator or placeholder
-                                            return Center(
+                                            return const Center(
                                               child:
                                                   CircularProgressIndicator(),
                                             );
@@ -390,15 +389,15 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                 return Container();
                               }
                             },
-                            itemCount: todayAppointment?.length ?? 1,
+                            itemCount: todayAppointment.length ?? 1,
                             scrollDirection: Axis.vertical,
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             padding: const EdgeInsets.all(8),
                           ),
                         ),
 
                   //all appointment
-                  allAppointment == null || allAppointment.isEmpty
+                  allAppointment.isEmpty
                       ? Padding(
                           padding: const EdgeInsets.only(top: 200),
                           child: Column(
@@ -414,8 +413,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                       Container(
                           child: ListView.builder(
                             itemBuilder: (context, int i) {
-                              if (allAppointment != null &&
-                                  allAppointment.isNotEmpty) {
+                              if (allAppointment.isNotEmpty) {
                                 List<dynamic> appointmentInfo =
                                     allAppointment[i];
                                 return Column(
@@ -450,7 +448,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                           } else if (snapshot.connectionState ==
                                               ConnectionState.waiting) {
                                             // While the future is not complete, you can return a loading indicator or placeholder
-                                            return Center(
+                                            return const Center(
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
@@ -461,7 +459,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                 .only(
                                                                 bottom: 25),
                                                         child: SizedBox(
@@ -525,14 +523,14 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                 );
                               }
                             },
-                            itemCount: allAppointment?.length ?? 1,
+                            itemCount: allAppointment.length ?? 1,
                             scrollDirection: Axis.vertical,
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             padding: const EdgeInsets.all(8),
                           ),
                         ),
 
-                  doneAppointment == null || doneAppointment.isEmpty
+                  doneAppointment.isEmpty
                       ? Padding(
                           padding: const EdgeInsets.only(top: 200),
                           child: Column(
@@ -581,7 +579,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                           } else if (snapshot.connectionState ==
                                               ConnectionState.waiting) {
                                             // While the future is not complete, you can return a loading indicator or placeholder
-                                            return Center(
+                                            return const Center(
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
@@ -592,7 +590,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                 .only(
                                                                 bottom: 25),
                                                         child: SizedBox(
@@ -645,14 +643,14 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                 );
                               }
                             },
-                            itemCount: doneAppointment?.length ?? 1,
+                            itemCount: doneAppointment.length ?? 1,
                             scrollDirection: Axis.vertical,
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             padding: const EdgeInsets.all(8),
                           ),
                         ),
 
-                  cancelAppointment == null || cancelAppointment.isEmpty
+                  cancelAppointment.isEmpty
                       ? Padding(
                           padding: const EdgeInsets.only(top: 200),
                           child: Column(
@@ -701,7 +699,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                           } else if (snapshot.connectionState ==
                                               ConnectionState.waiting) {
                                             // While the future is not complete, you can return a loading indicator or placeholder
-                                            return Center(
+                                            return const Center(
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
@@ -712,7 +710,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                 .only(
                                                                 bottom: 25),
                                                         child: SizedBox(
@@ -765,9 +763,9 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                 );
                               }
                             },
-                            itemCount: cancelAppointment?.length ?? 1,
+                            itemCount: cancelAppointment.length ?? 1,
                             scrollDirection: Axis.vertical,
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             padding: const EdgeInsets.all(8),
                           ),
                         ),

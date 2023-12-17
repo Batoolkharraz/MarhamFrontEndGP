@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/Login/onpresseButton.dart';
 import 'package:flutter_application_4/Auth/resetpass/reset.dart';
 import 'package:flutter_application_4/Auth/signup/signup.dart';
-import 'package:flutter_application_4/Home/checktime.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Login extends StatefulWidget {

@@ -6,7 +6,7 @@ class cancleuser extends StatelessWidget {
   final String date;
   final String time;
 
-  cancleuser({
+  const cancleuser({super.key, 
     required this.Id,
     required this.doctorName,
     required this.date,
@@ -36,13 +36,13 @@ class cancleuser extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(doctorName,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.black,
                           fontSize: 30,
                           fontWeight: FontWeight.w500,
                           fontFamily: 'Salsa')),
                           
-                           Text("canceled",
+                           const Text("canceled",
                       style: TextStyle(
                           color: Colors.red,
                           fontSize: 30,
@@ -52,16 +52,16 @@ class cancleuser extends StatelessWidget {
 
                 ],
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 22,
                   ),
                  Container(
                   decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          color:  Color.fromARGB(255, 228, 235, 248),
+          color:  const Color.fromARGB(255, 228, 235, 248),
           border: Border.all(
             color: const Color.fromARGB(255, 194, 186, 186), // Set the border color here
             width: 2.0, // Set the border width
@@ -72,28 +72,28 @@ class cancleuser extends StatelessWidget {
                   height: 70,
                   child: Row(
                     children: [
-                      SizedBox(width: 15,),
-                      FaIcon(
+                      const SizedBox(width: 15,),
+                      const FaIcon(
                                       FontAwesomeIcons.calendar,
                                       size: 26.0,
                                       color: Color(0xFF0561DD),
                                     ),
-                                    SizedBox(width: 10,),
+                                    const SizedBox(width: 10,),
                       Text(date,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.black,
                           fontSize: 25,
                           fontWeight: FontWeight.w500,
                           fontFamily: 'Salsa')),
-                          SizedBox(width:25,),
-                           FaIcon(
+                          const SizedBox(width:25,),
+                           const FaIcon(
                                       FontAwesomeIcons.clock,
                                       size: 26.0,
                                       color: Color(0xFF0561DD),
                                     ),
-                                    SizedBox(width:10,),
+                                    const SizedBox(width:10,),
                                     Text(time,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.black,
                           fontSize: 25,
                           fontWeight: FontWeight.w500,

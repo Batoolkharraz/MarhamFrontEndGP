@@ -16,10 +16,10 @@ void showalertt(BuildContext context) {
               const SizedBox(
                 height: 40,
               ),
-              Container(
+              const SizedBox(
                 width: 400,
                 height: 40,
-                child: const Text(
+                child: Text(
                   "Payment Mode",
                   style: TextStyle(
                     color: Colors.black,
@@ -45,14 +45,14 @@ void showalertt(BuildContext context) {
                 ),
                 child: Row(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Image.asset("assets/credit-card_8336730.png"),
-                    SizedBox(
+                    const SizedBox(
                       width: 20,
                     ),
-                    Text(
+                    const Text(
                       "Visa Card",
                       style: TextStyle(
                         color: Colors.black,
@@ -60,11 +60,11 @@ void showalertt(BuildContext context) {
                         fontFamily: 'Salsa',
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 100,
                     ),
                     InkWell(
-                      child: Icon(
+                      child: const Icon(
                         FontAwesomeIcons.angleRight,
                         size: 30.0,
                       ),
@@ -72,7 +72,7 @@ void showalertt(BuildContext context) {
                        Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SecondScreen()),
+                                builder: (context) => const SecondScreen()),
                           );
                       },
                     )
@@ -96,14 +96,14 @@ void showalertt(BuildContext context) {
                 ),
                 child: Row(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Image.asset("assets/payment-method_7368522.png"),
-                    SizedBox(
+                    const SizedBox(
                       width: 20,
                     ),
-                    Text(
+                    const Text(
                       "Electronic wallet",
                       style: TextStyle(
                         color: Colors.black,
@@ -111,11 +111,11 @@ void showalertt(BuildContext context) {
                         fontFamily: 'Salsa',
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
                     InkWell(
-                        child: Icon(
+                        child: const Icon(
                           FontAwesomeIcons.angleRight,
                           size: 30.0,
                         ),

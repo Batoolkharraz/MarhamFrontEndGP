@@ -54,7 +54,9 @@ void onPressed(BuildContext context, String username, String email,
     MaterialPageRoute(builder: (context) => const Login()),
   );
 }
-else print("user is null");
+else {
+        print("user is null");
+      }
     }
   } catch (e) {
     print('Error during user registration: ${e.toString()}');

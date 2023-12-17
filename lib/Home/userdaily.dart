@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Home/cancleuser.dart';
-import 'package:flutter_application_4/Home/checktime.dart';
 import 'package:flutter_application_4/Home/completeuser.dart';
 import 'package:flutter_application_4/Home/todayUser.dart';
 import 'package:flutter_application_4/Home/upcompleteuser.dart';
@@ -19,7 +17,7 @@ class UserDaily extends StatefulWidget {
 }
 
 class _UserDailyState extends State<UserDaily> {
-  final storage = FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
   List <dynamic>allAppointment = [];
   List doneAppointment = [];
   List cancelAppointment = [];
@@ -30,7 +28,7 @@ class _UserDailyState extends State<UserDaily> {
     final token = await storage.read(key: 'jwt');
     if (token != null) {
       final String userId = getUserIdFromToken(token);
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       return userId;
     } else {
       print('Token not found in local storage.');
@@ -52,7 +50,7 @@ class _UserDailyState extends State<UserDaily> {
   Future<void> getAllAppointment() async {
     try {
       String Id = await getTokenFromStorage();
-      var url = "https://marham-backend.onrender.com/schedule/byUser/all/${Id}";
+      var url = "https://marham-backend.onrender.com/schedule/byUser/all/$Id";
 
       var response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -75,7 +73,7 @@ class _UserDailyState extends State<UserDaily> {
     try {
       String Id = await getTokenFromStorage();
       var url =
-          "https://marham-backend.onrender.com/schedule/byUser/done/${Id}";
+          "https://marham-backend.onrender.com/schedule/byUser/done/$Id";
 
       var response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -99,7 +97,7 @@ class _UserDailyState extends State<UserDaily> {
     try {
       String Id = await getTokenFromStorage();
       var url =
-          "https://marham-backend.onrender.com/schedule/byUser/cancel/${Id}";
+          "https://marham-backend.onrender.com/schedule/byUser/cancel/$Id";
 
       var response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -123,7 +121,7 @@ class _UserDailyState extends State<UserDaily> {
     try {
       String Id = await getTokenFromStorage();
       var url =
-          "https://marham-backend.onrender.com/schedule/byUser/today/${Id}";
+          "https://marham-backend.onrender.com/schedule/byUser/today/$Id";
 
       var response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -190,9 +188,9 @@ class _UserDailyState extends State<UserDaily> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 90,
-        backgroundColor: Color(0xFF0561DD),
+        backgroundColor: const Color(0xFF0561DD),
         elevation: 1,
-        title: Center(
+        title: const Center(
           child: Text(
             "Appointment",
             style: TextStyle(
@@ -215,12 +213,12 @@ class _UserDailyState extends State<UserDaily> {
                 child: TabBar(
                   physics: const ClampingScrollPhysics(),
                   padding:
-                      EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
-                  unselectedLabelColor: Color(0xFF0561DD),
+                      const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
+                  unselectedLabelColor: const Color(0xFF0561DD),
                   indicatorSize: TabBarIndicatorSize.label,
                   indicator: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: Color(0xFF0561DD)),
+                      color: const Color(0xFF0561DD)),
                   tabs: [
                     Tab(
                       child: Container(
@@ -228,8 +226,8 @@ class _UserDailyState extends State<UserDaily> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             border:
-                                Border.all(color: Color(0xFF0561DD), width: 1)),
-                        child: Align(
+                                Border.all(color: const Color(0xFF0561DD), width: 1)),
+                        child: const Align(
                           alignment: Alignment.center,
                           child: Text(
                             "today",
@@ -248,8 +246,8 @@ class _UserDailyState extends State<UserDaily> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             border:
-                                Border.all(color: Color(0xFF0561DD), width: 1)),
-                        child: Align(
+                                Border.all(color: const Color(0xFF0561DD), width: 1)),
+                        child: const Align(
                           alignment: Alignment.center,
                           child: Text(
                             "upcoming",
@@ -268,8 +266,8 @@ class _UserDailyState extends State<UserDaily> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             border:
-                                Border.all(color: Color(0xFF0561DD), width: 1)),
-                        child: Align(
+                                Border.all(color: const Color(0xFF0561DD), width: 1)),
+                        child: const Align(
                           alignment: Alignment.center,
                           child: Text(
                             "complete",
@@ -288,8 +286,8 @@ class _UserDailyState extends State<UserDaily> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             border:
-                                Border.all(color: Color(0xFF0561DD), width: 1)),
-                        child: Align(
+                                Border.all(color: const Color(0xFF0561DD), width: 1)),
+                        child: const Align(
                           alignment: Alignment.center,
                           child: Text(
                             "cancel",
@@ -310,7 +308,7 @@ class _UserDailyState extends State<UserDaily> {
               child: TabBarView(
                 children: [
                   //today appointment
-                  todayAppointment == null || todayAppointment.isEmpty
+                  todayAppointment.isEmpty
                       ? Padding(
                           padding: const EdgeInsets.only(top: 200),
                           child: Column(
@@ -326,8 +324,7 @@ class _UserDailyState extends State<UserDaily> {
                       Container(
                           child: ListView.builder(
                             itemBuilder: (context, int i) {
-                              if (todayAppointment != null &&
-                                  todayAppointment.isNotEmpty) {
+                              if (todayAppointment.isNotEmpty) {
                                 var appointments =
                                     todayAppointment[i];
                                 if (appointments != null ) {
@@ -359,7 +356,7 @@ class _UserDailyState extends State<UserDaily> {
                                                     .connectionState ==
                                                 ConnectionState.waiting) {
                                               // While the future is not complete, you can return a loading indicator or placeholder
-                                              return Center(
+                                              return const Center(
                                                 child:
                                                     CircularProgressIndicator(),
                                               );
@@ -384,15 +381,15 @@ class _UserDailyState extends State<UserDaily> {
                                 return Container();
                               }
                             },
-                            itemCount: todayAppointment?.length ?? 1,
+                            itemCount: todayAppointment.length ?? 1,
                             scrollDirection: Axis.vertical,
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             padding: const EdgeInsets.all(8),
                           ),
                         ),
 
                   //all appointment
-                  allAppointment == null || allAppointment.isEmpty
+                  allAppointment.isEmpty
                       ? Padding(
                           padding: const EdgeInsets.only(top: 200),
                           child: Column(
@@ -407,8 +404,7 @@ class _UserDailyState extends State<UserDaily> {
                       Container(
                           child: ListView.builder(
                             itemBuilder: (context, int i) {
-                              if (allAppointment != null &&
-                                  allAppointment.isNotEmpty) {
+                              if (allAppointment.isNotEmpty) {
                                 
         Map<String, dynamic> appointmentInfo = allAppointment[i];
                                 return Column(
@@ -441,7 +437,7 @@ class _UserDailyState extends State<UserDaily> {
                                           } else if (snapshot.connectionState ==
                                               ConnectionState.waiting) {
                                             // While the future is not complete, you can return a loading indicator or placeholder
-                                            return Center(
+                                            return const Center(
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
@@ -452,7 +448,7 @@ class _UserDailyState extends State<UserDaily> {
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                 .only(
                                                                 bottom: 25),
                                                         child: SizedBox(
@@ -516,14 +512,14 @@ class _UserDailyState extends State<UserDaily> {
                                 );
                               }
                             },
-                            itemCount: allAppointment?.length ?? 1,
+                            itemCount: allAppointment.length ?? 1,
                             scrollDirection: Axis.vertical,
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             padding: const EdgeInsets.all(8),
                           ),
                         ),
 
-                  doneAppointment == null || doneAppointment.isEmpty
+                  doneAppointment.isEmpty
                       ? Padding(
                           padding: const EdgeInsets.only(top: 200),
                           child: Column(
@@ -571,7 +567,7 @@ class _UserDailyState extends State<UserDaily> {
                                           } else if (snapshot.connectionState ==
                                               ConnectionState.waiting) {
                                             // While the future is not complete, you can return a loading indicator or placeholder
-                                            return Center(
+                                            return const Center(
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
@@ -582,7 +578,7 @@ class _UserDailyState extends State<UserDaily> {
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                 .only(
                                                                 bottom: 25),
                                                         child: SizedBox(
@@ -611,10 +607,10 @@ class _UserDailyState extends State<UserDaily> {
                                                   child: Image.asset(
                                                       'assets/appointment.png'),
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 20,
                                                 ),
-                                                Text(
+                                                const Text(
                                                   'There is no Done appointment for you yet.',
                                                   style: TextStyle(
                                                     fontFamily: 'salsa',
@@ -641,10 +637,10 @@ class _UserDailyState extends State<UserDaily> {
                                         child: Image.asset(
                                             'assets/appointment.png'),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 20,
                                       ),
-                                      Text(
+                                      const Text(
                                         'There is no Done appointment for you yet.',
                                         style: TextStyle(
                                           fontFamily: 'salsa',
@@ -657,14 +653,14 @@ class _UserDailyState extends State<UserDaily> {
                                 );
                               }
                             },
-                            itemCount: doneAppointment?.length ?? 1,
+                            itemCount: doneAppointment.length ?? 1,
                             scrollDirection: Axis.vertical,
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             padding: const EdgeInsets.all(8),
                           ),
                         ),
 
-                  cancelAppointment == null || cancelAppointment.isEmpty
+                  cancelAppointment.isEmpty
                       ? Padding(
                           padding: const EdgeInsets.only(top: 200),
                           child: Column(
@@ -712,7 +708,7 @@ class _UserDailyState extends State<UserDaily> {
                                           } else if (snapshot.connectionState ==
                                               ConnectionState.waiting) {
                                             // While the future is not complete, you can return a loading indicator or placeholder
-                                            return Center(
+                                            return const Center(
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
@@ -723,7 +719,7 @@ class _UserDailyState extends State<UserDaily> {
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsets
+                                                            EdgeInsets
                                                                 .only(
                                                                 bottom: 25),
                                                         child: SizedBox(
@@ -752,10 +748,10 @@ class _UserDailyState extends State<UserDaily> {
                                                   child: Image.asset(
                                                       'assets/appointment.png'),
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 20,
                                                 ),
-                                                Text(
+                                                const Text(
                                                   'There is no cancel appointment for you yet.',
                                                   style: TextStyle(
                                                     fontFamily: 'salsa',
@@ -782,10 +778,10 @@ class _UserDailyState extends State<UserDaily> {
                                         child: Image.asset(
                                             'assets/appointment.png'),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 20,
                                       ),
-                                      Text(
+                                      const Text(
                                         'There is no cancel appointment for you yet.',
                                         style: TextStyle(
                                           fontFamily: 'salsa',
@@ -798,9 +794,9 @@ class _UserDailyState extends State<UserDaily> {
                                 );
                               }
                             },
-                            itemCount: cancelAppointment?.length ?? 1,
+                            itemCount: cancelAppointment.length ?? 1,
                             scrollDirection: Axis.vertical,
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             padding: const EdgeInsets.all(8),
                           ),
                         ),

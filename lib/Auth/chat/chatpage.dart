@@ -28,7 +28,7 @@ class _ChatPageState extends State<ChatPage> {
 
   Future<void> getcurrentUser() async {
     try {
-      var user = await FirebaseAuth.instance.currentUser;
+      var user = FirebaseAuth.instance.currentUser;
       print(user?.email);
       if (user != null) {
         setState(() {
@@ -39,6 +39,7 @@ class _ChatPageState extends State<ChatPage> {
       print(e);
     }
   }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

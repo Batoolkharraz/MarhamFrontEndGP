@@ -360,14 +360,14 @@ Future getAppointment() async {
                                       ],
                                     ),
                                     const SizedBox(height: 15,),
-                                    Row(
+                                    const Row(
                                       children: [
-                                        const SizedBox(width: 25,),
-                                        const FaIcon(FontAwesomeIcons.locationDot,
+                                        SizedBox(width: 25,),
+                                        FaIcon(FontAwesomeIcons.locationDot,
                                   color: Colors.blue, size: 30.0),
-                                   const SizedBox(width: 10,),
+                                   SizedBox(width: 10,),
                                   Text('nablus',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 26,
                                 fontFamily: 'salsa',

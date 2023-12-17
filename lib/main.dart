@@ -1,12 +1,8 @@
-import 'dart:async';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/Login/login.dart';
-import 'package:flutter_application_4/Auth/signup/signup.dart';
-import 'package:flutter_application_4/Home/checktime.dart';
-import 'package:flutter_application_4/Home/homePage.dart';
 import 'package:flutter_application_4/firebase_options.dart';
 
 // import 'package:flutter_application_4/notification.dart';
@@ -36,15 +32,17 @@ void  main() async {
     AwesomeNotifications().requestPermissionToSendNotifications();
   }
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context){
 // startTimer();
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,//عند الدراور
       home:Login(),
     );

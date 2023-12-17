@@ -33,9 +33,9 @@ class CardAlertDialog extends StatelessWidget {
             ),
           ),
         ),
-        Column(
+        const Column(
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children: [
             Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(

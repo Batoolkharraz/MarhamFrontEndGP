@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/doctorSide/doctorHome.dart';
-import 'package:flutter_application_4/unit/diagnosisList.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:http/http.dart' as http;
@@ -47,8 +46,8 @@ class writePrescription extends StatefulWidget {
   final String userName;
   final String userEmail;
 
-  writePrescription(
-      {required this.userId, required this.userName, required this.userEmail});
+  const writePrescription(
+      {super.key, required this.userId, required this.userName, required this.userEmail});
 
   @override
   _writePrescriptionState createState() => _writePrescriptionState();
@@ -60,7 +59,7 @@ class _writePrescriptionState extends State<writePrescription> {
   final emailController = TextEditingController();
   final medNmaeController = TextEditingController();
   final medDesController = TextEditingController();
-  final storage = FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
   String userId = '';
   List<String> selectedTimes = [];
   int numberOfMid = 1;
@@ -72,7 +71,7 @@ class _writePrescriptionState extends State<writePrescription> {
   bool night = false;
 
   Future<TimeOfDay?> pickTime() => showTimePicker(
-      context: context, initialTime: TimeOfDay(hour: 12, minute: 00));
+      context: context, initialTime: const TimeOfDay(hour: 12, minute: 00));
 
   String getUserIdFromToken(String token) {
     try {
@@ -89,7 +88,7 @@ class _writePrescriptionState extends State<writePrescription> {
     final token = await storage.read(key: 'jwt');
     if (token != null) {
       final String userId = getUserIdFromToken(token);
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       return userId;
     } else {
       print('Token not found in local storage.');
@@ -114,15 +113,15 @@ class _writePrescriptionState extends State<writePrescription> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Error'),
-            content: Text(
+            title: const Text('Error'),
+            content: const Text(
                 'End date cannot be before the start date. Please check the dates again.'),
             actions: [
               ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context); // Close the dialog
                 },
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -138,7 +137,7 @@ class _writePrescriptionState extends State<writePrescription> {
       };
 
       final response = await http.post(
-        Uri.parse('https://marham-backend.onrender.com/prescription/${id}'),
+        Uri.parse('https://marham-backend.onrender.com/prescription/$id'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -148,7 +147,7 @@ class _writePrescriptionState extends State<writePrescription> {
       if (response.statusCode == 201) {
         // Show a success message
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             backgroundColor: Color(0xFF0561DD),
             content: Center(
               child: Text(
@@ -167,7 +166,7 @@ class _writePrescriptionState extends State<writePrescription> {
       } else {
         // Handle the error when the HTTP request fails
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             backgroundColor: Colors.red,
             content: Center(
               child: Text(
@@ -210,19 +209,19 @@ class _writePrescriptionState extends State<writePrescription> {
         return Column(
           children: [
             Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: Color.fromARGB(255, 111, 110, 110),
+                  color: const Color.fromARGB(255, 111, 110, 110),
                   width: 1,
                 ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 10),
                     child: Text(
                       'Medicine Details:',
                       style: TextStyle(
@@ -233,39 +232,39 @@ class _writePrescriptionState extends State<writePrescription> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   TextField(
                     controller: medNmaeController,
                     decoration: InputDecoration(
                       labelText: 'Name of Medicine',
-                      labelStyle: TextStyle(fontSize: 25, fontFamily: 'Salsa'),
+                      labelStyle: const TextStyle(fontSize: 25, fontFamily: 'Salsa'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   TextField(
                     controller: medDesController,
                     decoration: InputDecoration(
                       labelText: 'Description (2 Pills after eat)',
-                      labelStyle: TextStyle(fontSize: 25, fontFamily: 'Salsa'),
+                      labelStyle: const TextStyle(fontSize: 25, fontFamily: 'Salsa'),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Column(
                     children: [
                       CheckboxListTile(
-                        title: Text('Morning'),
+                        title: const Text('Morning'),
                         value: morning,
                         onChanged: (bool? value) {
                           setState(() {
@@ -279,7 +278,7 @@ class _writePrescriptionState extends State<writePrescription> {
                         },
                       ),
                       CheckboxListTile(
-                        title: Text('Noon'),
+                        title: const Text('Noon'),
                         value: noon,
                         onChanged: (bool? value) {
                           setState(() {
@@ -293,7 +292,7 @@ class _writePrescriptionState extends State<writePrescription> {
                         },
                       ),
                       CheckboxListTile(
-                        title: Text('Night'),
+                        title: const Text('Night'),
                         value: night,
                         onChanged: (bool? value) {
                           setState(() {
@@ -308,7 +307,7 @@ class _writePrescriptionState extends State<writePrescription> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Center(
@@ -322,9 +321,9 @@ class _writePrescriptionState extends State<writePrescription> {
                         // Clear the input fields or update the UI as needed
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF0561DD),
+                        backgroundColor: const Color(0xFF0561DD),
                       ),
-                      child: Text(
+                      child: const Text(
                         "Save Medicine",
                         style: TextStyle(
                           fontSize: 24,
@@ -337,7 +336,7 @@ class _writePrescriptionState extends State<writePrescription> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
           ],
@@ -347,14 +346,14 @@ class _writePrescriptionState extends State<writePrescription> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80.0),
+        preferredSize: const Size.fromHeight(80.0),
         child: AppBar(
           automaticallyImplyLeading: false,
           toolbarHeight: 90,
-          backgroundColor: Color(0xFF0561DD),
+          backgroundColor: const Color(0xFF0561DD),
           elevation: 0,
           centerTitle: true,
-          title: Text(
+          title: const Text(
             'Prescription Details',
             style: TextStyle(
               fontSize: 30.0,
@@ -365,7 +364,7 @@ class _writePrescriptionState extends State<writePrescription> {
           leading: Padding(
             padding: const EdgeInsets.only(left: 15.0),
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back,
                 color: Colors.white,
                 size: 25,
@@ -373,7 +372,7 @@ class _writePrescriptionState extends State<writePrescription> {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => doctorHome(),
+                    builder: (context) => const doctorHome(),
                   ),
                 );
               },
@@ -383,7 +382,7 @@ class _writePrescriptionState extends State<writePrescription> {
             Padding(
               padding: const EdgeInsets.only(right: 25, top: 5),
               child: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.save,
                   color: Colors.white,
                   size: 40,
@@ -401,14 +400,14 @@ class _writePrescriptionState extends State<writePrescription> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             // write pres for user ....
             Container(
               child: Text(
-                'Writing Prescription for ' + widget.userName,
-                style: TextStyle(
+                'Writing Prescription for ${widget.userName}',
+                style: const TextStyle(
                     fontFamily: 'salsa',
                     fontSize: 28,
                     fontWeight: FontWeight.bold),
@@ -417,8 +416,8 @@ class _writePrescriptionState extends State<writePrescription> {
 
             //Diagnosis
             Container(
-              padding: EdgeInsets.only(top: 20, left: 10),
-              child: Text(
+              padding: const EdgeInsets.only(top: 20, left: 10),
+              child: const Text(
                 "Diagnosis: ",
                 style: TextStyle(
                   color: Color.fromARGB(255, 111, 110, 110),
@@ -429,10 +428,10 @@ class _writePrescriptionState extends State<writePrescription> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 20, bottom: 30),
+              padding: const EdgeInsets.only(top: 20, bottom: 30),
               child: TextField(
                 controller: diagnosisController,
-                style: TextStyle(fontSize: 30, fontFamily: 'Salsa'),
+                style: const TextStyle(fontSize: 30, fontFamily: 'Salsa'),
                 decoration: InputDecoration(
                   hintText: "Enter the patient's diagnosis",
                   border: OutlineInputBorder(
@@ -451,13 +450,13 @@ class _writePrescriptionState extends State<writePrescription> {
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF0561DD),
-                        fixedSize: Size(200, 60),
+                        backgroundColor: const Color(0xFF0561DD),
+                        fixedSize: const Size(200, 60),
                       ).copyWith(
                         shape: MaterialStateProperty.all(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(100),
-                            side: BorderSide(
+                            side: const BorderSide(
                                 color: Color(0xFF0561DD), width: 2.0),
                           ),
                         ),
@@ -471,8 +470,8 @@ class _writePrescriptionState extends State<writePrescription> {
                           builder: (BuildContext context, Widget? child) {
                             return Theme(
                               data: ThemeData.light().copyWith(
-                                textTheme: TextTheme(
-                                  caption: TextStyle(fontSize: 24),
+                                textTheme: const TextTheme(
+                                  bodySmall: TextStyle(fontSize: 24),
                                 ),
                               ),
                               child: child!,
@@ -482,7 +481,7 @@ class _writePrescriptionState extends State<writePrescription> {
                         if (newDate == null) return;
                         setState(() => selectedStartDate = newDate);
                       },
-                      child: Text(
+                      child: const Text(
                         "Select Start Date",
                         style: TextStyle(
                           color: Colors.white,
@@ -492,12 +491,12 @@ class _writePrescriptionState extends State<writePrescription> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Text(
                       '${selectedStartDate.day}/${selectedStartDate.month}/${selectedStartDate.year}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color(0xFF0561DD),
                         fontSize: 25,
                         fontWeight: FontWeight.w500,
@@ -507,7 +506,7 @@ class _writePrescriptionState extends State<writePrescription> {
                   ],
                 ),
 
-                SizedBox(
+                const SizedBox(
                   width: 40,
                 ),
 
@@ -516,13 +515,13 @@ class _writePrescriptionState extends State<writePrescription> {
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF0561DD),
-                        fixedSize: Size(200, 60),
+                        backgroundColor: const Color(0xFF0561DD),
+                        fixedSize: const Size(200, 60),
                       ).copyWith(
                         shape: MaterialStateProperty.all(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(100),
-                            side: BorderSide(
+                            side: const BorderSide(
                                 color: Color(0xFF0561DD), width: 2.0),
                           ),
                         ),
@@ -536,8 +535,8 @@ class _writePrescriptionState extends State<writePrescription> {
                           builder: (BuildContext context, Widget? child) {
                             return Theme(
                               data: ThemeData.light().copyWith(
-                                textTheme: TextTheme(
-                                  caption: TextStyle(fontSize: 24),
+                                textTheme: const TextTheme(
+                                  bodySmall: TextStyle(fontSize: 24),
                                 ),
                               ),
                               child: child!,
@@ -547,7 +546,7 @@ class _writePrescriptionState extends State<writePrescription> {
                         if (newDate == null) return;
                         setState(() => selectedEndDate = newDate);
                       },
-                      child: Text(
+                      child: const Text(
                         "Select End Date",
                         style: TextStyle(
                           color: Colors.white,
@@ -557,12 +556,12 @@ class _writePrescriptionState extends State<writePrescription> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Text(
                       '${selectedEndDate.day}/${selectedEndDate.month}/${selectedEndDate.year}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color(0xFF0561DD),
                         fontSize: 25,
                         fontWeight: FontWeight.w500,
@@ -574,7 +573,7 @@ class _writePrescriptionState extends State<writePrescription> {
               ],
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
 
@@ -586,10 +585,10 @@ class _writePrescriptionState extends State<writePrescription> {
                   borderRadius: BorderRadius.circular(20.0),
                 ),
 
-                prefixIcon: Icon(Icons.medication), // Add the medicine icon
+                prefixIcon: const Icon(Icons.medication), // Add the medicine icon
               ),
               keyboardType: TextInputType.number,
-              style: TextStyle(fontSize: 25), // Set the font size
+              style: const TextStyle(fontSize: 25), // Set the font size
               onChanged: (value) {
                 setState(() {
                   // Update the number of combinations based on user input
@@ -598,14 +597,14 @@ class _writePrescriptionState extends State<writePrescription> {
               },
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
 
             // Display the generated combination widgets
             Expanded(
               child: ListView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 children: combinationWidgets,
               ),
             ),

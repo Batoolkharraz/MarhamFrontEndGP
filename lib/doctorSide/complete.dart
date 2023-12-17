@@ -8,12 +8,13 @@ class complete extends StatelessWidget {
   final String date;
   final String time;
 
-  complete({
+  const complete({super.key, 
     required this.Id,
     required this.userName,
     required this.date,
     required this.time,
   });
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -66,13 +67,13 @@ class complete extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(userName,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.black,
                             fontSize: 30,
                             fontWeight: FontWeight.w500,
                             fontFamily: 'Salsa')),
                     InkWell(
-                      child: FaIcon(
+                      child: const FaIcon(
                         FontAwesomeIcons.circleCheck,
                         size: 26.0,
                         color: Colors.green,
@@ -83,7 +84,7 @@ class complete extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
@@ -138,7 +139,7 @@ class complete extends StatelessWidget {
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
-                      color: Color.fromARGB(255, 228, 235, 248),
+                      color: const Color.fromARGB(255, 228, 235, 248),
                       border: Border.all(
                         color: const Color.fromARGB(
                             255, 194, 186, 186), // Set the border color here
@@ -149,36 +150,36 @@ class complete extends StatelessWidget {
                     height: 70,
                     child: Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 15,
                         ),
-                        FaIcon(
+                        const FaIcon(
                           FontAwesomeIcons.calendar,
                           size: 26.0,
                           color: Color(0xFF0561DD),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Text(date,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 25,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Salsa')),
-                        SizedBox(
+                        const SizedBox(
                           width: 100,
                         ),
-                        FaIcon(
+                        const FaIcon(
                           FontAwesomeIcons.clock,
                           size: 26.0,
                           color: Color(0xFF0561DD),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Text(time,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 25,
                                 fontWeight: FontWeight.w500,

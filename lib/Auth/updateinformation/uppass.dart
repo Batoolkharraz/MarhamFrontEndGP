@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/Login/ValidateForm.dart';
 import 'package:flutter_application_4/Auth/updateinformation/updatenow.dart';
  Future<void> showpasswordDialog(BuildContext context) async {
-var  password ;// Store the text input value
+String?  password ;// Store the text input value
   final GlobalKey<FormState> signstate = GlobalKey<FormState>();
   await showDialog(
     context: context,
@@ -80,7 +80,7 @@ var  password ;// Store the text input value
             onPressed: () {
               if(validateForm(signstate))
               {
-                updateinformation(password,"password");
+                updateinformation(password!,"password");
               print('Entered text: $password ');
                 Navigator.of(context).pop(); 
               }

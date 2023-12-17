@@ -1,10 +1,6 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:http/http.dart' as http;
-import 'package:jwt_decoder/jwt_decoder.dart';
 
 class todayUser extends StatefulWidget {
   final String id;
@@ -12,7 +8,7 @@ class todayUser extends StatefulWidget {
   final String date;
   final String time;
 
-  todayUser({
+  const todayUser({super.key, 
     required this.id,
     required this.doctorName,
     required this.date,
@@ -45,11 +41,11 @@ class _todayUserState extends State<todayUser> {
             children: [
               Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 25,
                   ),
                   Text( widget.doctorName,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.black,
                           fontSize: 30,
                           fontWeight: FontWeight.w500,
@@ -57,18 +53,18 @@ class _todayUserState extends State<todayUser> {
                   
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 22,
                   ),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
-                      color: Color.fromARGB(255, 228, 235, 248),
+                      color: const Color.fromARGB(255, 228, 235, 248),
                       border: Border.all(
                         color: const Color.fromARGB(
                             255, 194, 186, 186), // Set the border color here
@@ -79,36 +75,36 @@ class _todayUserState extends State<todayUser> {
                     height: 70,
                     child: Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 15,
                         ),
-                        FaIcon(
+                        const FaIcon(
                           FontAwesomeIcons.calendar,
                           size: 26.0,
                           color: Color(0xFF0561DD),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Text(widget.date,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 25,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Salsa')),
-                        SizedBox(
+                        const SizedBox(
                           width: 25,
                         ),
-                        FaIcon(
+                        const FaIcon(
                           FontAwesomeIcons.clock,
                           size: 26.0,
                           color: Color(0xFF0561DD),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Text(widget.time,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 25,
                                 fontWeight: FontWeight.w500,

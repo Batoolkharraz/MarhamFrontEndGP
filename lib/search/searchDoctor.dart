@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/doctorappointment/doctorapp.dart';
 import 'package:flutter_application_4/unit/findDoctorList.dart';
@@ -17,7 +16,7 @@ class searchDoctor extends StatefulWidget {
 }
 
 class _searchDoctorState extends State<searchDoctor> {
-  List _doctors = [];
+  final List _doctors = [];
   List _foundedDoctors = [];
   List categories = [];
   List addresses = [
@@ -29,13 +28,13 @@ class _searchDoctorState extends State<searchDoctor> {
   List<String> searchCat = [];
   List<String> searchAddress = [];
   bool display = false;
-  final storage = FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
   Future<String> getTokenFromStorage() async {
     final token = await storage.read(key: 'jwt');
     if (token != null) {
       final String userId = getUserIdFromToken(token);
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       return userId;
     } else {
       print('Token not found in local storage.');
@@ -99,10 +98,10 @@ class _searchDoctorState extends State<searchDoctor> {
       context: context,
       builder: (BuildContext context) {
         return Container(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              Text(
+              const Text(
                 'Filters',
                 style: TextStyle(
                   fontSize: 30.0,
@@ -110,8 +109,8 @@ class _searchDoctorState extends State<searchDoctor> {
                   fontFamily: 'salsa',
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 15, left: 30),
+              const Padding(
+                padding: EdgeInsets.only(top: 15, left: 30),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -126,10 +125,10 @@ class _searchDoctorState extends State<searchDoctor> {
                   ],
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Expanded(
                 child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
                     childAspectRatio: 2.0,
                   ),
@@ -155,7 +154,7 @@ class _searchDoctorState extends State<searchDoctor> {
                         child: Center(
                           child: Text(
                             category['name'],
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 20.0,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'salsa',
@@ -167,12 +166,12 @@ class _searchDoctorState extends State<searchDoctor> {
                   },
                 ),
               ),
-              Divider(
+              const Divider(
                 thickness: 2,
                 color: Colors.grey,
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 15, left: 30),
+              const Padding(
+                padding: EdgeInsets.only(top: 15, left: 30),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -187,10 +186,10 @@ class _searchDoctorState extends State<searchDoctor> {
                   ],
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Expanded(
                 child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4,
                     childAspectRatio: 2.0,
                   ),
@@ -216,7 +215,7 @@ class _searchDoctorState extends State<searchDoctor> {
                         child: Center(
                           child: Text(
                             address,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 20.0,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'salsa',
@@ -298,11 +297,11 @@ class _searchDoctorState extends State<searchDoctor> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         toolbarHeight: 90,
-        backgroundColor: Color(0xFF0561DD),
+        backgroundColor: const Color(0xFF0561DD),
         automaticallyImplyLeading: false,
         elevation: 0,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Find Your Doctor',
           style: TextStyle(
             fontFamily: 'salsas',
@@ -313,7 +312,7 @@ class _searchDoctorState extends State<searchDoctor> {
         leading: Padding(
           padding: const EdgeInsets.only(left: 15.0),
           child: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back,
               color: Colors.white,
               size: 25,
@@ -331,8 +330,8 @@ class _searchDoctorState extends State<searchDoctor> {
               children: [
                 Padding(
                   padding:
-                      EdgeInsets.only(left: 25, right: 15, bottom: 25, top: 25),
-                  child: Container(
+                      const EdgeInsets.only(left: 25, right: 15, bottom: 25, top: 25),
+                  child: SizedBox(
                     height: 60,
                     width: 450,
                     child: TextField(
@@ -340,7 +339,7 @@ class _searchDoctorState extends State<searchDoctor> {
                         display = true;
                       },
                       onChanged: (value) => onSearch(value),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Search',
                         labelStyle: TextStyle(
                           fontSize: 25,
@@ -359,7 +358,7 @@ class _searchDoctorState extends State<searchDoctor> {
                         ),
                         prefixIcon: Icon(Icons.search),
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         fontFamily: 'salsa',
                         fontWeight: FontWeight.bold,
@@ -368,11 +367,11 @@ class _searchDoctorState extends State<searchDoctor> {
                   ),
                 ),
 
-                SizedBox(
+                const SizedBox(
                     width:
                         10), // Adjust the spacing between TextField and IconButton
                 InkWell(
-                  child: FaIcon(
+                  child: const FaIcon(
                     FontAwesomeIcons.filter,
                     size: 26.0,
                     color: Colors.grey,
@@ -385,7 +384,6 @@ class _searchDoctorState extends State<searchDoctor> {
             ),
             Expanded(
               child: _foundedDoctors.isEmpty ||
-                      _foundedDoctors == null ||
                       display == false
                   ? Center(
                       child: Padding(
@@ -403,7 +401,7 @@ class _searchDoctorState extends State<searchDoctor> {
                       itemCount: _foundedDoctors.length,
                       itemBuilder: (context, index) {
                         return Slidable(
-                          actionPane: SlidableDrawerActionPane(),
+                          actionPane: const SlidableDrawerActionPane(),
                           actionExtentRatio: 0.25,
                           child: findDoctorList(
                             doctorPic:

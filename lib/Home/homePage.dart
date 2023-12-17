@@ -1,10 +1,8 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Home/userdaily.dart';
 import 'package:flutter_application_4/Home/home.dart';
 import 'package:flutter_application_4/profile/profile.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:http/http.dart' as http;
 
 class homePage extends StatefulWidget {
   const homePage({super.key});

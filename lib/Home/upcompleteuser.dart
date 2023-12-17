@@ -14,7 +14,7 @@ class schedualupcomplete extends StatelessWidget {
   final String date;
   final String time;
 
-  schedualupcomplete({
+  const schedualupcomplete({super.key, 
     required this.bookId,
     required this.doctorId,
     required this.doctorName,
@@ -23,7 +23,7 @@ class schedualupcomplete extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
- final storage = FlutterSecureStorage();
+ const storage = FlutterSecureStorage();
 
  
   String getUserIdFromToken(String token) {
@@ -41,7 +41,7 @@ class schedualupcomplete extends StatelessWidget {
     final token = await storage.read(key: 'jwt');
     if (token != null) {
       final String userId = getUserIdFromToken(token);
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       return userId;
     } else {
       print('Token not found in local storage.');
@@ -67,7 +67,7 @@ class schedualupcomplete extends StatelessWidget {
       );
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         backgroundColor: Color(0xFF0561DD),
         content: 
         Center(
@@ -83,7 +83,7 @@ class schedualupcomplete extends StatelessWidget {
       ),
     );
       } else {ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         backgroundColor: Colors.red,
         content: 
         Center(
@@ -127,14 +127,14 @@ class schedualupcomplete extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text( doctorName,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.black,
                             fontSize: 30,
                             fontWeight: FontWeight.w500,
                             fontFamily: 'Salsa')),
                     
                     InkWell(
-                      child: FaIcon(
+                      child: const FaIcon(
                         FontAwesomeIcons.circleXmark,
                         size: 26.0,
                         color: Colors.blue,
@@ -146,18 +146,18 @@ class schedualupcomplete extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 22,
                   ),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
-                      color: Color.fromARGB(255, 228, 235, 248),
+                      color: const Color.fromARGB(255, 228, 235, 248),
                       border: Border.all(
                         color: const Color.fromARGB(
                             255, 194, 186, 186), // Set the border color here
@@ -168,36 +168,36 @@ class schedualupcomplete extends StatelessWidget {
                     height: 70,
                     child: Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 15,
                         ),
-                        FaIcon(
+                        const FaIcon(
                           FontAwesomeIcons.calendar,
                           size: 26.0,
                           color: Color(0xFF0561DD),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Text(date,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 25,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Salsa')),
-                        SizedBox(
+                        const SizedBox(
                           width: 25,
                         ),
-                        FaIcon(
+                        const FaIcon(
                           FontAwesomeIcons.clock,
                           size: 26.0,
                           color: Color(0xFF0561DD),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Text(time,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 25,
                                 fontWeight: FontWeight.w500,

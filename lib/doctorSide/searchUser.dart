@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/doctorSide/userProfile.dart';
 import 'dart:convert';
-import 'dart:ffi';
-import 'package:flutter_application_4/doctorappointment/doctorapp.dart';
-import 'package:flutter_application_4/unit/findDoctorList.dart';
 import 'package:flutter_application_4/unit/findUserList.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:jwt_decoder/jwt_decoder.dart';
 
 class searchUser extends StatefulWidget {
   const searchUser({super.key});
@@ -30,7 +26,7 @@ class _searchUserState extends State<searchUser> {
   List<String> searchCat = [];
   List<String> searchAddress = [];
   bool display = false;
-  final storage = FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
 
 
@@ -69,10 +65,10 @@ void _showSearchOptionsBottomSheet(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return Container(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Text(
+            const Text(
               'Filters',
               style: TextStyle(
                 fontSize: 30.0,
@@ -80,9 +76,9 @@ void _showSearchOptionsBottomSheet(BuildContext context) {
                 fontFamily: 'salsa',
               ),
             ),
-            SizedBox(height: 15),
-            Padding(
-              padding: const EdgeInsets.only(left: 30),
+            const SizedBox(height: 15),
+            const Padding(
+              padding: EdgeInsets.only(left: 30),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -97,10 +93,10 @@ void _showSearchOptionsBottomSheet(BuildContext context) {
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Expanded(
               child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
                   childAspectRatio: 2.0,
                 ),
@@ -124,7 +120,7 @@ void _showSearchOptionsBottomSheet(BuildContext context) {
                       child: Center(
                         child: Text(
                           address,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'salsa',
@@ -168,11 +164,11 @@ void _showSearchOptionsBottomSheet(BuildContext context) {
       backgroundColor: Colors.white,
       appBar: AppBar(
         toolbarHeight: 90,
-        backgroundColor: Color(0xFF0561DD),
+        backgroundColor: const Color(0xFF0561DD),
         automaticallyImplyLeading: false,
         elevation: 0,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Find Patient',
           style: TextStyle(
             fontFamily: 'salsa',
@@ -183,7 +179,7 @@ void _showSearchOptionsBottomSheet(BuildContext context) {
         leading: Padding(
           padding: const EdgeInsets.only(left: 15.0),
           child: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back,
               color: Colors.white,
               size: 25,
@@ -201,8 +197,8 @@ void _showSearchOptionsBottomSheet(BuildContext context) {
               children: [
                 Padding(
                   padding:
-                      EdgeInsets.only(left: 25, right: 15, bottom: 25, top: 25),
-                  child: Container(
+                      const EdgeInsets.only(left: 25, right: 15, bottom: 25, top: 25),
+                  child: SizedBox(
                     height: 60,
                     width: 450,
                     child: TextField(
@@ -210,7 +206,7 @@ void _showSearchOptionsBottomSheet(BuildContext context) {
                         display = true;
                       },
                       onChanged: (value) => onSearch(value),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Search',
                         labelStyle: TextStyle(
                           fontSize: 25,
@@ -229,7 +225,7 @@ void _showSearchOptionsBottomSheet(BuildContext context) {
                         ),
                         prefixIcon: Icon(Icons.search),
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         fontFamily: 'salsa',
                         fontWeight: FontWeight.bold,
@@ -238,11 +234,11 @@ void _showSearchOptionsBottomSheet(BuildContext context) {
                   ),
                 ),
 
-                SizedBox(
+                const SizedBox(
                     width:
                         10), // Adjust the spacing between TextField and IconButton
                 InkWell(
-                  child: FaIcon(
+                  child: const FaIcon(
                     FontAwesomeIcons.filter,
                     size: 26.0,
                     color: Colors.grey,
@@ -255,7 +251,6 @@ void _showSearchOptionsBottomSheet(BuildContext context) {
             ),
             Expanded(
               child: _foundedUsers.isEmpty ||
-                      _foundedUsers == null ||
                       display == false
                   ? Center(
                       child: Padding(
@@ -273,7 +268,7 @@ void _showSearchOptionsBottomSheet(BuildContext context) {
                       itemCount: _foundedUsers.length,
                       itemBuilder: (context, index) {
                         return Slidable(
-                          actionPane: SlidableDrawerActionPane(),
+                          actionPane: const SlidableDrawerActionPane(),
                           actionExtentRatio: 0.25,
                           child: findUserList(
                             userPic:

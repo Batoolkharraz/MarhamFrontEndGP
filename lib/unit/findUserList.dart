@@ -5,7 +5,7 @@ class findUserList extends StatelessWidget {
   final String userName;
   final VoidCallback onTap;
 
-  findUserList({
+  const findUserList({super.key, 
     required this.userPic,
     required this.userName,
     required this.onTap,
@@ -17,14 +17,14 @@ class findUserList extends StatelessWidget {
       GestureDetector(
       onTap: onTap,
         child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20),
-        padding: EdgeInsets.only(top: 10, bottom: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.only(top: 10, bottom: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
-                Container(
+                SizedBox(
                   width: 70,
                   height: 70,
                   child: ClipRRect(
@@ -32,14 +32,14 @@ class findUserList extends StatelessWidget {
                     child: Image.network(userPic),
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(userName,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.black, fontWeight: FontWeight.w500,fontSize: 25)),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                   ],

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/Login/ValidateForm.dart'; 
 import 'package:flutter_application_4/Auth/updateinformation/updatenow.dart';
  Future<void> showTextDialog(BuildContext context) async {
- var username;// Store the text input value
+ String? username;// Store the text input value
   final GlobalKey<FormState> signstate = GlobalKey<FormState>();
   await showDialog(
     context: context,
@@ -83,7 +83,7 @@ import 'package:flutter_application_4/Auth/updateinformation/updatenow.dart';
             onPressed: () {
               if(validateForm(signstate))
               {
-                updateinformation(username,"username");
+                updateinformation(username!,"username");
               print('Entered text:+ $username');
                 Navigator.of(context).pop(); 
               }

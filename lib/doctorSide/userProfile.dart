@@ -6,13 +6,12 @@ import 'package:flutter_application_4/medicine/medicineSchedule.dart';
 import 'package:flutter_application_4/unit/patientRec.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import '../unit/diagnosisList.dart';
 import 'doctorHome.dart';
 
 class userProfile extends StatefulWidget {
   final Map<String, dynamic> user;
 
-  userProfile({required this.user});
+  const userProfile({super.key, required this.user});
 
   @override
   State<userProfile> createState() => _userProfileState();
@@ -60,15 +59,15 @@ class _userProfileState extends State<userProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE8EEFA),
+      backgroundColor: const Color(0xFFE8EEFA),
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80.0),
+        preferredSize: const Size.fromHeight(80.0),
         child: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Color(0xFF0561DD),
+          backgroundColor: const Color(0xFF0561DD),
           elevation: 0,
           centerTitle: true,
-          title: Text(
+          title: const Text(
             'Patient Profile',
             style: TextStyle(
               fontSize: 30.0,
@@ -79,7 +78,7 @@ class _userProfileState extends State<userProfile> {
           leading: Padding(
             padding: const EdgeInsets.only(left: 24.0),
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back,
                 color: Colors.white,
                 size: 40,
@@ -87,7 +86,7 @@ class _userProfileState extends State<userProfile> {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => doctorHome(),
+                    builder: (context) => const doctorHome(),
                   ),
                 );
               },
@@ -101,7 +100,7 @@ class _userProfileState extends State<userProfile> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -110,7 +109,7 @@ class _userProfileState extends State<userProfile> {
                   children: [
                     Text(
                       widget.user['username'],
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'salsa',
                         fontSize: 30.0,
                         fontWeight: FontWeight.bold,
@@ -118,7 +117,7 @@ class _userProfileState extends State<userProfile> {
                     ),
                   ],
                 ),
-                Container(
+                SizedBox(
                   width: 70,
                   height: 70,
                   child: ClipRRect(
@@ -128,9 +127,9 @@ class _userProfileState extends State<userProfile> {
                 ),
               ],
             ),
-            SizedBox(height: 25),
+            const SizedBox(height: 25),
             Container(
-              child: Text(
+              child: const Text(
                 'Patient Record:',
                 style: TextStyle(
                   fontFamily: 'salsa',
@@ -139,8 +138,8 @@ class _userProfileState extends State<userProfile> {
                 ),
               ),
             ),
-            SizedBox(height: 15),
-            prescriptions == null || prescriptions.isEmpty
+            const SizedBox(height: 15),
+            prescriptions.isEmpty
                 ? Center(
                     child: Padding(
                       padding: const EdgeInsets.only(top: 100),
@@ -151,14 +150,14 @@ class _userProfileState extends State<userProfile> {
                               'assets/patient_report.png',
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                         ],
                       ),
                     ),
                   )
-                : Container(
+                : SizedBox(
                     height: 650, // Set a specific height for the expanded part
                     child: ListView.builder(
                       shrinkWrap: true,
@@ -198,10 +197,10 @@ class _userProfileState extends State<userProfile> {
                   color: Colors.white,
                   border: Border.all(
                     width: 2,
-                    color: Color(0xFF0561DD),
+                    color: const Color(0xFF0561DD),
                   ),
                   borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Colors.grey,
                       offset: Offset(0, 0),
@@ -213,14 +212,14 @@ class _userProfileState extends State<userProfile> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
-                      child: Container(
+                      child: SizedBox(
                         width: 150,
                         child: Image.asset(
                           'assets/prescription.png',
                         ),
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Write Prescription',
                       style: TextStyle(
                         color: Color(0xFF0561DD),

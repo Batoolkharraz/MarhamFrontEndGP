@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/payment/payment.dart';
-import 'package:intl/intl.dart';
 
 class working extends StatefulWidget {
   final String date;
@@ -8,7 +7,7 @@ class working extends StatefulWidget {
   final String is_booked;
   final VoidCallback onTap;
 
-  working({
+  const working({super.key, 
     required this.date,
     required this.time,
     required this.is_booked,
@@ -32,7 +31,7 @@ class _WorkingState extends State<working> {
   void updateButtonState() {
     buttonText = widget.is_booked == 'true' ? 'booked' : 'book';
     buttonColor =
-        widget.is_booked == 'true' ? Colors.red : Color(0xFF0561DD);
+        widget.is_booked == 'true' ? Colors.red : const Color(0xFF0561DD);
   }
 
   @override
@@ -59,31 +58,31 @@ class _WorkingState extends State<working> {
             children: [
               Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 25,
                   ),
                   Text(
                     formattedDate,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
                       fontSize: 30,
                       fontWeight: FontWeight.w500,
                       fontFamily: 'Salsa',
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 70,
                   ),
                   Text(
                     widget.time,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
                       fontSize: 50,
                       fontWeight: FontWeight.w500,
                       fontFamily: 'Salsa',
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 80,
                   ),
                   InkWell(

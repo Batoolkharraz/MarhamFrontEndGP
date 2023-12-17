@@ -15,7 +15,7 @@ class schedual extends StatelessWidget {
   final String date;
   final String time;
 
-  schedual({
+  const schedual({super.key, 
     required this.bookId,
     required this.userId,
     required this.userName,
@@ -25,7 +25,7 @@ class schedual extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final storage = FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
 
     String getUserIdFromToken(String token) {
       try {
@@ -42,7 +42,7 @@ class schedual extends StatelessWidget {
       final token = await storage.read(key: 'jwt');
       if (token != null) {
         final String userId = getUserIdFromToken(token);
-        await Future.delayed(Duration(seconds: 2));
+        await Future.delayed(const Duration(seconds: 2));
         return userId;
       } else {
         print('Token not found in local storage.');
@@ -69,7 +69,7 @@ class schedual extends StatelessWidget {
         );
         if (response.statusCode == 200) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               backgroundColor: Color(0xFF0561DD),
               content: Center(
                 child: Text(
@@ -88,7 +88,7 @@ class schedual extends StatelessWidget {
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               backgroundColor: Colors.red,
               content: Center(
                 child: Text(
@@ -130,7 +130,7 @@ class schedual extends StatelessWidget {
         );
         if (response.statusCode == 200) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               backgroundColor: Color(0xFF0561DD),
               content: Center(
                 child: Text(
@@ -149,7 +149,7 @@ class schedual extends StatelessWidget {
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               backgroundColor: Colors.red,
               content: Center(
                 child: Text(
@@ -195,7 +195,7 @@ class schedual extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(userName,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.black,
                             fontSize: 30,
                             fontWeight: FontWeight.w500,
@@ -204,7 +204,7 @@ class schedual extends StatelessWidget {
                       child: Row(
                         children: [
                           InkWell(
-                            child: FaIcon(
+                            child: const FaIcon(
                               FontAwesomeIcons.circleCheck,
                               size: 26.0,
                               color: Colors.green,
@@ -213,11 +213,11 @@ class schedual extends StatelessWidget {
                               doneAppointment(bookId, userId);
                             },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 15,
                           ),
                           InkWell(
-                            child: FaIcon(
+                            child: const FaIcon(
                               FontAwesomeIcons.circleXmark,
                               size: 26.0,
                               color: Colors.blue,
@@ -232,18 +232,18 @@ class schedual extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 22,
                   ),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
-                      color: Color.fromARGB(255, 228, 235, 248),
+                      color: const Color.fromARGB(255, 228, 235, 248),
                       border: Border.all(
                         color: const Color.fromARGB(
                             255, 194, 186, 186), // Set the border color here
@@ -254,36 +254,36 @@ class schedual extends StatelessWidget {
                     height: 70,
                     child: Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 15,
                         ),
-                        FaIcon(
+                        const FaIcon(
                           FontAwesomeIcons.calendar,
                           size: 26.0,
                           color: Color(0xFF0561DD),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Text(date,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 25,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Salsa')),
-                        SizedBox(
+                        const SizedBox(
                           width: 100,
                         ),
-                        FaIcon(
+                        const FaIcon(
                           FontAwesomeIcons.clock,
                           size: 26.0,
                           color: Color(0xFF0561DD),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Text(time,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 25,
                                 fontWeight: FontWeight.w500,

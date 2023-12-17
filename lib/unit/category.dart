@@ -22,7 +22,7 @@ class category extends StatelessWidget {
           width: 150.0,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.0),
-            color: Color.fromARGB(255, 229, 231, 237),
+            color: const Color.fromARGB(255, 229, 231, 237),
             /*border: Border.all(
               color: Color(0xFF0561DD),
               width: 3.0,
@@ -30,7 +30,7 @@ class category extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Container(
+              SizedBox(
                  height:81.0,
                 child: Image.network(
                   icon,

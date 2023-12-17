@@ -24,13 +24,13 @@ class home extends StatefulWidget {
 class _homeState extends State<home> {
   List categories = [];
   List doctors = [];
-  final storage = FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
   Future<String> getTokenFromStorage() async {
     final token = await storage.read(key: 'jwt');
     if (token != null) {
       final String userId = getUserIdFromToken(token);
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       return userId;
     } else {
       print('Token not found in local storage.');
@@ -127,7 +127,7 @@ class _homeState extends State<home> {
   }
 Future<void> getcurrentUser() async {
     try {
-      var user = await FirebaseAuth.instance.currentUser;
+      var user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         setState(() {
           signedinuser = user;

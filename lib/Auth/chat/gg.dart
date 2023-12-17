@@ -14,7 +14,7 @@ add(String? email) async {
         // Use the update method to add a new field without removing existing data
          await firestore
              .collection('sender-reciver')
-             .doc("${email}_${toke2}")
+             .doc("${email}_$toke2")
              .set({'email09':toke2});
       
      } catch (e) {
