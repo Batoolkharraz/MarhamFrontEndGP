@@ -69,6 +69,7 @@ Future.delayed(const Duration(seconds: 2), () {
       }
 
       if (roleofuser == "doctor") {
+<<<<<<< HEAD
         showDialog(
   context: context,
   builder: (BuildContext context) {
@@ -81,6 +82,9 @@ Future.delayed(const Duration(seconds: 2), () {
 Future.delayed(const Duration(seconds: 2), () {
   Navigator.pop(context); // Close the loading dialog
   Navigator.of(context).pushReplacement(
+=======
+        Navigator.of(context).pushReplacement(
+>>>>>>> fa3ed82f3124af2915a31953ac60d3042501b65c
           MaterialPageRoute(
             builder: (context) {
               return WillPopScope(

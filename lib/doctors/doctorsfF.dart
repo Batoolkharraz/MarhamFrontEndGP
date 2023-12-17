@@ -194,14 +194,6 @@ class _DoctorsPageState extends State<DoctorsPage> {
                           const SizedBox(
                             height: 10,
                           ),
-                          const Text(
-                            'There is No Doctor Added Yet!',
-                            style: TextStyle(
-                              fontFamily: 'salsa',
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
                         ],
                       ),
                     ),

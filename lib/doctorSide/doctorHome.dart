@@ -61,7 +61,11 @@ class _doctorHomeState extends State<doctorHome> {
 
   Future getDoctorrInfo() async {
     String id = await getTokenFromStorage();
+<<<<<<< HEAD
     var url = "https://marham-backend.onrender.com/doctor/find/$id";
+=======
+    var url = "https://marham-backend.onrender.com/doctor/find/${id}";
+>>>>>>> fa3ed82f3124af2915a31953ac60d3042501b65c
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var responceBody = response.body.toString();
@@ -99,7 +103,11 @@ class _doctorHomeState extends State<doctorHome> {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
+<<<<<<< HEAD
                       builder: (context) => const EditDoctor(),
+=======
+                      builder: (context) => EditDoctor(),
+>>>>>>> fa3ed82f3124af2915a31953ac60d3042501b65c
                     ),
                   );
                 },
@@ -186,15 +194,24 @@ class _doctorHomeState extends State<doctorHome> {
               ),
 
               Text(
+<<<<<<< HEAD
                 Doctor['name'] ?? '',
                 style: const TextStyle(
+=======
+                Doctor['name'] == null ? '' : Doctor['name'],
+                style: TextStyle(
+>>>>>>> fa3ed82f3124af2915a31953ac60d3042501b65c
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Salsa',
                 ),
               ),
               Text(
+<<<<<<< HEAD
                 Doctor['email'] ?? '',
+=======
+                Doctor['email'] == null ? '' : Doctor['email'],
+>>>>>>> fa3ed82f3124af2915a31953ac60d3042501b65c
                 style: TextStyle(
                   fontSize: 23,
                   color: Colors.grey[600],

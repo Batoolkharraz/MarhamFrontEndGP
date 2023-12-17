@@ -52,15 +52,17 @@ class _profileState extends State<profile> {
     }
   }
 
-  Future getPrescription() async {
+Future<void> getPrescription() async {
+  try {
     String id = await getTokenFromStorage();
     var url = "https://marham-backend.onrender.com/prescription/forUser/$id";
     var response = await http.get(Uri.parse(url));
+
     if (response.statusCode == 200) {
-      var responceBody = response.body.toString();
-      responceBody = responceBody.trim();
-      responceBody = responceBody.substring(17, responceBody.length - 1);
-      var pre = jsonDecode(responceBody);
+      var responseBody = response.body.toString();
+      responseBody = responseBody.trim();
+      responseBody = responseBody.substring(17, responseBody.length - 1);
+      var pre = jsonDecode(responseBody);
 
       // Convert date strings to DateTime and sort by dateFrom in descending order
       pre.sort((a, b) {
@@ -78,26 +80,46 @@ class _profileState extends State<profile> {
             .format(DateFormat('MM/dd/yyyy').parse(prescription['dateTo']));
       }
 
-      setState(() {
-        prescriptions.clear();
-        prescriptions.addAll(pre);
-      });
+      // Check if the widget is still mounted before calling setState
+      if (mounted) {
+        setState(() {
+          prescriptions.clear();
+          prescriptions.addAll(pre);
+        });
+      }
     }
+  } catch (e) {
+    // Handle the error, e.g., print or log it
+    print('Error fetching prescriptions: $e');
   }
+}
 
-  Future getUserInfo() async {
-    String userid = await getTokenFromStorage();
-    var url = "https://marham-backend.onrender.com/giveme/getUser/$userid";
+
+Future getUserInfo() async {
+  String userid = await getTokenFromStorage();
+  var url = "https://marham-backend.onrender.com/giveme/getUser/$userid";
+  
+  try {
     var response = await http.get(Uri.parse(url));
+
     if (response.statusCode == 200) {
       var responceBody = response.body.toString();
       responceBody = responceBody.trim();
       var user = jsonDecode(responceBody);
-      setState(() {
-        User = user;
-      });
+
+      // Check if the widget is still mounted before calling setState
+      if (mounted) {
+        setState(() {
+          User.addAll(user);
+        });
+      }
     }
+  } catch (e) {
+    // Handle the error, e.g., print or log it
+    print('Error fetching user info: $e');
   }
+}
+
 
   Future<String> getDoctor(String docId) async {
     var url =

@@ -67,24 +67,24 @@ class doctor extends StatelessWidget {
                   height: 5,
                 ),
                 //rate
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.star,
-                      color: Color.fromARGB(255, 227, 212, 142),
-                    ),
-                    const SizedBox(height: 15,),
-                    Text(
-                      doctorRate,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        fontFamily: 'Salsa',
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     const Icon(
+                //       Icons.star,
+                //       color: Color.fromARGB(255, 227, 212, 142),
+                //     ),
+                //     const SizedBox(height: 15,),
+                //     Text(
+                //       doctorRate,
+                //       style: const TextStyle(
+                //         fontWeight: FontWeight.bold,
+                //         fontSize: 18,
+                //         fontFamily: 'Salsa',
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ),

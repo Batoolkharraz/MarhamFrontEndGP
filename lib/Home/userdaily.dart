@@ -19,7 +19,7 @@ class UserDaily extends StatefulWidget {
 
 class _UserDailyState extends State<UserDaily> {
   final storage = FlutterSecureStorage();
-  List allAppointment = [];
+  List <dynamic>allAppointment = [];
   List doneAppointment = [];
   List cancelAppointment = [];
   List todayAppointment = [];
@@ -403,16 +403,16 @@ class _UserDailyState extends State<UserDaily> {
                           ),
                         )
                       :
-                      //all appointment
                       Container(
                           child: ListView.builder(
                             itemBuilder: (context, int i) {
                               if (allAppointment != null &&
                                   allAppointment.isNotEmpty) {
-                                var appointmentInfo =
-                                    allAppointment[i];
+                                
+        Map<String, dynamic> appointmentInfo = allAppointment[i];
                                 return Column(
                                   children: [
+                                    
                                       FutureBuilder<Map<String, String>>(
                                         future: getAppInfo(
                                             appointmentInfo['bookId'],
@@ -422,7 +422,8 @@ class _UserDailyState extends State<UserDaily> {
                                                   ConnectionState.done &&
                                               snapshot.hasData) {
                                             String doctorName =
-                                                snapshot.data!['docName'] ?? '';
+                                                snapshot.data!['docName'] ??
+                                                    '';
                                             String date =
                                                 snapshot.data!['date'] ?? '';
                                             String time =
