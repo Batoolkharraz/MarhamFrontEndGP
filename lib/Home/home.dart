@@ -1,12 +1,13 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/chat/chatpage.dart';
-import 'package:flutter_application_4/Home/checktime.dart';
-import 'package:flutter_application_4/doctorappointment/doctorapp.dart';
+import 'package:flutter_application_4/doctorappointment/doctorapp.dart' as appointment;
 import 'package:flutter_application_4/doctors/doctorsfF.dart';
 import 'package:flutter_application_4/search/searchDoctor.dart';
 import 'package:flutter_application_4/unit/category.dart';
+import 'package:flutter_application_4/unit/checktime.dart';
 import 'package:flutter_application_4/unit/doctor.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -125,6 +126,7 @@ class _homeState extends State<home> {
       ),
     );
   }
+<<<<<<< HEAD
 Future<void> getcurrentUser() async {
     try {
       var user = FirebaseAuth.instance.currentUser;
@@ -138,15 +140,33 @@ Future<void> getcurrentUser() async {
       print(e);
     }
   }
+=======
+// Future<void> getcurrentUser() async {
+//     try {
+//       var user = await FirebaseAuth.instance.currentUser;
+//       if (user != null) {
+//         setState(() {
+//           signedinuser = user;
+          
+//         });
+//       }
+//     } catch (e) {
+//       print(e);
+//     }
+//   }
+  
+>>>>>>> c1b166e4ceff4cb85d25fa9f426b79da963bb9d9
   @override
+  
   void initState() {
     // TODO: implement initState
     getCategories();
     getDoctor();
-   
     // getcurrentUser();
     super.initState();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -341,7 +361,7 @@ Future<void> getcurrentUser() async {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          appointment(doctor: doctors[index]),
+                                          appointment.appointment(doctor: doctors[index]),
                                     ),
                                   );
                                 });

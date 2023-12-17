@@ -88,11 +88,11 @@ class _WorkingState extends State<working> {
                   InkWell(
                     onTap: widget.onTap,
                     onTapDown: (_) {
-                      showalertt(context);
-                      // setState(() {
-                      //   buttonText = 'booked';
-                      //   buttonColor = Colors.red;
-                      // });
+                    //  showpaymentalertt(context);
+                      setState(() {
+                        buttonText = 'booked';
+                        buttonColor = Colors.red;
+                      });
                     },
                     child: Text(
                       buttonText,

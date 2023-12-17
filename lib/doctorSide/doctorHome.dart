@@ -61,7 +61,7 @@ class _doctorHomeState extends State<doctorHome> {
 
   Future getDoctorrInfo() async {
     String id = await getTokenFromStorage();
-    var url = "https://marham-backend.onrender.com/doctor/find/$id";
+    var url = "https://marham-backend.onrender.com/doctor/find/${id}";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var responceBody = response.body.toString();
@@ -99,7 +99,7 @@ class _doctorHomeState extends State<doctorHome> {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const EditDoctor(),
+                      builder: (context) => EditDoctor(),
                     ),
                   );
                 },
@@ -186,15 +186,15 @@ class _doctorHomeState extends State<doctorHome> {
               ),
 
               Text(
-                Doctor['name'] ?? '',
-                style: const TextStyle(
+                Doctor['name'] == null ? '' : Doctor['name'],
+                style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Salsa',
                 ),
               ),
               Text(
-                Doctor['email'] ?? '',
+                Doctor['email'] == null ? '' : Doctor['email'],
                 style: TextStyle(
                   fontSize: 23,
                   color: Colors.grey[600],

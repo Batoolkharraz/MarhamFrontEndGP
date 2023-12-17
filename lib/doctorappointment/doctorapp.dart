@@ -6,6 +6,7 @@ import 'package:flutter_application_4/unit/appOfDate.dart';
 import 'package:http/http.dart' as http;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_application_4/unit/print.dart';
 
 class appointment extends StatefulWidget {
   final Map<String, dynamic> doctor;
@@ -185,7 +186,7 @@ class _appointmentState extends State<appointment> {
                                       child: InkWell(
                                     child: const FaIcon(FontAwesomeIcons.phone,
                                         color: Colors.white, size: 25.0),
-                                    onTap: () => {print("phone call")},
+                                    onTap: () => {printing()},
                                   )),
                                 ),
                               ]),
