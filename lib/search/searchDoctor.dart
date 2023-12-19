@@ -242,20 +242,6 @@ class _searchDoctorState extends State<searchDoctor> {
     });
   }
 
-  void sendSearch() async {
-    String id = await getTokenFromStorage();
-
-    final prescription = {};
-
-    final response = await http.post(
-      Uri.parse('https://marham-backend.onrender.com/prescription/$id'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(prescription),
-    );
-  }
-
   void createSearchList() async {
     String id = await getTokenFromStorage();
 

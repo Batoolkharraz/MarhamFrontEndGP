@@ -50,7 +50,7 @@ class CardNotAlertDialog extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                'You can not this card to make payments, Thank you',
+                'You can not make payments with this card, Thank you',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
             ),

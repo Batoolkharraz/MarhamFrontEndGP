@@ -5,6 +5,7 @@ import 'package:flutter_application_4/doctorSide/cancle.dart';
 import 'package:flutter_application_4/doctorSide/complete.dart';
 import 'package:flutter_application_4/doctorSide/today.dart';
 import 'package:flutter_application_4/doctorSide/upcoming.dart';
+import 'package:flutter_application_4/doctorSide/userProfile.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:http/http.dart' as http;
@@ -61,8 +62,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
   Future<void> getAllAppointment() async {
     try {
       String Id = await getDoctorId();
-      var url =
-          "https://marham-backend.onrender.com/schedule/byDoctor/all/$Id";
+      var url = "https://marham-backend.onrender.com/schedule/byDoctor/all/$Id";
 
       var response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -141,7 +141,6 @@ class _AppointmentPageState extends State<AppointmentPage> {
         responseBody = responseBody.trim();
         responseBody = responseBody.substring(12, responseBody.length - 1);
         var allApp = jsonDecode(responseBody);
-
         setState(() {
           todayAppointment.clear();
           todayAppointment.addAll(allApp);
@@ -185,6 +184,30 @@ class _AppointmentPageState extends State<AppointmentPage> {
     }
   }
 
+  Future<Map<String, dynamic>> getUser(String id) async {
+    var url = "https://marham-backend.onrender.com/giveme/getUser/$id";
+
+    try {
+      var response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        var responseBody = response.body.toString();
+        responseBody = responseBody.trim();
+        var user = jsonDecode(responseBody);
+
+        // Return the user as a Map<String, dynamic>
+        return user;
+      } else {
+        print("Failed to load user. Status code: ${response.statusCode}");
+        // Return an empty map if there's an error
+        return {};
+      }
+    } catch (error) {
+      print("Error loading user: $error");
+      // Return an empty map if there's an error
+      return {};
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -223,8 +246,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 color: Colors.white,
                 child: TabBar(
                   physics: const ClampingScrollPhysics(),
-                  padding:
-                      const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
+                  padding: const EdgeInsets.only(
+                      top: 10, left: 10, right: 10, bottom: 10),
                   unselectedLabelColor: const Color(0xFF0561DD),
                   indicatorSize: TabBarIndicatorSize.label,
                   indicator: BoxDecoration(
@@ -236,8 +259,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
                         height: 50,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            border:
-                                Border.all(color: const Color(0xFF0561DD), width: 1)),
+                            border: Border.all(
+                                color: const Color(0xFF0561DD), width: 1)),
                         child: const Align(
                           alignment: Alignment.center,
                           child: Text(
@@ -256,8 +279,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
                         height: 50,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            border:
-                                Border.all(color: const Color(0xFF0561DD), width: 1)),
+                            border: Border.all(
+                                color: const Color(0xFF0561DD), width: 1)),
                         child: const Align(
                           alignment: Alignment.center,
                           child: Text(
@@ -276,8 +299,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
                         height: 50,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            border:
-                                Border.all(color: const Color(0xFF0561DD), width: 1)),
+                            border: Border.all(
+                                color: const Color(0xFF0561DD), width: 1)),
                         child: const Align(
                           alignment: Alignment.center,
                           child: Text(
@@ -296,8 +319,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
                         height: 50,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            border:
-                                Border.all(color: const Color(0xFF0561DD), width: 1)),
+                            border: Border.all(
+                                color: const Color(0xFF0561DD), width: 1)),
                         child: const Align(
                           alignment: Alignment.center,
                           child: Text(
@@ -361,6 +384,18 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                               userName: docName,
                                               date: date,
                                               time: time,
+                                              onTap: () async {
+                                                Map<String, dynamic> userData =
+                                                    (await getUser(
+                                                        appointments['userId'])) ;
+                                                Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        userProfile(
+                                                            user: userData),
+                                                  ),
+                                                );
+                                              },
                                             );
                                           } else if (snapshot.connectionState ==
                                               ConnectionState.waiting) {
@@ -459,8 +494,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            EdgeInsets
-                                                                .only(
+                                                            EdgeInsets.only(
                                                                 bottom: 25),
                                                         child: SizedBox(
                                                           width: 70,
@@ -590,8 +624,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            EdgeInsets
-                                                                .only(
+                                                            EdgeInsets.only(
                                                                 bottom: 25),
                                                         child: SizedBox(
                                                           width: 70,
@@ -710,8 +743,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            EdgeInsets
-                                                                .only(
+                                                            EdgeInsets.only(
                                                                 bottom: 25),
                                                         child: SizedBox(
                                                           width: 70,

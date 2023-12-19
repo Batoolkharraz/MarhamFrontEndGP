@@ -140,46 +140,49 @@ class _userProfileState extends State<userProfile> {
             ),
             const SizedBox(height: 15),
             prescriptions.isEmpty
-                ? Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 100),
-                      child: Column(
-                        children: [
-                          Container(
-                            child: Image.asset(
-                              'assets/patient_report.png',
+                ? Expanded(
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 100),
+                        child: Column(
+                          children: [
+                            Container(
+                              child: Image.asset(
+                                'assets/patient_report.png',
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
+                            const SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   )
-                : SizedBox(
-                    height: 650, // Set a specific height for the expanded part
+                : Expanded(
                     child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: prescriptions.length,
                       itemBuilder: (context, index) {
-                       // print(prescriptions[index]['medicines']);
                         return patientRec(
                           diagnosis: prescriptions[index]['diagnosis'],
                           from: prescriptions[index]['dateFrom'],
-                          onTap:(){
-                            
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => medicineSchedule(
-                                    medicines: prescriptions[index]['medicines']),
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => medicineSchedule(
+                                  medicines: prescriptions[index]['medicines'],
                                 ),
-                              );
-                          }
+                              ),
+                            );
+                          },
                         );
                       },
                     ),
                   ),
+            const SizedBox(
+                height:
+                    15), // Add some space between the list and the GestureDetector
             GestureDetector(
               onTap: () {
                 Navigator.of(context).push(
@@ -231,6 +234,9 @@ class _userProfileState extends State<userProfile> {
                 ),
               ),
             ),
+            SizedBox(
+                height:
+                    15),
           ],
         ),
       ),

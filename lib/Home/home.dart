@@ -126,21 +126,6 @@ class _homeState extends State<home> {
       ),
     );
   }
-<<<<<<< HEAD
-Future<void> getcurrentUser() async {
-    try {
-      var user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        setState(() {
-          signedinuser = user;
-          checktime();
-        });
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-=======
 // Future<void> getcurrentUser() async {
 //     try {
 //       var user = await FirebaseAuth.instance.currentUser;
@@ -155,7 +140,6 @@ Future<void> getcurrentUser() async {
 //     }
 //   }
   
->>>>>>> c1b166e4ceff4cb85d25fa9f426b79da963bb9d9
   @override
   
   void initState() {
