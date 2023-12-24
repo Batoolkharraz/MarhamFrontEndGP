@@ -24,16 +24,29 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   late User signedinuser;
 
-  Future getDoctorrInfo(String id) async {
-    var url = "https://marham-backend.onrender.com/doctor/find/$id";
-    var response = await http.get(Uri.parse(url));
+  Future<Map<String, dynamic>> getDoctorInfo(String email) async {
+    final Email = {
+      "email": email,
+    };
+
+    final response = await http.post(
+      Uri.parse('https://marham-backend.onrender.com/doctor/getDocByEmail/12'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(Email),
+    );
+
     if (response.statusCode == 200) {
-      var responceBody = response.body.toString();
-      responceBody = responceBody.trim();
-      var user = jsonDecode(responceBody);
-      setState(() {
-        Doctor.addAll(user);
-      });
+      var responseBody = response.body.toString();
+      responseBody = responseBody.trim();
+      var user = jsonDecode(responseBody);
+      print(user);
+      return user;
+    } else {
+      print('no doctor info found');
+      // You may want to throw an exception or handle the error accordingly
+      throw Exception('Failed to load doctor info');
     }
   }
 
@@ -90,17 +103,43 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: Container(
         child: ListView.builder(
-          // Set reverse to true
           itemCount: second.length,
           itemBuilder: (context, index) {
-            final reversedIndex = second.length - 1 - index;
-            return PersonChat(email: second[reversedIndex]);
+            var reversedIndex = second.length - 1 - index;
+
+            return FutureBuilder<Map<String, dynamic>>(
+              future: getDoctorInfo(second[reversedIndex]),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  // You can return a loading indicator while data is being fetched
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  // Handle errors
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  var doctorInfo = snapshot.data!;
+                  // If data is successfully fetched, build the PersonChat
+                  
+                  return PersonChat(
+                      email: doctorInfo['name'],
+                      image: doctorInfo['image']['secure_url']); // Replace with the actual property you need
+                }
+              },
+            );
           },
         ),
       ),
     );
   }
 
+/*ListView.builder(
+          // Set reverse to true
+          itemCount: second.length,
+          itemBuilder: (context, index) {
+            final reversedIndex = second.length - 1 - index;
+            return PersonChat(email: second[reversedIndex]);
+          },
+        ), */
   Future<List<String>> getAllUsers() async {
     List<String> documentIds = [];
 

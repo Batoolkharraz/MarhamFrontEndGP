@@ -13,8 +13,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_application_4/notification/local_notifications.dart';
+
 class TimerManager {
- Timer? _timer;
+  Timer? _timer;
 
   void startTimer() {
     // Start a timer that executes the callback every second
@@ -24,16 +25,14 @@ class TimerManager {
       // You can perform any action here on each timer tick
     });
   }
+
   void pauseTimer() {
-  
     // Set _timer to null to stop the current timer
-     if (_timer != null) {
+    if (_timer != null) {
       print("pause");
-      _timer?.cancel();// Resume the timer
+      _timer?.cancel(); // Resume the timer
     }
-    
-  
-  }  
+  }
 }
 
 class UserDaily extends StatefulWidget {
@@ -44,10 +43,10 @@ class UserDaily extends StatefulWidget {
 }
 
 class _UserDailyState extends State<UserDaily> {
-    final TimerManager timerManager = TimerManager();
+  final TimerManager timerManager = TimerManager();
 
   final storage = const FlutterSecureStorage();
-  List <dynamic>allAppointment = [];
+  List<dynamic> allAppointment = [];
   List doneAppointment = [];
   List cancelAppointment = [];
   List todayAppointment = [];
@@ -86,10 +85,12 @@ class _UserDailyState extends State<UserDaily> {
         responseBody = responseBody.trim();
         responseBody = responseBody.substring(12, responseBody.length - 1);
         var allApp = jsonDecode(responseBody);
-        setState(() {
-          allAppointment.clear();
-          allAppointment.addAll(allApp);
-        });
+        if (mounted) {
+          setState(() {
+            allAppointment.clear();
+            allAppointment.addAll(allApp);
+          });
+        }
       }
     } catch (error) {
       print("Error fetching appointments: $error");
@@ -100,8 +101,7 @@ class _UserDailyState extends State<UserDaily> {
   Future<void> getDoneAppointment() async {
     try {
       String Id = await getTokenFromStorage();
-      var url =
-          "https://marham-backend.onrender.com/schedule/byUser/done/$Id";
+      var url = "https://marham-backend.onrender.com/schedule/byUser/done/$Id";
 
       var response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -109,11 +109,12 @@ class _UserDailyState extends State<UserDaily> {
         responseBody = responseBody.trim();
         responseBody = responseBody.substring(19, responseBody.length - 1);
         var allApp = jsonDecode(responseBody);
-
-        setState(() {
-          doneAppointment.clear();
-          doneAppointment.addAll(allApp);
-        });
+        if (mounted) {
+          setState(() {
+            doneAppointment.clear();
+            doneAppointment.addAll(allApp);
+          });
+        }
       }
     } catch (error) {
       print("Error fetching done appointments: $error");
@@ -133,11 +134,12 @@ class _UserDailyState extends State<UserDaily> {
         responseBody = responseBody.trim();
         responseBody = responseBody.substring(19, responseBody.length - 1);
         var allApp = jsonDecode(responseBody);
-
-        setState(() {
-          cancelAppointment.clear();
-          cancelAppointment.addAll(allApp);
-        });
+        if (mounted) {
+          setState(() {
+            cancelAppointment.clear();
+            cancelAppointment.addAll(allApp);
+          });
+        }
       }
     } catch (error) {
       print("Error fetching cancel appointments: $error");
@@ -148,8 +150,7 @@ class _UserDailyState extends State<UserDaily> {
   Future<void> getTodayAppointment() async {
     try {
       String Id = await getTokenFromStorage();
-      var url =
-          "https://marham-backend.onrender.com/schedule/byUser/today/$Id";
+      var url = "https://marham-backend.onrender.com/schedule/byUser/today/$Id";
 
       var response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -157,10 +158,12 @@ class _UserDailyState extends State<UserDaily> {
         responseBody = responseBody.trim();
         responseBody = responseBody.substring(12, responseBody.length - 1);
         var allApp = jsonDecode(responseBody);
-        setState(() {
-          todayAppointment.clear();
-          todayAppointment.addAll(allApp);
-        });
+        if (mounted) {
+          setState(() {
+            todayAppointment.clear();
+            todayAppointment.addAll(allApp);
+          });
+        }
       }
     } catch (error) {
       print("Error fetching today appointments: $error");
@@ -186,8 +189,8 @@ class _UserDailyState extends State<UserDaily> {
         // Extract date and time from the response
         String date = app['scheduleByDay']['date'];
         String time = app['scheduleByDay']['timeSlots']['time'];
-        
-      //  checktime();
+
+        //  checktime();
         // Extract doctor name from the response
         String docName = responseData['docName'];
         return {'date': date, 'time': time, 'docName': docName};
@@ -200,6 +203,7 @@ class _UserDailyState extends State<UserDaily> {
       return {};
     }
   }
+
   listenToNotifications() {
     print("Listening to notification");
     LocalNotifications.onClickNotification.stream.listen((event) {
@@ -207,6 +211,7 @@ class _UserDailyState extends State<UserDaily> {
       Navigator.pushNamed(context, '/another', arguments: event);
     });
   }
+
   @override
   void initState() {
     super.initState();
@@ -221,47 +226,46 @@ class _UserDailyState extends State<UserDaily> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-  toolbarHeight: 90,
-  backgroundColor: const Color(0xFF0561DD),
-  elevation: 1,
-  title: Center(
-    child: Row(
-      children: [
-        SizedBox(width: 160),
-        Text(
-          "Appointment",
-          style: TextStyle(
-            fontSize: 30,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Salsa',
+        toolbarHeight: 90,
+        backgroundColor: const Color(0xFF0561DD),
+        elevation: 1,
+        title: Center(
+          child: Row(
+            children: [
+              SizedBox(width: 160),
+              Text(
+                "Appointment",
+                style: TextStyle(
+                  fontSize: 30,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Salsa',
+                ),
+              ),
+              SizedBox(width: 100),
+              Center(
+                child: InkWell(
+                  child: FaIcon(FontAwesomeIcons.bell,
+                      color: Colors.white, size: 25.0),
+                  onTap: () {
+                    timerManager.startTimer();
+                  },
+                ),
+              ),
+              Center(
+                child: InkWell(
+                  child: FaIcon(FontAwesomeIcons.bellSlash,
+                      color: Colors.white, size: 25.0),
+                  onTap: () {
+                    print("Pause Timer Button Tapped");
+                    timerManager.pauseTimer();
+                  },
+                ),
+              ),
+            ],
           ),
         ),
-        SizedBox(width: 100),
-        Center(
-          child: InkWell(
-            child: FaIcon(FontAwesomeIcons.bell, color: Colors.white, size: 25.0),
-            onTap: () {
-              timerManager.startTimer();
-              
-            },
-          ),
-        ),
-      Center(
-          child: InkWell(
-            child: FaIcon(FontAwesomeIcons.bellSlash, color: Colors.white, size: 25.0),
-            onTap: () {
-              print("Pause Timer Button Tapped");
-               timerManager.pauseTimer();
-            },
-          ),
-        ),
-        
-      ],
-    ),
-  ),
-),
-
+      ),
       body: DefaultTabController(
         length: 4,
         child: Column(
@@ -272,8 +276,8 @@ class _UserDailyState extends State<UserDaily> {
                 color: Colors.white,
                 child: TabBar(
                   physics: const ClampingScrollPhysics(),
-                  padding:
-                      const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
+                  padding: const EdgeInsets.only(
+                      top: 10, left: 10, right: 10, bottom: 10),
                   unselectedLabelColor: const Color(0xFF0561DD),
                   indicatorSize: TabBarIndicatorSize.label,
                   indicator: BoxDecoration(
@@ -285,8 +289,8 @@ class _UserDailyState extends State<UserDaily> {
                         height: 50,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            border:
-                                Border.all(color: const Color(0xFF0561DD), width: 1)),
+                            border: Border.all(
+                                color: const Color(0xFF0561DD), width: 1)),
                         child: const Align(
                           alignment: Alignment.center,
                           child: Text(
@@ -302,12 +306,11 @@ class _UserDailyState extends State<UserDaily> {
                     ),
                     Tab(
                       child: Container(
-                        
                         height: 50,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            border:
-                                Border.all(color: const Color(0xFF0561DD), width: 1)),
+                            border: Border.all(
+                                color: const Color(0xFF0561DD), width: 1)),
                         child: const Align(
                           alignment: Alignment.center,
                           child: Text(
@@ -326,8 +329,8 @@ class _UserDailyState extends State<UserDaily> {
                         height: 50,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            border:
-                                Border.all(color: const Color(0xFF0561DD), width: 1)),
+                            border: Border.all(
+                                color: const Color(0xFF0561DD), width: 1)),
                         child: const Align(
                           alignment: Alignment.center,
                           child: Text(
@@ -346,8 +349,8 @@ class _UserDailyState extends State<UserDaily> {
                         height: 50,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            border:
-                                Border.all(color: const Color(0xFF0561DD), width: 1)),
+                            border: Border.all(
+                                color: const Color(0xFF0561DD), width: 1)),
                         child: const Align(
                           alignment: Alignment.center,
                           child: Text(
@@ -386,51 +389,47 @@ class _UserDailyState extends State<UserDaily> {
                           child: ListView.builder(
                             itemBuilder: (context, int i) {
                               if (todayAppointment.isNotEmpty) {
-                                var appointments =
-                                    todayAppointment[i];
-                                if (appointments != null ) {
+                                var appointments = todayAppointment[i];
+                                if (appointments != null) {
                                   return Column(
                                     children: [
-                                        FutureBuilder<Map<String, String>>(
-                                          future: getAppInfo(
-                                            appointments['bookId'],
-                                            appointments['doctorId'],
-                                          ),
-                                          builder: (context, snapshot) {
-                                            if (snapshot.connectionState ==
-                                                    ConnectionState.done &&
-                                                snapshot.hasData) {
-                                              String docName =
-                                                  snapshot.data!['docName'] ??
-                                                      '';
-                                              String date =
-                                                  snapshot.data!['date'] ?? '';
-                                              String time =
-                                                  snapshot.data!['time'] ?? '';
-                                              return todayUser(
-                                                id: appointments['bookId'],
-                                                doctorName: docName,
-                                                date: date,
-                                                time: time,
-                                              );
-                                            } else if (snapshot
-                                                    .connectionState ==
-                                                ConnectionState.waiting) {
-                                              // While the future is not complete, you can return a loading indicator or placeholder
-                                              return const Center(
-                                                child:
-                                                    CircularProgressIndicator(),
-                                              );
-                                              // Replace with your loading indicator
-                                            } else if (snapshot.data == null) {
-                                              // Once the delay is complete, display the image and text
-                                              return Container();
-                                            } else {
-                                              return Container(
-                                              );
-                                            }
-                                          },
+                                      FutureBuilder<Map<String, String>>(
+                                        future: getAppInfo(
+                                          appointments['bookId'],
+                                          appointments['doctorId'],
                                         ),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                                  ConnectionState.done &&
+                                              snapshot.hasData) {
+                                            String docName =
+                                                snapshot.data!['docName'] ?? '';
+                                            String date =
+                                                snapshot.data!['date'] ?? '';
+                                            String time =
+                                                snapshot.data!['time'] ?? '';
+                                            return todayUser(
+                                              id: appointments['bookId'],
+                                              doctorName: docName,
+                                              date: date,
+                                              time: time,
+                                            );
+                                          } else if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            // While the future is not complete, you can return a loading indicator or placeholder
+                                            return const Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            );
+                                            // Replace with your loading indicator
+                                          } else if (snapshot.data == null) {
+                                            // Once the delay is complete, display the image and text
+                                            return Container();
+                                          } else {
+                                            return Container();
+                                          }
+                                        },
+                                      ),
                                     ],
                                   );
                                 } else {
@@ -461,101 +460,95 @@ class _UserDailyState extends State<UserDaily> {
                             ],
                           ),
                         )
-                      :
-                      Container(
+                      : Container(
                           child: ListView.builder(
                             itemBuilder: (context, int i) {
                               if (allAppointment.isNotEmpty) {
-                                
-        Map<String, dynamic> appointmentInfo = allAppointment[i];
+                                Map<String, dynamic> appointmentInfo =
+                                    allAppointment[i];
                                 return Column(
                                   children: [
-                                    
-                                      FutureBuilder<Map<String, String>>(
-                                        future: getAppInfo(
-                                            appointmentInfo['bookId'],
-                                            appointmentInfo['doctorId']),
-                                        builder: (context, snapshot) {
-                                          if (snapshot.connectionState ==
-                                                  ConnectionState.done &&
-                                              snapshot.hasData) {
-                                            String doctorName =
-                                                snapshot.data!['docName'] ??
-                                                    '';
-                                            String date =
-                                                snapshot.data!['date'] ?? '';
-                                            String time =
-                                                snapshot.data!['time'] ?? '';
-                                            return schedualupcomplete(
-                                              bookId: appointmentInfo
-                                                  ['bookId'],
-                                              doctorId: appointmentInfo
-                                                  ['doctorId'],
-                                              doctorName: doctorName,
-                                              date: date,
-                                              time: time,
-                                            );
-                                          } else if (snapshot.connectionState ==
-                                              ConnectionState.waiting) {
-                                            // While the future is not complete, you can return a loading indicator or placeholder
-                                            return const Center(
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Column(
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsets
-                                                                .only(
-                                                                bottom: 25),
-                                                        child: SizedBox(
-                                                          width: 70,
-                                                        ),
+                                    FutureBuilder<Map<String, String>>(
+                                      future: getAppInfo(
+                                          appointmentInfo['bookId'],
+                                          appointmentInfo['doctorId']),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.connectionState ==
+                                                ConnectionState.done &&
+                                            snapshot.hasData) {
+                                          String doctorName =
+                                              snapshot.data!['docName'] ?? '';
+                                          String date =
+                                              snapshot.data!['date'] ?? '';
+                                          String time =
+                                              snapshot.data!['time'] ?? '';
+                                          return schedualupcomplete(
+                                            bookId: appointmentInfo['bookId'],
+                                            doctorId:
+                                                appointmentInfo['doctorId'],
+                                            doctorName: doctorName,
+                                            date: date,
+                                            time: time,
+                                          );
+                                        } else if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          // While the future is not complete, you can return a loading indicator or placeholder
+                                          return const Center(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding: EdgeInsets.only(
+                                                          bottom: 25),
+                                                      child: SizedBox(
+                                                        width: 70,
                                                       ),
-                                                      SizedBox(
-                                                        width:
-                                                            40, // Adjust the width as needed
-                                                        height:
-                                                            40, // Adjust the height as needed
-                                                        child:
-                                                            CircularProgressIndicator(),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
+                                                    ),
+                                                    SizedBox(
+                                                      width:
+                                                          40, // Adjust the width as needed
+                                                      height:
+                                                          40, // Adjust the height as needed
+                                                      child:
+                                                          CircularProgressIndicator(),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                          // Replace with your loading indicator
+                                        } else if (snapshot.data == null) {
+                                          // Once the delay is complete, display the image and text
+                                          return Column(
+                                            children: [
+                                              Container(
+                                                child: Image.asset(
+                                                    'assets/appointment.png'),
                                               ),
-                                            );
-                                            // Replace with your loading indicator
-                                          } else if (snapshot.data == null) {
-                                            // Once the delay is complete, display the image and text
-                                            return Column(
+                                            ],
+                                          );
+                                        } else {
+                                          return Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 150),
+                                            child: Column(
                                               children: [
                                                 Container(
                                                   child: Image.asset(
                                                       'assets/appointment.png'),
                                                 ),
                                               ],
-                                            );
-                                          } else {
-                                            return Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 150),
-                                              child: Column(
-                                                children: [
-                                                  Container(
-                                                    child: Image.asset(
-                                                        'assets/appointment.png'),
-                                                  ),
-                                                ],
-                                              ),
-                                            );
-                                          }
-                                        },
-                                      ),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    ),
                                   ],
                                 );
                               } else {
@@ -639,8 +632,7 @@ class _UserDailyState extends State<UserDaily> {
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            EdgeInsets
-                                                                .only(
+                                                            EdgeInsets.only(
                                                                 bottom: 25),
                                                         child: SizedBox(
                                                           width: 70,
@@ -780,8 +772,7 @@ class _UserDailyState extends State<UserDaily> {
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            EdgeInsets
-                                                                .only(
+                                                            EdgeInsets.only(
                                                                 bottom: 25),
                                                         child: SizedBox(
                                                           width: 70,
