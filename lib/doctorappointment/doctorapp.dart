@@ -257,8 +257,9 @@ class _appointmentState extends State<appointment> {
                       onTap: () => {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => ChatScreen(
-                                ruseremail: widget.doctor['name'],
-                                image: widget.doctor['image']['secure_url'])))
+                                ruseremail: widget.doctor['email'],
+                                image: widget.doctor['image']['secure_url'],
+                                name:widget.doctor['name'],)))
                       },
                     ),
                     const Padding(

@@ -9,11 +9,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class ChatScreen extends StatefulWidget {
   final String ruseremail;
   final String image;
-
+  final String name;
   const ChatScreen({
     Key? key,
     required this.ruseremail,
     required this.image,
+    required this. name,
   }) : super(key: key);
 
   @override
@@ -122,7 +123,7 @@ String getChatRoomId() {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 30),
                   child: Text(
-                    _email,
+                    widget.name,
                     style: const TextStyle(
                       fontSize: 28,
                       color: Color(0xFF0561DD),

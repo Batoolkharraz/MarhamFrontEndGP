@@ -121,8 +121,9 @@ class _ChatPageState extends State<ChatPage> {
                   // If data is successfully fetched, build the PersonChat
                   
                   return PersonChat(
-                      email: doctorInfo['name'],
-                      image: doctorInfo['image']['secure_url']); // Replace with the actual property you need
+                      email: doctorInfo['email'],
+                      image: doctorInfo['image']['secure_url'],
+                      name:doctorInfo['name']); // Replace with the actual property you need
                 }
               },
             );
