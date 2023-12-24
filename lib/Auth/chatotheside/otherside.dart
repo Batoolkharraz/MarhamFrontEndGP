@@ -6,19 +6,19 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
  final FirebaseFirestore firestore = FirebaseFirestore.instance;
    const storage = FlutterSecureStorage(); 
-class ChatScreen extends StatefulWidget {
+class ChatScreen2 extends StatefulWidget {
   final String ruseremail;
 
-  const ChatScreen({
+  const ChatScreen2({
     Key? key,
     required this.ruseremail,
   }) : super(key: key);
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
+  State<ChatScreen2> createState() => _ChatScreen2State();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ChatScreen2State extends State<ChatScreen2> {
 
   final TextEditingController messageController = TextEditingController();
  
@@ -49,16 +49,17 @@ late User signedinuser;
    
 String getChatRoomId() {
   // Create a unique chat room ID based on sender and receiver emails
-  List<String?> participants = [signedinuser.email, _email];
+  List<String?> participants = [_email,signedinuser.email];
+  
   participants.sort(); // Sort emails to ensure consistency
   return participants.where((e) => e != null).join('_') ?? '';
-  print("from mm+ ${signedinuser.email}");
+ 
 }
  
   @override
   Widget build(BuildContext context) {
     String chatRoomId = getChatRoomId();
-    print("chat room id:"+chatRoomId);
+     print("from mm+ ${chatRoomId}");
     return Scaffold(
       // appBar: AppBar(
          

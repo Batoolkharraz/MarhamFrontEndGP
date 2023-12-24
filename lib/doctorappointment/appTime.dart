@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/doctorappointment/workinghour.dart';
+import 'package:flutter_application_4/unit/getdates.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 
+                        MyClass obj=MyClass();
 class appTime extends StatefulWidget {
   final String docId;
   final String date;
@@ -52,7 +54,7 @@ class _appTimeState extends State<appTime> {
     );
 
     if (response.statusCode == 200) {
-      if (mounted) {
+      if (mounted) {obj.printing();
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             backgroundColor: Color(0xFF0561DD),
