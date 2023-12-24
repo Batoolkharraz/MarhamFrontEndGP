@@ -124,7 +124,7 @@ class medicineList extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const Text(
-                      'By : Dr.',
+                      'By : ',
                       style: TextStyle(
                         fontFamily: 'salsa',
                         fontSize: 20,

@@ -1,14 +1,19 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/chat/chatnumber.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
 
 const storage = FlutterSecureStorage();
 final FirebaseFirestore firestore = FirebaseFirestore.instance;
- List<String> userDocumentIds = [];
- List<String> second=[];
+List<String> userDocumentIds = [];
+List<String> second = [];
+List<String> Doctor = [];
+
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
 
@@ -18,6 +23,19 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   late User signedinuser;
+
+  Future getDoctorrInfo(String id) async {
+    var url = "https://marham-backend.onrender.com/doctor/find/$id";
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var responceBody = response.body.toString();
+      responceBody = responceBody.trim();
+      var user = jsonDecode(responceBody);
+      setState(() {
+        Doctor.addAll(user);
+      });
+    }
+  }
 
   @override
   void initState() {
@@ -39,6 +57,7 @@ class _ChatPageState extends State<ChatPage> {
       print(e);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,67 +88,67 @@ class _ChatPageState extends State<ChatPage> {
           onPressed: () => {Navigator.of(context).pop()},
         ),
       ),
-      body: 
-       Container(
-  child: ListView.builder(
-     // Set reverse to true
-    itemCount: second.length,
-    itemBuilder: (context, index) {
-      final reversedIndex = second.length - 1 - index;
-      return PersonChat(email: second[reversedIndex]);
-    },
-  ),
-),
-
+      body: Container(
+        child: ListView.builder(
+          // Set reverse to true
+          itemCount: second.length,
+          itemBuilder: (context, index) {
+            final reversedIndex = second.length - 1 - index;
+            return PersonChat(email: second[reversedIndex]);
+          },
+        ),
+      ),
     );
   }
 
-Future<List<String>> getAllUsers() async {
-  List<String> documentIds = [];
+  Future<List<String>> getAllUsers() async {
+    List<String> documentIds = [];
 
-  try {
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('sender-reciver').get();
+    try {
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('sender-reciver').get();
 
-    if (querySnapshot.docs.isNotEmpty) {
-      // Iterate through all documents in the collection
-      for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
-        // Access the document ID and data of each document
-        String documentId = documentSnapshot.id;
-        Map<String, dynamic> userData = documentSnapshot.data() as Map<String, dynamic>;
-        // Add the document ID to the list
-        documentIds.add(documentId);
+      if (querySnapshot.docs.isNotEmpty) {
+        // Iterate through all documents in the collection
+        for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
+          // Access the document ID and data of each document
+          String documentId = documentSnapshot.id;
+          Map<String, dynamic> userData =
+              documentSnapshot.data() as Map<String, dynamic>;
+          // Add the document ID to the list
+          documentIds.add(documentId);
+        }
+      } else {
+        print('No users found in the collection.');
       }
-    } else {
-      print('No users found in the collection.');
+    } catch (e) {
+      print('Error retrieving users: $e');
     }
-  } catch (e) {
-    print('Error retrieving users: $e');
-  }
 
-  // Return the list of document IDs
+    // Return the list of document IDs
     print('all Document IDa: $documentIds');
-  return documentIds;
-}
- Future<void> _fetchUserDocumentIds() async {
-  List<String> secondParts = [];
-      List<String> ids = await getAllUsers();
-    List<String> sos = ids.where((str) => str.startsWith(signedinuser.email!)).toList();
-    for (String email in sos) {
-    // Split each email at the underscore character
-    List<String> parts = email.split('_');
-
-    // Check if there is a second part before printing
-    if (parts.length > 1) {
-      secondParts.add(parts[1]);
-      
-    } else {
-      print('Not enough parts after split for $email.');
-    }
-  
+    return documentIds;
   }
+
+  Future<void> _fetchUserDocumentIds() async {
+    List<String> secondParts = [];
+    List<String> ids = await getAllUsers();
+    List<String> sos =
+        ids.where((str) => str.startsWith(signedinuser.email!)).toList();
+    for (String email in sos) {
+      // Split each email at the underscore character
+      List<String> parts = email.split('_');
+
+      // Check if there is a second part before printing
+      if (parts.length > 1) {
+        secondParts.add(parts[1]);
+      } else {
+        print('Not enough parts after split for $email.');
+      }
+    }
     print(' $secondParts');
-      setState(() {
+    setState(() {
       second = secondParts;
     });
-}
+  }
 }

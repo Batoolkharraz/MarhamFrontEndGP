@@ -52,88 +52,85 @@ class _profileState extends State<profile> {
     }
   }
 
-Future<void> getPrescription() async {
-  try {
-    String id = await getTokenFromStorage();
-    var url = "https://marham-backend.onrender.com/prescription/forUser/$id";
-    var response = await http.get(Uri.parse(url));
+  Future<void> getPrescription() async {
+    try {
+      String id = await getTokenFromStorage();
+      var url = "https://marham-backend.onrender.com/prescription/forUser/$id";
+      var response = await http.get(Uri.parse(url));
 
-    if (response.statusCode == 200) {
-      var responseBody = response.body.toString();
-      responseBody = responseBody.trim();
-      responseBody = responseBody.substring(17, responseBody.length - 1);
-      var pre = jsonDecode(responseBody);
+      if (response.statusCode == 200) {
+        var responseBody = response.body.toString();
+        responseBody = responseBody.trim();
+        responseBody = responseBody.substring(17, responseBody.length - 1);
+        var pre = jsonDecode(responseBody);
 
-      // Convert date strings to DateTime and sort by dateFrom in descending order
-      pre.sort((a, b) {
-        DateTime dateA = DateFormat('MM/dd/yyyy').parse(a['dateFrom']);
-        DateTime dateB = DateFormat('MM/dd/yyyy').parse(b['dateFrom']);
-        return dateB.compareTo(dateA);
-      });
-
-      // Format the sorted date as dd/mm/yyyy
-      DateFormat fromFormat = DateFormat('dd/MM/yyyy');
-      for (var prescription in pre) {
-        prescription['dateFrom'] = fromFormat
-            .format(DateFormat('MM/dd/yyyy').parse(prescription['dateFrom']));
-        prescription['dateTo'] = fromFormat
-            .format(DateFormat('MM/dd/yyyy').parse(prescription['dateTo']));
-      }
-
-      // Check if the widget is still mounted before calling setState
-      if (mounted) {
-        setState(() {
-          prescriptions.clear();
-          prescriptions.addAll(pre);
+        // Convert date strings to DateTime and sort by dateFrom in descending order
+        pre.sort((a, b) {
+          DateTime dateA = DateFormat('MM/dd/yyyy').parse(a['dateFrom']);
+          DateTime dateB = DateFormat('MM/dd/yyyy').parse(b['dateFrom']);
+          return dateB.compareTo(dateA);
         });
+
+        // Format the sorted date as dd/mm/yyyy
+        DateFormat fromFormat = DateFormat('dd/MM/yyyy');
+        for (var prescription in pre) {
+          prescription['dateFrom'] = fromFormat
+              .format(DateFormat('MM/dd/yyyy').parse(prescription['dateFrom']));
+          prescription['dateTo'] = fromFormat
+              .format(DateFormat('MM/dd/yyyy').parse(prescription['dateTo']));
+        }
+        // Check if the widget is still mounted before calling setState
+        if (mounted) {
+          setState(() {
+            prescriptions.clear();
+            prescriptions.addAll(pre);
+        print(prescriptions);
+          });
+        }
       }
+    } catch (e) {
+      // Handle the error, e.g., print or log it
+      print('Error fetching prescriptions: $e');
     }
-  } catch (e) {
-    // Handle the error, e.g., print or log it
-    print('Error fetching prescriptions: $e');
   }
-}
 
+  Future getUserInfo() async {
+    String userid = await getTokenFromStorage();
+    var url = "https://marham-backend.onrender.com/giveme/getUser/$userid";
 
-Future getUserInfo() async {
-  String userid = await getTokenFromStorage();
-  var url = "https://marham-backend.onrender.com/giveme/getUser/$userid";
-  
-  try {
-    var response = await http.get(Uri.parse(url));
+    try {
+      var response = await http.get(Uri.parse(url));
 
-    if (response.statusCode == 200) {
-      var responceBody = response.body.toString();
-      responceBody = responceBody.trim();
-      var user = jsonDecode(responceBody);
+      if (response.statusCode == 200) {
+        var responceBody = response.body.toString();
+        responceBody = responceBody.trim();
+        var user = jsonDecode(responceBody);
 
-      // Check if the widget is still mounted before calling setState
-      if (mounted) {
-        setState(() {
-          User.addAll(user);
-        });
+        // Check if the widget is still mounted before calling setState
+        if (mounted) {
+          setState(() {
+            User.addAll(user);
+          });
+        }
       }
+    } catch (e) {
+      // Handle the error, e.g., print or log it
+      print('Error fetching user info: $e');
     }
-  } catch (e) {
-    // Handle the error, e.g., print or log it
-    print('Error fetching user info: $e');
   }
-}
-
 
   Future<String> getDoctor(String docId) async {
     var url =
-        "https://marham-backend.onrender.com/doctor/651c58f32cd651e7a27ac12f";
+        "https://marham-backend.onrender.com/doctor/$docId";
     var response = await http.get(Uri.parse(url));
     var responceBody = response.body.toString();
     responceBody = responceBody.trim();
-    responceBody = responceBody.substring(10, responceBody.length - 1);
     var doc = jsonDecode(responceBody);
 
     return doc['name'];
   }
 
-Future getAppointment() async {
+  Future getAppointment() async {
     String id = await getTokenFromStorage();
     var url = "https://marham-backend.onrender.com/prescription/forUser/$id";
     var response = await http.get(Uri.parse(url));
@@ -166,11 +163,9 @@ Future getAppointment() async {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       backgroundColor: const Color.fromARGB(255, 231, 233, 237),
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -219,7 +214,8 @@ Future getAppointment() async {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: const Color(0xFF0561DD), // Blue border color
+                              color:
+                                  const Color(0xFF0561DD), // Blue border color
                               width: 3, // Adjust the border width as needed
                             ),
                             boxShadow: [
@@ -295,17 +291,15 @@ Future getAppointment() async {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //title
-                     
-                          const Text(
-                            'Personal Information',
-                            style: TextStyle(
-                              color: Color(0xFF0561DD),
-                              fontSize: 28,
-                              fontFamily: 'salsa',
-                            ),
-                          ),
-                          
-                      
+
+                      const Text(
+                        'Personal Information',
+                        style: TextStyle(
+                          color: Color(0xFF0561DD),
+                          fontSize: 28,
+                          fontFamily: 'salsa',
+                        ),
+                      ),
 
                       const SizedBox(
                         height: 10,
@@ -313,92 +307,119 @@ Future getAppointment() async {
 
                       //appointment
                       User.isEmpty
-              ? const SizedBox(
-                  height: 270,
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ):
-                      SizedBox(
-                        height:
-                            210, // Set a fixed height or use a different value based on your design
-                        child: ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: 1,
-                          itemBuilder: (context, index) {
-                            //  final appointment = appointmentList[index];
-                            return Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child:Container(
-                                
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                            width: 2,
-                            color: const Color(0xFF0561DD),
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                                ),
-                                
-                                child: Column(
-                                  children: [
-                                    const SizedBox(height: 25,),
-                                    Row(
-                                      children: [
-                                        const SizedBox(width: 25,),
-                                        const FaIcon(FontAwesomeIcons.user,
-                                  color: Colors.blue, size: 30.0),
-                                   const SizedBox(width: 10,),
-                                  Text(User['username']?? 'not found',
-                                  style: const TextStyle(
-                               color: Colors.black,
-                                fontSize: 26,
-                                fontFamily: 'salsa',
+                          ? const SizedBox(
+                              height: 270,
+                              child: Center(
+                                child: CircularProgressIndicator(),
                               ),
-                                  )
-                                      ],
-                                    ),
-                                    const SizedBox(height: 15,),
-                                    const Row(
-                                      children: [
-                                        SizedBox(width: 25,),
-                                        FaIcon(FontAwesomeIcons.locationDot,
-                                  color: Colors.blue, size: 30.0),
-                                   SizedBox(width: 10,),
-                                  Text('nablus',
-                                  style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 26,
-                                fontFamily: 'salsa',
+                            )
+                          : SizedBox(
+                              height:
+                                  210, // Set a fixed height or use a different value based on your design
+                              child: ListView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: 1,
+                                itemBuilder: (context, index) {
+                                  //  final appointment = appointmentList[index];
+                                  return Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: Container(
+                                        height: 200,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            width: 2,
+                                            color: const Color(0xFF0561DD),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: 25,
+                                            ),
+                                            Row(
+                                              children: [
+                                                const SizedBox(
+                                                  width: 25,
+                                                ),
+                                                const FaIcon(
+                                                    FontAwesomeIcons.user,
+                                                    color: Colors.blue,
+                                                    size: 30.0),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                  User['username'] ??
+                                                      'not found',
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 26,
+                                                    fontFamily: 'salsa',
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 15,
+                                            ),
+                                            const Row(
+                                              children: [
+                                                SizedBox(
+                                                  width: 25,
+                                                ),
+                                                FaIcon(
+                                                    FontAwesomeIcons
+                                                        .locationDot,
+                                                    color: Colors.blue,
+                                                    size: 30.0),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                  'nablus',
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 26,
+                                                    fontFamily: 'salsa',
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 15,
+                                            ),
+                                            Row(
+                                              children: [
+                                                const SizedBox(
+                                                  width: 25,
+                                                ),
+                                                const FaIcon(
+                                                    FontAwesomeIcons
+                                                        .mobileScreen,
+                                                    color: Colors.blue,
+                                                    size: 30.0),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                  User['phone'] ?? 'not found',
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 26,
+                                                    fontFamily: 'salsa',
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ));
+                                },
                               ),
-                                  )
-                                      ],
-                                    ),
-                                     const SizedBox(height:15,),
-                                    Row(
-                                      children: [
-                                        const SizedBox(width: 25,),
-                                        const FaIcon(FontAwesomeIcons.mobileScreen,
-                                  color: Colors.blue, size: 30.0),
-                                   const SizedBox(width: 10,),
-                                  Text(User['phone'] ?? 'not found',
-                                  style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 26,
-                                fontFamily: 'salsa',
-                              ),
-                                  )
-                                      ],
-                                    ),
-                                    
-                                  ],
-                                ),
-                              )
-                            );
-                          },
-                        ),
-                      ),
+                            ),
                     ],
                   ),
                   const SizedBox(
@@ -453,8 +474,7 @@ Future getAppointment() async {
                                   ],
                                 ),
                               )
-                            :
-                             SizedBox(
+                            : SizedBox(
                                 height: 250,
                                 child: ListView.builder(
                                   shrinkWrap: true,
