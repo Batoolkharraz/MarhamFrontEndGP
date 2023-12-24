@@ -17,7 +17,6 @@ Future<String> getUserName(String email) async {
 
     if (response.statusCode == 200) {
       var responseBody = response.body;
-      final responseData = jsonDecode(responseBody);
       var data = json.decode(responseBody);
  // Replace 'username' with the actual key in the response
       print("Username: $data");

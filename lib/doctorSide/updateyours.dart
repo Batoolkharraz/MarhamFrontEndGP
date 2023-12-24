@@ -16,7 +16,7 @@ class EditDoctor extends StatefulWidget {
 
 class _EditDoctorState extends State<EditDoctor> {
   final myController = TextEditingController();
-  final bool _isUsernameEditing = false;
+
   var username, phone, email, password, cpassword;
   Uint8List? image;
   final GlobalKey<FormState> signstate = GlobalKey<FormState>();

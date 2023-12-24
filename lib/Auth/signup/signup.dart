@@ -149,7 +149,7 @@ class _SignupState extends State<Signup> {
                             validator: (text) {
                               if (text == null || text.isEmpty) {
                                 return "please fill all information";
-                              return null;
+                             
                               }
                               return null;
                             },

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_4/Auth/Login/logintpost.dart';
-import 'package:flutter_application_4/doctorSide/doctorHome.dart';
 import 'package:flutter_application_4/doctorSide/maindoctor.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_application_4/Home/homePage.dart';

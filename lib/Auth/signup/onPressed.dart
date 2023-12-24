@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 void onPressed(BuildContext context, String username, String email,
     String phone, String password) async {
   try {
-    final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     String loginSuccessful = await addPOST(username, email, phone, password);
