@@ -31,37 +31,38 @@ class _appointmentState extends State<appointment> {
       responceBody = responceBody.substring(13, responceBody.length - 1);
       var app = jsonDecode(responceBody);
       final dateFormatter = DateFormat("yyyy/MM/dd");
+      if (mounted) {
+        setState(() {
+          apps.add(app);
 
-      setState(() {
-        apps.add(app);
+          for (var appointment in apps) {
+            var scheduleByDay = appointment['scheduleByDay'] as List<dynamic>;
 
-        for (var appointment in apps) {
-          var scheduleByDay = appointment['scheduleByDay'] as List<dynamic>;
+            for (var schedule in scheduleByDay) {
+              var date = dateFormatter.parse(schedule['date'] as String);
+              final formattedDate = DateFormat('dd MMM yyyy').format(date);
 
-          for (var schedule in scheduleByDay) {
-            var date = dateFormatter.parse(schedule['date'] as String);
-            final formattedDate = DateFormat('dd MMM yyyy').format(date);
+              // Create a list of time slots for the date
+              var timeSlots = <Map<String, dynamic>>[];
 
-            // Create a list of time slots for the date
-            var timeSlots = <Map<String, dynamic>>[];
+              if (schedule['timeSlots'] != null) {
+                timeSlots = (schedule['timeSlots'] as List<dynamic>)
+                    .map((slot) => {
+                          'time': slot['time'] as String,
+                          'is_booked': slot['is_booked'] as bool,
+                          '_id': slot['_id'] as String,
+                        })
+                    .toList();
+              }
 
-            if (schedule['timeSlots'] != null) {
-              timeSlots = (schedule['timeSlots'] as List<dynamic>)
-                  .map((slot) => {
-                        'time': slot['time'] as String,
-                        'is_booked': slot['is_booked'] as bool,
-                        '_id': slot['_id'] as String,
-                      })
-                  .toList();
+              // Add the time slots to the map
+              dateToTimeSlots[formattedDate] = timeSlots;
             }
-
-            // Add the time slots to the map
-            dateToTimeSlots[formattedDate] = timeSlots;
           }
-        }
 
-        appointmentDates = dateToTimeSlots.keys.toList()..sort();
-      });
+          appointmentDates = dateToTimeSlots.keys.toList()..sort();
+        });
+      }
     }
   }
 
@@ -73,18 +74,19 @@ class _appointmentState extends State<appointment> {
 
   @override
   Widget build(BuildContext context) {
-    String email = widget.doctor['email']; // Assuming widget.doctor['email'] is the email address
+    String email = widget.doctor[
+        'email']; // Assuming widget.doctor['email'] is the email address
 
-List<String> emailParts = email.split('@');
+    List<String> emailParts = email.split('@');
 
-String part1 = emailParts[0];
+    String part1 = emailParts[0];
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.doctor['name'] ,style: const TextStyle(
-                                
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w500,
-                                   )),
+        title: Text(widget.doctor['name'],
+            style: const TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.w500,
+            )),
         toolbarHeight: 90,
         backgroundColor: const Color(0xFF0561DD),
         leading: BackButton(
@@ -104,8 +106,7 @@ String part1 = emailParts[0];
                 child: Row(
                   children: [
                     Padding(
-                      padding:
-                          const EdgeInsets.only(top: 20, left: 14),
+                      padding: const EdgeInsets.only(top: 20, left: 14),
                       child: ClipOval(
                         child: Container(
                           width:
@@ -122,145 +123,147 @@ String part1 = emailParts[0];
                         ),
                       ),
                     ),
-                     
                     Container(
                       // color: Colors.blue,
                       width: 300,
-                      padding: EdgeInsets.only(top:60,left:20),
-                      child: Column(  mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                      padding: EdgeInsets.only(top: 60, left: 20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(widget.doctor['description'],
-                                        style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 35,
-                                            fontWeight: FontWeight.w500,
-                                            fontFamily: 'Salsa')),
-                                            SizedBox(height:10),
-                                             Container(
-                                      width: 300,
-                                      // color: Colors.blue,
-                                       child: Row(
-                                         children: [SizedBox(width: 5,),
-                                          Container(
-  width: 30,
-  height: 30,
-  decoration: BoxDecoration(
-    shape: BoxShape.circle,
-    border: Border.all(color: Colors.blue, width: 2),
-  ),
-  child: Center(
-    child: Icon(
-      Icons.attach_money,
-      color: Colors.blue,
-    ),
-  ),
-)
-,
-SizedBox(width: 10,),
-                                              Text("70sh "
-                                              , style: const TextStyle(
-                                     color: Color.fromRGBO(58, 58, 58, 1),
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'Salsa'))
-                                        ,
-                                        SizedBox(width: 15,),
-                                         FaIcon(
-                                      FontAwesomeIcons.locationDot,
-                                      size: 26.0,
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Salsa')),
+                          SizedBox(height: 10),
+                          Container(
+                            width: 300,
+                            // color: Colors.blue,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Container(
+                                  width: 30,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                        color: Colors.blue, width: 2),
+                                  ),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.attach_money,
                                       color: Colors.blue,
-                                    ),SizedBox(width: 5,),
-                                              Text(widget.doctor['address']
-                                              , style: const TextStyle(
-                                     color: Color.fromRGBO(58, 58, 58, 1),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text("70sh ",
+                                    style: const TextStyle(
+                                        color: Color.fromRGBO(58, 58, 58, 1),
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: 'Salsa')),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                FaIcon(
+                                  FontAwesomeIcons.locationDot,
+                                  size: 26.0,
+                                  color: Colors.blue,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(widget.doctor['address'],
+                                    style: const TextStyle(
+                                        color: Color.fromRGBO(58, 58, 58, 1),
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: 'Salsa'))
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Container(
+                            width: 300,
+                            child: Row(
+                              children: [
+                                SizedBox(width: 5),
+                                FaIcon(
+                                  FontAwesomeIcons.envelope,
+                                  size: 26.0,
+                                  color: Colors.blue,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(part1,
+                                    style: const TextStyle(
+                                        color: Color.fromRGBO(58, 58, 58, 1),
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: 'Salsa'))
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 25),
+                            child: Text("@gmail.com",
+                                style: const TextStyle(
+                                    color: Color.fromRGBO(58, 58, 58, 1),
                                     fontSize: 25,
                                     fontWeight: FontWeight.w500,
-                                    fontFamily: 'Salsa'))
-                                         ],
-                                       ),
-                                     ),
-                                     SizedBox(height:10),
-                                     Container(
-                                      
-                                      width: 300,
-                                       child: Row(
-                                         children: [
-                                          SizedBox(width: 5),
-                                         FaIcon(
-                                      FontAwesomeIcons.envelope,
-                                      size: 26.0,
-                                      color: Colors.blue,
-                                    ),SizedBox(width: 10,),
-                                              Text(part1
-                                              , style: const TextStyle(
-                                     color: Color.fromRGBO(58, 58, 58, 1),
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'Salsa'))
-                                    
-                                         ],
-                                       ),
-                                     ),
-                                    
-                                     Padding(
-                                       padding: const EdgeInsets.only(left:25),
-                                       child: Text("@gmail.com"
-                                                , style: const TextStyle(
-                                       color: Color.fromRGBO(58, 58, 58, 1),
-                                                                         fontSize: 25,
-                                                                         fontWeight: FontWeight.w500,
-                                                                         fontFamily: 'Salsa')),
-                                     )
-                                     ,
-                                     
+                                    fontFamily: 'Salsa')),
+                          ),
                         ],
                       ),
-                    ) 
-                      
-                    
+                    )
                   ],
                 ),
               ),
               Container(
                 child: Column(
                   children: [
-                    
-                    InkWell(child:
-                     Container(
-                      padding: const EdgeInsets.only(top: 5),
-                      width: 510,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: const Color(0xFF0561DD),
-                        border: Border.all(
-                          color: Colors.grey, // Set the border color here
-                          width: 2.0, // Set the border width
+                    InkWell(
+                      child: Container(
+                        padding: const EdgeInsets.only(top: 5),
+                        width: 510,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: const Color(0xFF0561DD),
+                          border: Border.all(
+                            color: Colors.grey, // Set the border color here
+                            width: 2.0, // Set the border width
+                          ),
                         ),
-                      ),
-                      child: Text("Talk to " + widget.doctor['name'],
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold
-                              // fontFamily: 'Salsa',
+                        child: Text("Talk to " + widget.doctor['name'],
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold
+                                // fontFamily: 'Salsa',
 
-                              )),
-                    ),
-                    onTap:  () => { Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                      ChatScreen(ruseremail:widget.doctor['email']))
-                                    )
-                    
-                                      },
-                                
+                                )),
+                      ),
+                      onTap: () => {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ChatScreen(
+                                ruseremail: widget.doctor['email'],
+                                image: widget.doctor['image']['secure_url'],
+                                name:widget.doctor['name'],)))
+                      },
                     ),
                     const Padding(
-                      padding:
-                          EdgeInsets.only(left: 20, bottom: 5, top: 15),
+                      padding: EdgeInsets.only(left: 20, bottom: 5, top: 15),
                       child: SizedBox(
                         width: 600,
                         child: Text("BooK Apponitment",
@@ -272,7 +275,6 @@ SizedBox(width: 10,),
                                 )),
                       ),
                     ),
-                   
                   ],
                 ),
               ),
@@ -298,8 +300,7 @@ SizedBox(width: 10,),
                         ],
                       ),
                     )
-                  : 
-                  SizedBox(
+                  : SizedBox(
                       height: 900,
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),

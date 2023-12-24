@@ -3,10 +3,14 @@ import 'package:flutter_application_4/Auth/chat/mk.dart';
 
 class PersonChat extends StatefulWidget {
   final String email;
+  final String image;
+  final String name;
 
   const PersonChat({
     Key? key,
     required this.email,
+    required this.image,
+    required this.name,
   }) : super(key: key);
 
   @override
@@ -79,11 +83,18 @@ class _PersonChatState extends State<PersonChat> {
                           ),
                         ],
                       ),
-                      child: const CircleAvatar(
-                        backgroundImage: AssetImage(
-                            'assets/5bbc3519d674c.jpg'), // Set the profile picture image
-                        radius: 40, // Set the profile picture size
-                      ),
+                      child: widget.image != null
+                              ? CircleAvatar(
+                                  backgroundColor: Colors.transparent,
+                                  backgroundImage:
+                                      NetworkImage(widget.image),
+                                  radius: 40,
+                                )
+                              : const CircleAvatar(
+                                  backgroundImage:
+                                      AssetImage('assets/5bbc3519d674c.jpg'),
+                                  radius: 40,
+                                ),
                     ),
                     const SizedBox(
                         width:
@@ -94,7 +105,7 @@ class _PersonChatState extends State<PersonChat> {
                         padding: const EdgeInsets.only(
                             right: 70), // Add some padding to the right
                         child: Text(
-                          _email, // Display "Loading..." if username is not available yet
+                          widget.name, // Display "Loading..." if username is not available yet
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 30,
@@ -122,8 +133,9 @@ class _PersonChatState extends State<PersonChat> {
                   builder: (context) {
                     print("Navigating to ChatScreen");
                     return ChatScreen(
-                      ruseremail:
-                          _email, // Pass the user's email to the ChatScreen
+                      ruseremail:_email, 
+                      image:widget.image,
+                      name:widget.name// Pass the user's email to the ChatScreen
                     );
                   },
                 ),

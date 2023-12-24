@@ -133,6 +133,9 @@ class _SecondScreenState extends State<SecondScreen> {
 
   bool isDateExpired(String date) {
     // Split the date string into month and year parts
+    if (date.isEmpty) {
+      return true;
+    }
     List<String> parts = date.split('/');
 
     // Extract month and year as integers
@@ -425,14 +428,17 @@ class _SecondScreenState extends State<SecondScreen> {
                                 });
                               }
 */
+                              
                               bool isExpired =
                                   isDateExpired(cardExpiryDateController.text);
-                              print(isExpired);
-                              print(cardNumberController.text.length);
-                              print(cardCvvController.text.length);
+
                               if (cardNumberController.text.length != 19 ||
                                   cardCvvController.text.length != 3 ||
-                                  isExpired) {
+                                  isExpired||
+                                  cardNumberController.text.isEmpty ||
+                                  cardCvvController.text.isEmpty ||
+                                  cardExpiryDateController.text.isEmpty ||
+                                  cardHolderNameController.text.isEmpty) {
                                 showDialog(
                                   context: context,
                                   builder: (context) =>
