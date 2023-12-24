@@ -143,7 +143,21 @@ Future<void> getcurrentUser() async {
   }
 
 
-  
+
+// Future<void> getcurrentUser() async {
+//     try {
+//       var user = await FirebaseAuth.instance.currentUser;
+//       if (user != null) {
+//         setState(() {
+//           signedinuser = user;
+          
+//         });
+//       }
+//     } catch (e) {
+//       print(e);
+//     }
+//   }
+
   @override
   void initState() {
     // TODO: implement initState

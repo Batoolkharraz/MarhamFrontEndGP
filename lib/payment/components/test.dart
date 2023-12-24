@@ -15,7 +15,7 @@ class _nameState extends State<name> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ElevatedButton(onPressed: (){
-showpaymentalertt(context);
+//showpaymentalertt(context);
       }, child: Text("bb")),
     );
   }

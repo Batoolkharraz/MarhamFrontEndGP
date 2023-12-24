@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/doctorappointment/workinghour.dart';
+
 import 'package:flutter_application_4/unit/getdates.dart';
+import 'package:flutter_application_4/payment/payment.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -11,7 +13,11 @@ class appTime extends StatefulWidget {
   final String date;
   final List<Map<String, dynamic>> timeSlots;
 
-  const appTime({super.key, required this.timeSlots, required this.date, required this.docId});
+  const appTime(
+      {super.key,
+      required this.timeSlots,
+      required this.date,
+      required this.docId});
 
   @override
   State<appTime> createState() => _appTimeState();
@@ -116,9 +122,9 @@ class _appTimeState extends State<appTime> {
               fontFamily: 'Salsa',
             ),
           ),
-           leading: BackButton(
-          onPressed: () => {Navigator.of(context).pop()},
-        ),
+          leading: BackButton(
+            onPressed: () => {Navigator.of(context).pop()},
+          ),
         ),
       ),
       body: Padding(
@@ -171,7 +177,9 @@ class _appTimeState extends State<appTime> {
                           ),
                         );
                       } else {
-                        bookedApp(slot['_id']);
+                        print(slot);
+                        showpaymentalertt(context, slot['_id'],widget.docId);
+                        //bookedApp(slot['_id']);
                       }
                     },
                   );

@@ -3,7 +3,7 @@ import 'package:flutter_application_4/payment/card.dart';
 import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-void showpaymentalertt(BuildContext context) {
+void showpaymentalertt(BuildContext context,String book,String doc) {
   showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -61,7 +61,7 @@ void showpaymentalertt(BuildContext context) {
                       "Visa Card",
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 30,
+                        fontSize: 28,
                         fontFamily: 'Salsa',
                       ),
                     ),
@@ -77,7 +77,9 @@ void showpaymentalertt(BuildContext context) {
                        Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const SecondScreen()),
+                                builder: (context) =>SecondScreen(
+                                  bookId: book,
+                                  docId:doc)),
                           );
                       },
                     )
@@ -112,7 +114,7 @@ void showpaymentalertt(BuildContext context) {
                       "Electronic wallet",
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 30,
+                        fontSize: 28,
                         fontFamily: 'Salsa',
                       ),
                     ),
