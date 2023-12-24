@@ -8,10 +8,14 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
    const storage = FlutterSecureStorage(); 
 class ChatScreen2 extends StatefulWidget {
   final String ruseremail;
+  final String image;
+  final String name;
 
   const ChatScreen2({
     Key? key,
     required this.ruseremail,
+    required this.image,
+    required this.name,
   }) : super(key: key);
 
   @override
@@ -102,10 +106,18 @@ String getChatRoomId() {
                       ),
                     ],
                   ),
-                  child: const CircleAvatar(
-                    radius: 33,
-                    backgroundImage: AssetImage("assets/5bbc3519d674c.jpg"),
-                  ),
+                  child: widget.image != null
+                              ? CircleAvatar(
+                                  backgroundColor: Colors.transparent,
+                                  backgroundImage:
+                                      NetworkImage(widget.image),
+                                  radius: 33,
+                                )
+                              : const CircleAvatar(
+                                  backgroundImage:
+                                      AssetImage('assets/5bbc3519d674c.jpg'),
+                                  radius: 33,
+                                ),
                              ),
                ),
               Container(
@@ -113,7 +125,7 @@ String getChatRoomId() {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 30),
                   child: Text(
-                    _email,
+                    widget.name,
                     style: const TextStyle(
                       fontSize: 28,
                       color: Color(0xFF0561DD),
