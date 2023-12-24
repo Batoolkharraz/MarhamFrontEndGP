@@ -1,11 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_4/Auth/chatotheside/chatlist.dart';
-import 'package:flutter_application_4/doctorSide/dailyapp.dart';
-import 'package:flutter_application_4/doctorSide/searchUser.dart';
-import 'package:flutter_application_4/doctorSide/updateyours.dart';
-import 'package:flutter_application_4/doctorSide/working.dart';
 import 'dart:typed_data';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

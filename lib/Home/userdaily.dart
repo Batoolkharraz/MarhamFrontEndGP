@@ -1,18 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Home/cancleuser.dart';
 import 'package:flutter_application_4/Home/completeuser.dart';
 import 'package:flutter_application_4/Home/todayUser.dart';
 import 'package:flutter_application_4/Home/upcompleteuser.dart';
 import 'package:flutter_application_4/notificationdate.dart';
-import 'package:flutter_application_4/unit/getdates.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_application_4/notification/local_notifications.dart';
 class TimerManager {
  Timer? _timer;
 
@@ -48,6 +48,7 @@ class _UserDailyState extends State<UserDaily> {
 
   final storage = const FlutterSecureStorage();
   List <dynamic>allAppointment = [];
+    List<String> dates = [];
   List doneAppointment = [];
   List cancelAppointment = [];
   List todayAppointment = [];
@@ -200,12 +201,43 @@ class _UserDailyState extends State<UserDaily> {
       return {};
     }
   }
-  listenToNotifications() {
-    print("Listening to notification");
-    LocalNotifications.onClickNotification.stream.listen((event) {
-      print(event);
-      Navigator.pushNamed(context, '/another', arguments: event);
-    });
+  // listenToNotifications() {
+  //   print("Listening to notification");
+  //   LocalNotifications.onClickNotification.stream.listen((event) {
+  //     print(event);
+      
+  //   });
+  // }
+  void printing() async {
+    print("am in");
+    List<String>times=[];
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  var user = FirebaseAuth.instance.currentUser;
+    await getAllAppointment();
+    for (final app in allAppointment) {
+      Map<String, String> appInfo =
+          await getAppInfo(app['bookId'], app['doctorId']);
+      if (appInfo.isNotEmpty) {
+        String date = appInfo['date']!;
+        String time = appInfo['time']!;
+        // if (dates.contains(date))
+        //   print('$date is present in the list.');
+        // else if (!dates.contains(date)) {
+          dates.add(date);
+          times.add(time);
+        
+      }
+    }
+    if ((user != null)) {
+            await firestore
+                .collection('AppointmentsDates')
+                .doc("${user?.email}")
+                .set({'Appointments':dates});
+                await firestore
+                .collection('Appointmentstimes')
+                .doc("${user?.email}")
+                .set({'times':times});
+          }
   }
   @override
   void initState() {
@@ -214,7 +246,8 @@ class _UserDailyState extends State<UserDaily> {
     getDoneAppointment();
     getcancelAppointment();
     getTodayAppointment();
-    listenToNotifications();
+    printing();
+    // listenToNotifications();
   }
 
   @override
@@ -237,11 +270,12 @@ class _UserDailyState extends State<UserDaily> {
             fontFamily: 'Salsa',
           ),
         ),
-        SizedBox(width: 100),
+        SizedBox(width: 50),
         Center(
           child: InkWell(
             child: FaIcon(FontAwesomeIcons.bell, color: Colors.white, size: 25.0),
             onTap: () {
+              print("clicked");
               timerManager.startTimer();
               
             },

@@ -53,7 +53,7 @@ void showpaymentalertt(BuildContext context,String book,String doc) {
                     const SizedBox(
                       width: 10,
                     ),
-                    Image.asset("assets/credit-card_8336730.png"),
+                    Image.asset("assets/visa_196578.png"),
                     SizedBox(
                       width: 20,
                     ),
@@ -106,20 +106,23 @@ void showpaymentalertt(BuildContext context,String book,String doc) {
                     const SizedBox(
                       width: 10,
                     ),
-                    Image.asset("assets/payment-method_7368522.png"),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Image.asset("assets/paypal_174861.png"),
+                    ),
                     SizedBox(
                       width: 20,
                     ),
                     Text(
-                      "Electronic wallet",
+                      "PayPal",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 28,
                         fontFamily: 'Salsa',
                       ),
                     ),
-                    SizedBox(
-                      width: 15,
+                    const SizedBox(
+                      width: 140,
                     ),
                     InkWell(
                         child: const Icon(

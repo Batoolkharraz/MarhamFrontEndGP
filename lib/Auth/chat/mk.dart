@@ -52,7 +52,6 @@ String getChatRoomId() {
   List<String?> participants = [signedinuser.email, _email];
   participants.sort(); // Sort emails to ensure consistency
   return participants.where((e) => e != null).join('_') ?? '';
-  print("from mm+ ${signedinuser.email}");
 }
  
   @override

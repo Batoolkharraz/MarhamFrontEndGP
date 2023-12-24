@@ -84,7 +84,7 @@ class _profileState extends State<profile> {
           setState(() {
             prescriptions.clear();
             prescriptions.addAll(pre);
-        print(prescriptions);
+            print(prescriptions);
           });
         }
       }
@@ -120,8 +120,7 @@ class _profileState extends State<profile> {
   }
 
   Future<String> getDoctor(String docId) async {
-    var url =
-        "https://marham-backend.onrender.com/doctor/$docId";
+    var url = "https://marham-backend.onrender.com/doctor/$docId";
     var response = await http.get(Uri.parse(url));
     var responceBody = response.body.toString();
     responceBody = responceBody.trim();
@@ -166,173 +165,170 @@ class _profileState extends State<profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 231, 233, 237),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
-            child: IconButton(
-              icon: const Icon(
-                Icons.edit_note_sharp,
-                color: Color(0xFF0561DD),
-                size: 40,
-              ),
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const EditUser(),
-                  ),
-                );
-              },
-            ),
-          )
-        ],
-      ),
-      body: Column(
-        children: [
-          //head
-          User.isEmpty
-              ? const SizedBox(
-                  height: 270,
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
-              : SizedBox(
-                  height: 270,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Container(
-                          width:
-                              180, // Width and height to accommodate the border
-                          height: 180,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color:
-                                  const Color(0xFF0561DD), // Blue border color
-                              width: 3, // Adjust the border width as needed
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: const Color(0xFF0561DD)
-                                    .withOpacity(0.3), // Shadow color
-                                offset: const Offset(0, 4), // Shadow position
-                                blurRadius: 15, // Shadow blur radius
-                              ),
-                            ],
-                          ),
-                          child: User['image'] != null
-                              ? CircleAvatar(
-                                  backgroundColor: Colors.transparent,
-                                  backgroundImage:
-                                      NetworkImage(User['image']['secure_url']),
-                                  radius: 90,
-                                )
-                              : const CircleAvatar(
-                                  backgroundImage:
-                                      AssetImage('assets/5bbc3519d674c.jpg'),
-                                  radius: 90,
-                                ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        User['username'] ?? 'userName',
-                        style: const TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Salsa',
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        User['email'] ?? 'email not found',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.grey[600],
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Salsa',
-                        ),
-                      ),
-                    ],
-                  ),
+        backgroundColor: Color.fromARGB(255, 214, 219, 223),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
+              child: IconButton(
+                icon: const Icon(
+                  Icons.edit_note_sharp,
+                  color: Color(0xFF0561DD),
+                  size: 40,
                 ),
-
-          const SizedBox(
-            height: 20,
-          ),
-
-          //my appointment
-          Container(
-            height: 655,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(50.0),
-                topRight: Radius.circular(50.0),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const EditUser(),
+                    ),
+                  );
+                },
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30, top: 40),
-              child: Column(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      //title
-
-                      const Text(
-                        'Personal Information',
-                        style: TextStyle(
-                          color: Color(0xFF0561DD),
-                          fontSize: 28,
-                          fontFamily: 'salsa',
-                        ),
+            )
+          ],
+        ),
+        body: SingleChildScrollView(
+            child: Center(
+          child: Container( 
+            child: Column(children: [
+              User.isEmpty
+                  ? const SizedBox(
+                      height: 270,
+                      child: Center(
+                        child: CircularProgressIndicator(),
                       ),
-
-                      const SizedBox(
-                        height: 10,
-                      ),
-
-                      //appointment
-                      User.isEmpty
-                          ? const SizedBox(
-                              height: 270,
-                              child: Center(
-                                child: CircularProgressIndicator(),
+                    )
+                  : SizedBox(
+                      height: 270,
+                      child: Column(
+                        children: [
+                          Container(
+                            width:
+                                180, // Width and height to accommodate the border
+                            height: 180,
+                            decoration: BoxDecoration(
+                              
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color:
+                                    const Color(0xFF0561DD), // Blue border color
+                                width: 3, // Adjust the border width as needed
                               ),
-                            )
-                          : SizedBox(
-                              height:
-                                  210, // Set a fixed height or use a different value based on your design
-                              child: ListView.builder(
-                                physics: const BouncingScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: 1,
-                                itemBuilder: (context, index) {
-                                  //  final appointment = appointmentList[index];
-                                  return Padding(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color(0xFF0561DD)
+                                      .withOpacity(0.3), // Shadow color
+                                  offset: const Offset(0, 4), // Shadow position
+                                  blurRadius: 15, // Shadow blur radius
+                                ),
+                              ],
+                            ),
+                            child: User['image'] != null
+                                ? CircleAvatar(
+                                    backgroundColor: Colors.transparent,
+                                    backgroundImage:
+                                        NetworkImage(User['image']['secure_url']),
+                                    radius: 90,
+                                  )
+                                : const CircleAvatar(
+                                    backgroundImage:
+                                        AssetImage('assets/5bbc3519d674c.jpg'),
+                                    radius: 90,
+                                  ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            User['username'] ?? 'userName',
+                            style: const TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Salsa',
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Text(
+                            User['email'] ?? 'email not found',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.grey[600],
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Salsa',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+          
+              ///////////////////////////////////////////info
+              Padding(
+                padding: const EdgeInsets.only(top: 25.0),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(50.0),
+                      topRight: Radius.circular(50.0),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Title
+          
+                        const Text(
+                          'Personal Information',
+                          style: TextStyle(
+                            color: Color(0xFF0561DD),
+                            fontSize: 28,
+                            fontFamily: 'salsa',
+                          ),
+                        ),
+          
+                        const SizedBox(
+                          height: 10,
+                        ),
+          
+                        // Appointment
+          
+                        User.isEmpty
+                            ? const SizedBox(
+                                height: 270,
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              )
+                            : SizedBox(
+                                height:
+                                    210, // Set a fixed height or use a different value based on your design
+          
+                                child: ListView.builder(
+                                  physics: const BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: 1,
+                                  itemBuilder: (context, index) {
+                                    //  final appointment = appointmentList[index];
+          
+                                    return Padding(
                                       padding: const EdgeInsets.only(top: 10),
                                       child: Container(
                                         height: 200,
                                         decoration: BoxDecoration(
+                                          color: Colors.white,
                                           border: Border.all(
                                             width: 2,
                                             color: const Color(0xFF0561DD),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                          borderRadius: BorderRadius.circular(10),
                                         ),
                                         child: Column(
                                           children: [
@@ -345,21 +341,21 @@ class _profileState extends State<profile> {
                                                   width: 25,
                                                 ),
                                                 const FaIcon(
-                                                    FontAwesomeIcons.user,
-                                                    color: Colors.blue,
-                                                    size: 30.0),
+                                                  FontAwesomeIcons.user,
+                                                  color: Colors.blue,
+                                                  size: 30.0,
+                                                ),
                                                 const SizedBox(
                                                   width: 10,
                                                 ),
                                                 Text(
-                                                  User['username'] ??
-                                                      'not found',
+                                                  User['username'] ?? 'not found',
                                                   style: const TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 26,
                                                     fontFamily: 'salsa',
                                                   ),
-                                                )
+                                                ),
                                               ],
                                             ),
                                             const SizedBox(
@@ -371,10 +367,10 @@ class _profileState extends State<profile> {
                                                   width: 25,
                                                 ),
                                                 FaIcon(
-                                                    FontAwesomeIcons
-                                                        .locationDot,
-                                                    color: Colors.blue,
-                                                    size: 30.0),
+                                                  FontAwesomeIcons.locationDot,
+                                                  color: Colors.blue,
+                                                  size: 30.0,
+                                                ),
                                                 SizedBox(
                                                   width: 10,
                                                 ),
@@ -385,7 +381,7 @@ class _profileState extends State<profile> {
                                                     fontSize: 26,
                                                     fontFamily: 'salsa',
                                                   ),
-                                                )
+                                                ),
                                               ],
                                             ),
                                             const SizedBox(
@@ -397,10 +393,10 @@ class _profileState extends State<profile> {
                                                   width: 25,
                                                 ),
                                                 const FaIcon(
-                                                    FontAwesomeIcons
-                                                        .mobileScreen,
-                                                    color: Colors.blue,
-                                                    size: 30.0),
+                                                  FontAwesomeIcons.mobileScreen,
+                                                  color: Colors.blue,
+                                                  size: 30.0,
+                                                ),
                                                 const SizedBox(
                                                   width: 10,
                                                 ),
@@ -411,123 +407,125 @@ class _profileState extends State<profile> {
                                                     fontSize: 26,
                                                     fontFamily: 'salsa',
                                                   ),
-                                                )
+                                                ),
                                               ],
                                             ),
                                           ],
                                         ),
-                                      ));
-                                },
-                              ),
-                            ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        //title
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Your medicine',
-                              style: TextStyle(
-                                color: Color(0xFF0561DD),
-                                fontSize: 30,
-                                fontFamily: 'salsa',
-                              ),
-                            ),
-                            Text(
-                              'see all',
-                              style: TextStyle(
-                                color: Color(0xFF0561DD),
-                                fontSize: 20,
-                                fontFamily: 'salsa',
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        prescriptions.isEmpty
-                            ? Center(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      child: Image.asset('assets/medicine.png'),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      'No Prescription written for You Yet!',
-                                      style: TextStyle(
-                                        color: Colors.grey[600],
-                                        fontFamily: 'salsa',
-                                        fontSize: 25,
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : SizedBox(
-                                height: 250,
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: prescriptions.length,
-                                  itemBuilder: (context, index) {
-                                    return FutureBuilder(
-                                      future: getDoctor(
-                                          '${prescriptions[index]['writtenBy']}'),
-                                      builder: (context, categorySnapshot) {
-                                        if (categorySnapshot.hasError) {
-                                          return Text(
-                                              'Error: ${categorySnapshot.error}');
-                                        } else {
-                                          return Container(
-                                            child: medicineList(
-                                              diagnosis: prescriptions[index]
-                                                  ['diagnosis'],
-                                              from: prescriptions[index]
-                                                  ['dateFrom'],
-                                              to: prescriptions[index]
-                                                  ['dateTo'],
-                                              writtenBy: categorySnapshot.data
-                                                  .toString(),
-                                              onTap: () {
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        medicineSchedule(
-                                                      medicines:
-                                                          prescriptions[index]
-                                                              ['medicines'],
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          );
-                                        }
-                                      },
                                     );
                                   },
-                                  physics: const BouncingScrollPhysics(),
                                 ),
                               ),
                       ],
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
+          /////////////////////////////////////med
+          
+             Container(color: Colors.white,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //title
+          
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Your medicine',
+                            style: TextStyle(
+                              color: Color(0xFF0561DD),
+                              fontSize: 30,
+                              fontFamily: 'salsa',
+                            ),
+                          ),
+                          Text(
+                            'see all',
+                            style: TextStyle(
+                              color: Color(0xFF0561DD),
+                              fontSize: 20,
+                              fontFamily: 'salsa',
+                            ),
+                          ),
+                        ],
+                      ),
+          
+                      prescriptions.isEmpty
+                          ? Center(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    child: Image.asset('assets/medicine.png'),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    'No Prescription written for You Yet!',
+                                    style: TextStyle(
+                                      color: Colors.grey[600],
+                                      fontFamily: 'salsa',
+                                      fontSize: 25,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : SizedBox(
+                              height: 250,
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: prescriptions.length,
+                                itemBuilder: (context, index) {
+                                  return FutureBuilder(
+                                    future: getDoctor(
+                                        '${prescriptions[index]['writtenBy']}'),
+                                    builder: (context, categorySnapshot) {
+                                      if (categorySnapshot.hasError) {
+                                        return Text(
+                                            'Error: ${categorySnapshot.error}');
+                                      } else {
+                                        return Container(
+                                          child: medicineList(
+                                            diagnosis: prescriptions[index]
+                                                ['diagnosis'],
+                                            from: prescriptions[index]
+                                                ['dateFrom'],
+                                            to: prescriptions[index]['dateTo'],
+                                            writtenBy:
+                                                categorySnapshot.data.toString(),
+                                            onTap: () {
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      medicineSchedule(
+                                                    medicines:
+                                                        prescriptions[index]
+                                                            ['medicines'],
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      }
+                                    },
+                                  );
+                                },
+                                physics: const BouncingScrollPhysics(),
+                              ),
+                            ),
+                    ],
+                  ),
+                  padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+                ),
+              
+          //////////////////////////////
+            ]),
           ),
-        ],
-      ),
-    );
+        )));
   }
 }
