@@ -70,10 +70,12 @@ class _AppointmentPageState extends State<AppointmentPage> {
         responseBody = responseBody.trim();
         responseBody = responseBody.substring(12, responseBody.length - 1);
         var allApp = jsonDecode(responseBody);
-        setState(() {
-          allAppointment.clear();
-          allAppointment.addAll(allApp);
-        });
+        if (mounted) {
+          setState(() {
+            allAppointment.clear();
+            allAppointment.addAll(allApp);
+          });
+        }
       }
     } catch (error) {
       print("Error fetching appointments: $error");
@@ -93,11 +95,12 @@ class _AppointmentPageState extends State<AppointmentPage> {
         responseBody = responseBody.trim();
         responseBody = responseBody.substring(19, responseBody.length - 1);
         var allApp = jsonDecode(responseBody);
-
-        setState(() {
-          doneAppointment.clear();
-          doneAppointment.addAll(allApp);
-        });
+        if (mounted) {
+          setState(() {
+            doneAppointment.clear();
+            doneAppointment.addAll(allApp);
+          });
+        }
       }
     } catch (error) {
       print("Error fetching done appointments: $error");
@@ -117,11 +120,12 @@ class _AppointmentPageState extends State<AppointmentPage> {
         responseBody = responseBody.trim();
         responseBody = responseBody.substring(19, responseBody.length - 1);
         var allApp = jsonDecode(responseBody);
-
-        setState(() {
-          cancelAppointment.clear();
-          cancelAppointment.addAll(allApp);
-        });
+        if (mounted) {
+          setState(() {
+            cancelAppointment.clear();
+            cancelAppointment.addAll(allApp);
+          });
+        }
       }
     } catch (error) {
       print("Error fetching cancel appointments: $error");
@@ -141,10 +145,12 @@ class _AppointmentPageState extends State<AppointmentPage> {
         responseBody = responseBody.trim();
         responseBody = responseBody.substring(12, responseBody.length - 1);
         var allApp = jsonDecode(responseBody);
-        setState(() {
-          todayAppointment.clear();
-          todayAppointment.addAll(allApp);
-        });
+        if (mounted) {
+          setState(() {
+            todayAppointment.clear();
+            todayAppointment.addAll(allApp);
+          });
+        }
       }
     } catch (error) {
       print("Error fetching today appointments: $error");
@@ -386,8 +392,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                               time: time,
                                               onTap: () async {
                                                 Map<String, dynamic> userData =
-                                                    (await getUser(
-                                                        appointments['userId'])) ;
+                                                    (await getUser(appointments[
+                                                        'userId']));
                                                 Navigator.of(context).push(
                                                   MaterialPageRoute(
                                                     builder: (context) =>

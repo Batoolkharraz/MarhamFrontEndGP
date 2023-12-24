@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_4/Auth/chat/gg.dart';
+import 'package:flutter_application_4/Auth/chatotheside/chatlist.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
  final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -92,6 +93,7 @@ String getChatRoomId() {
                                   ),
           child: Row(
             children: [
+              
                Padding(
                  padding: const EdgeInsets.only(right:20.0),
                  child: Container(
