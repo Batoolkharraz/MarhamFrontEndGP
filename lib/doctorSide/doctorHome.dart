@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/Auth/chatotheside/chatlist.dart';
 import 'package:flutter_application_4/doctorSide/dailyapp.dart';
 import 'package:flutter_application_4/doctorSide/searchUser.dart';
 import 'package:flutter_application_4/doctorSide/updateyours.dart';
 import 'package:flutter_application_4/doctorSide/working.dart';
 import 'dart:typed_data';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_application_4/Auth/updateinformation/uploadimage.dart';
 import 'package:http/http.dart' as http;
@@ -82,7 +84,7 @@ class _doctorHomeState extends State<doctorHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 231, 233, 237),
+        backgroundColor: Colors.white,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
@@ -92,16 +94,16 @@ class _doctorHomeState extends State<doctorHome> {
               padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
               child: IconButton(
                 icon: const Icon(
-                  Icons.edit_note_sharp,
+                  Icons.edit,
                   color: Color(0xFF0561DD),
                   size: 40,
                 ),
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => EditDoctor(),
-                    ),
-                  );
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) => {},
+                  //   ),
+                  // );
                 },
               ),
             )
@@ -111,6 +113,14 @@ class _doctorHomeState extends State<doctorHome> {
           physics: const BouncingScrollPhysics(),
           child: Container(
             child: Column(children: [
+              Doctor.isEmpty
+              ? const SizedBox(
+                  height: 270,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              :
               SizedBox(
                 width: 600,
                 height: 200,
@@ -193,180 +203,251 @@ class _doctorHomeState extends State<doctorHome> {
                   fontFamily: 'Salsa',
                 ),
               ),
-              Text(
-                Doctor['email'] == null ? '' : Doctor['email'],
+               Text(
+                Doctor['description'] == null ? '' : Doctor['description'],
                 style: TextStyle(
-                  fontSize: 23,
-                  color: Colors.grey[600],
+                  color: Colors.grey,
+                  fontSize: 25,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Salsa',
                 ),
               ),
+              
               const SizedBox(height: 40.0),
-
+Padding(
+  padding: const EdgeInsets.only(left: 15,right:15),
+  child:   Container(
+  
+    child: Column(
+  
+                      mainAxisAlignment: MainAxisAlignment.start,
+  
+                      crossAxisAlignment: CrossAxisAlignment.start,
+  
+                      children: [
+  
+                        //title
+  
+                       
+  
+                            const Text(
+  
+                              'Personal Information',
+  
+                              style: TextStyle(
+  
+                                color: Color(0xFF0561DD),
+  
+                                fontSize: 28,
+  
+                                fontFamily: 'salsa',
+  
+                              ),
+  
+                            ),
+  
+                            
+  
+                        
+  
+  
+  
+                        const SizedBox(
+  
+                          height: 10,
+  
+                        ),
+  
+  
+  
+                        //appointment
+  
+                        Doctor.isEmpty
+  
+                ? const SizedBox(
+  
+                    height: 270,
+  
+                    child: Center(
+  
+                      child: CircularProgressIndicator(),
+  
+                    ),
+  
+                  ):
+  
+                        SizedBox(
+  
+                          height:
+  
+                              210, // Set a fixed height or use a different value based on your design
+  
+                          child: ListView.builder(
+  
+                            physics: const BouncingScrollPhysics(),
+  
+                            shrinkWrap: true,
+  
+                            itemCount: 1,
+  
+                            itemBuilder: (context, index) {
+  
+                              //  final appointment = appointmentList[index];
+  
+                              return Padding(
+  
+                                padding: const EdgeInsets.only(top: 10),
+  
+                                child:Container(
+  
+                                  
+  
+                                  height: 200,
+  
+                                  decoration: BoxDecoration(
+  
+                                    border: Border.all(
+  
+                              width: 2,
+  
+                              color: const Color(0xFF0561DD),
+  
+                            ),
+  
+                            borderRadius: BorderRadius.circular(10),
+  
+                                  ),
+  
+                                  
+  
+                                  child: Column(
+  
+                                    children: [
+  
+                                      const SizedBox(height: 25,),
+  
+                                      Row(
+  
+                                        children: [
+  
+                                          const SizedBox(width: 25,),
+  
+                                          const FaIcon(FontAwesomeIcons.message,
+  
+                                    color: Colors.blue, size: 30.0),
+  
+                                     const SizedBox(width: 10,),
+  
+                                    Text(Doctor['email']?? 'not found',
+  
+                                    style: const TextStyle(
+  
+                                 color: Colors.black,
+  
+                                  fontSize: 26,
+  
+                                  fontFamily: 'salsa',
+  
+                                ),
+  
+                                    )
+  
+                                        ],
+  
+                                      ),
+  
+                                       const SizedBox(height:15,),
+  
+                                       Row(
+  
+                                        children: [
+  
+                                          const SizedBox(width: 25,),
+  
+                                          const FaIcon(FontAwesomeIcons.mobileScreen,
+  
+                                    color: Colors.blue, size: 30.0),
+  
+                                     const SizedBox(width: 10,),
+  
+                                    Text(Doctor['phone'] ?? 'not found',
+  
+                                    style: const TextStyle(
+  
+                                  color: Colors.black,
+  
+                                  fontSize: 26,
+  
+                                  fontFamily: 'salsa',
+  
+                                ),
+  
+                                    )
+  
+                                        ],
+  
+                                      ),
+  
+                                       const SizedBox(height:15,),
+  
+                                      Row(
+  
+                                        children: [
+  
+                                          const SizedBox(width: 25,),
+  
+                                          const FaIcon(FontAwesomeIcons.locationDot,
+  
+                                    color: Colors.blue, size: 30.0),
+  
+                                     const SizedBox(width: 10,),
+  
+                                    Text(Doctor['address'] ?? 'not found',
+  
+                                    style: const TextStyle(
+  
+                                  color: Colors.black,
+  
+                                  fontSize: 26,
+  
+                                  fontFamily: 'salsa',
+  
+                                ),
+  
+                                    )
+  
+                                        ],
+  
+                                      ),
+  
+                                      
+  
+                                    ],
+  
+                                  ),
+  
+                                )
+  
+                              );
+  
+                            },
+  
+                          ),
+  
+                        ),
+  
+                      ],
+  
+                    ),
+  
+  ),
+)
               //check patient record
 
-              Container(
-                padding: const EdgeInsets.only(top: 50, left: 30, right: 30),
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(50.0),
-                      topRight: Radius.circular(50.0),
-                    )),
-                height: 800,
-                child: Column(
-                  children: [
-                    //daily appointment
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const AppointmentPage(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            width: 2,
-                            color: const Color(0xFF0561DD),
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.grey, // Shadow color
-                              offset: Offset(0, 0), // Offset of the shadow
-                              blurRadius: 15, // Spread of the shadow
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 10, bottom: 10),
-                              child: SizedBox(
-                                width: 150,
-                                child: Image.asset('assets/image (18).png'),
-                              ),
-                            ),
-                            const Text(
-                              'Daily Appointment',
-                              style: TextStyle(
-                                color: Color(0xFF0561DD),
-                                fontSize: 27,
-                                fontFamily: 'salsa',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(
-                      height: 30,
-                    ),
-
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const searchUser(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            width: 2,
-                            color: const Color(0xFF0561DD),
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.grey, // Shadow color
-                              offset: Offset(0, 0), // Offset of the shadow
-                              blurRadius: 15, // Spread of the shadow
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 150,
-                              child: Image.asset('assets/patient_icon.png'),
-                            ),
-                            const Text(
-                              'search for patient',
-                              style: TextStyle(
-                                color: Color(0xFF0561DD),
-                                fontSize: 27,
-                                fontFamily: 'salsa',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(
-                      height: 30,
-                    ),
-
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const Workingdoctor(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            width: 2,
-                            color: const Color(0xFF0561DD),
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.grey, // Shadow color
-                              offset: Offset(0, 0), // Offset of the shadow
-                              blurRadius: 15, // Spread of the shadow
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 150,
-                              child: Image.asset('assets/calendar.png'),
-                            ),
-                            const Text(
-                              'Make Your Schedule',
-                              style: TextStyle(
-                                color: Color(0xFF0561DD),
-                                fontSize: 27,
-                                fontFamily: 'salsa',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(
-                      height: 30,
-                    ),
-                  ],
-                ),
-              )
-            ]),
-          ),
-        ));
+            ]
+            )
+          )
+        )
+    );
   }
 }

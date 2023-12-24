@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -5,9 +6,35 @@ import 'package:flutter_application_4/Home/cancleuser.dart';
 import 'package:flutter_application_4/Home/completeuser.dart';
 import 'package:flutter_application_4/Home/todayUser.dart';
 import 'package:flutter_application_4/Home/upcompleteuser.dart';
+import 'package:flutter_application_4/notificationdate.dart';
+import 'package:flutter_application_4/unit/getdates.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_application_4/notification/local_notifications.dart';
+class TimerManager {
+ Timer? _timer;
+
+  void startTimer() {
+    // Start a timer that executes the callback every second
+    _timer = Timer.periodic(Duration(minutes: 1), (Timer timer) {
+      getlist();
+      print("Timer tick");
+      // You can perform any action here on each timer tick
+    });
+  }
+  void pauseTimer() {
+  
+    // Set _timer to null to stop the current timer
+     if (_timer != null) {
+      print("pause");
+      _timer?.cancel();// Resume the timer
+    }
+    
+  
+  }  
+}
 
 class UserDaily extends StatefulWidget {
   const UserDaily({Key? key}) : super(key: key);
@@ -17,13 +44,14 @@ class UserDaily extends StatefulWidget {
 }
 
 class _UserDailyState extends State<UserDaily> {
+    final TimerManager timerManager = TimerManager();
+
   final storage = const FlutterSecureStorage();
   List <dynamic>allAppointment = [];
   List doneAppointment = [];
   List cancelAppointment = [];
   List todayAppointment = [];
   List appointment = [];
-
   Future<String> getTokenFromStorage() async {
     final token = await storage.read(key: 'jwt');
     if (token != null) {
@@ -158,7 +186,6 @@ class _UserDailyState extends State<UserDaily> {
         // Extract date and time from the response
         String date = app['scheduleByDay']['date'];
         String time = app['scheduleByDay']['timeSlots']['time'];
-        print("time is: + $time");
         
       //  checktime();
         // Extract doctor name from the response
@@ -173,7 +200,13 @@ class _UserDailyState extends State<UserDaily> {
       return {};
     }
   }
-
+  listenToNotifications() {
+    print("Listening to notification");
+    LocalNotifications.onClickNotification.stream.listen((event) {
+      print(event);
+      Navigator.pushNamed(context, '/another', arguments: event);
+    });
+  }
   @override
   void initState() {
     super.initState();
@@ -181,27 +214,54 @@ class _UserDailyState extends State<UserDaily> {
     getDoneAppointment();
     getcancelAppointment();
     getTodayAppointment();
+    listenToNotifications();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 90,
-        backgroundColor: const Color(0xFF0561DD),
-        elevation: 1,
-        title: const Center(
-          child: Text(
-            "Appointment",
-            style: TextStyle(
-              fontSize: 30,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Salsa',
-            ),
+  toolbarHeight: 90,
+  backgroundColor: const Color(0xFF0561DD),
+  elevation: 1,
+  title: Center(
+    child: Row(
+      children: [
+        SizedBox(width: 160),
+        Text(
+          "Appointment",
+          style: TextStyle(
+            fontSize: 30,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Salsa',
           ),
         ),
-      ),
+        SizedBox(width: 100),
+        Center(
+          child: InkWell(
+            child: FaIcon(FontAwesomeIcons.bell, color: Colors.white, size: 25.0),
+            onTap: () {
+              timerManager.startTimer();
+              
+            },
+          ),
+        ),
+      Center(
+          child: InkWell(
+            child: FaIcon(FontAwesomeIcons.bellSlash, color: Colors.white, size: 25.0),
+            onTap: () {
+              print("Pause Timer Button Tapped");
+               timerManager.pauseTimer();
+            },
+          ),
+        ),
+        
+      ],
+    ),
+  ),
+),
+
       body: DefaultTabController(
         length: 4,
         child: Column(
@@ -242,6 +302,7 @@ class _UserDailyState extends State<UserDaily> {
                     ),
                     Tab(
                       child: Container(
+                        
                         height: 50,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),

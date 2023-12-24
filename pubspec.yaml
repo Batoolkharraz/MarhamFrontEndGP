@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.1.0 <4.0.0'
+  sdk: '>=3.0.6 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -32,7 +32,7 @@ dependencies:
   google_nav_bar: ^5.0.6
   flutter:
     sdk: flutter
-  flutter_svg: ^0.22.0
+  flutter_svg: ^2.0.9
   image_picker: ^1.0.4
   flutter_secure_storage: ^5.0.10
   jwt_decoder: ^2.0.1
@@ -40,11 +40,10 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+
   http: ^0.13.3 
   smooth_page_indicator: ^1.0.0
   lottie: ^1.2.1
-  animated_splash_screen: ^1.1.0
   custom_clippers: ^2.0.0
   intl: ^0.18.1
   flutter_slidable: ^0.6.0
@@ -53,7 +52,10 @@ dependencies:
   firebase_auth: ^4.14.1
   cloud_firestore: ^4.13.2
   awesome_notifications: ^0.8.2
-  flutter_local_notifications: ^8.2.0
+  cupertino_icons: ^1.0.2
+  flutter_local_notifications: ^15.1.1
+  flutter_timezone: ^1.0.7
+  rxdart: ^0.27.7
   flutter_credit_card: ^3.0.6
   flutter_paypal_checkout: ^1.0.1
   

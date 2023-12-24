@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/Auth/chat/mk.dart';
 import 'package:flutter_application_4/doctorappointment/appTime.dart';
 import 'package:flutter_application_4/unit/appOfDate.dart';
 import 'package:http/http.dart' as http;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_application_4/unit/print.dart';
 
 class appointment extends StatefulWidget {
   final Map<String, dynamic> doctor;
@@ -73,8 +73,18 @@ class _appointmentState extends State<appointment> {
 
   @override
   Widget build(BuildContext context) {
+    String email = widget.doctor['email']; // Assuming widget.doctor['email'] is the email address
+
+List<String> emailParts = email.split('@');
+
+String part1 = emailParts[0];
     return Scaffold(
       appBar: AppBar(
+        title: Text(widget.doctor['name'] ,style: const TextStyle(
+                                
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w500,
+                                   )),
         toolbarHeight: 90,
         backgroundColor: const Color(0xFF0561DD),
         leading: BackButton(
@@ -87,14 +97,15 @@ class _appointmentState extends State<appointment> {
           child: Column(
             children: [
               Container(
-                width: 600,
-                height: 230,
-                color: Colors.white,
+                // color:Colors.black,
+                // width: 600,
+                height: 240,
+                // color: Colors.white,
                 child: Row(
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsets.only(top: 20, left: 20, right: 20),
+                          const EdgeInsets.only(top: 20, left: 14),
                       child: ClipOval(
                         child: Container(
                           width:
@@ -111,111 +122,112 @@ class _appointmentState extends State<appointment> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 60,
-                      ),
-                      child: SizedBox(
-                        width: 290,
-                        height: 400,
-                        child: Column(
-                          children: [
-                            Text(widget.doctor['name'],
-                                style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 35,
+                     
+                    Container(
+                      // color: Colors.blue,
+                      width: 300,
+                      padding: EdgeInsets.only(top:60,left:20),
+                      child: Column(  mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(widget.doctor['description'],
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 35,
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: 'Salsa')),
+                                            SizedBox(height:10),
+                                             Container(
+                                      width: 300,
+                                      // color: Colors.blue,
+                                       child: Row(
+                                         children: [SizedBox(width: 5,),
+                                          Container(
+  width: 30,
+  height: 30,
+  decoration: BoxDecoration(
+    shape: BoxShape.circle,
+    border: Border.all(color: Colors.blue, width: 2),
+  ),
+  child: Center(
+    child: Icon(
+      Icons.attach_money,
+      color: Colors.blue,
+    ),
+  ),
+)
+,
+SizedBox(width: 10,),
+                                              Text("70sh "
+                                              , style: const TextStyle(
+                                     color: Color.fromRGBO(58, 58, 58, 1),
+                                    fontSize: 25,
                                     fontWeight: FontWeight.w500,
-                                    fontFamily: 'Salsa')),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 20, left: 65),
-                              child: Row(children: [
-                                Container(
-                                  width:
-                                      50, // Adjust the width and height as needed to make it circular
-                                  height: 50,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape
-                                        .circle, // This makes the container circular
-                                    color: Color(0xFF0561DD),
-                                    // You can change the background color
-                                  ),
-                                  child: Center(
-                                      child: InkWell(
-                                    child: const FaIcon(
-                                      FontAwesomeIcons.commentMedical,
-                                      size: 28.0,
-                                      color: Colors.white,
-                                    ),
-                                    onTap: () => {print("message")},
-                                  )),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Container(
-                                  width:
-                                      50, // Adjust the width and height as needed to make it circular
-                                  height: 50,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape
-                                        .circle, // This makes the container circular
-                                    color: Color(
-                                        0xFF0561DD), // You can change the background color
-                                  ),
-                                  child: Center(
-                                      child: InkWell(
-                                    child: const FaIcon(FontAwesomeIcons.video,
-                                        color: Colors.white, size: 25.0),
-                                    onTap: () => {print("video call")},
-                                  )),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Container(
-                                  width:
-                                      50, // Adjust the width and height as needed to make it circular
-                                  height: 50,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape
-                                        .circle, // This makes the container circular
-                                    color: Color(
-                                        0xFF0561DD), // You can change the background color
-                                  ),
-                                  child: Center(
-                                      child: InkWell(
-                                    child: const FaIcon(FontAwesomeIcons.phone,
-                                        color: Colors.white, size: 25.0),
-                                    onTap: () => {printing()},
-                                  )),
-                                ),
-                              ]),
-                            ),
-                          ],
-                        ),
+                                    fontFamily: 'Salsa'))
+                                        ,
+                                        SizedBox(width: 15,),
+                                         FaIcon(
+                                      FontAwesomeIcons.locationDot,
+                                      size: 26.0,
+                                      color: Colors.blue,
+                                    ),SizedBox(width: 5,),
+                                              Text(widget.doctor['address']
+                                              , style: const TextStyle(
+                                     color: Color.fromRGBO(58, 58, 58, 1),
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'Salsa'))
+                                         ],
+                                       ),
+                                     ),
+                                     SizedBox(height:10),
+                                     Container(
+                                      
+                                      width: 300,
+                                       child: Row(
+                                         children: [
+                                          SizedBox(width: 5),
+                                         FaIcon(
+                                      FontAwesomeIcons.envelope,
+                                      size: 26.0,
+                                      color: Colors.blue,
+                                    ),SizedBox(width: 10,),
+                                              Text(part1
+                                              , style: const TextStyle(
+                                     color: Color.fromRGBO(58, 58, 58, 1),
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'Salsa'))
+                                    
+                                         ],
+                                       ),
+                                     ),
+                                    
+                                     Padding(
+                                       padding: const EdgeInsets.only(left:25),
+                                       child: Text("@gmail.com"
+                                                , style: const TextStyle(
+                                       color: Color.fromRGBO(58, 58, 58, 1),
+                                                                         fontSize: 25,
+                                                                         fontWeight: FontWeight.w500,
+                                                                         fontFamily: 'Salsa')),
+                                     )
+                                     ,
+                                     
+                        ],
                       ),
-                    ),
+                    ) 
+                      
+                    
                   ],
                 ),
               ),
               Container(
                 child: Column(
                   children: [
-                    const Padding(
-                      padding:
-                          EdgeInsets.only(left: 20, bottom: 15, top: 15),
-                      child: SizedBox(
-                        width: 600,
-                        child: Text("Availability",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold
-                                // fontFamily: 'Salsa',
-                                )),
-                      ),
-                    ),
-                    Container(
+                    
+                    InkWell(child:
+                     Container(
                       padding: const EdgeInsets.only(top: 5),
                       width: 510,
                       height: 50,
@@ -227,7 +239,7 @@ class _appointmentState extends State<appointment> {
                           width: 2.0, // Set the border width
                         ),
                       ),
-                      child: Text("Address:    " + widget.doctor['address'],
+                      child: Text("Talk to " + widget.doctor['name'],
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                               color: Colors.white,
@@ -236,7 +248,31 @@ class _appointmentState extends State<appointment> {
                               // fontFamily: 'Salsa',
 
                               )),
-                    )
+                    ),
+                    onTap:  () => { Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                      ChatScreen(ruseremail:widget.doctor['email']))
+                                    )
+                    
+                                      },
+                                
+                    ),
+                    const Padding(
+                      padding:
+                          EdgeInsets.only(left: 20, bottom: 5, top: 15),
+                      child: SizedBox(
+                        width: 600,
+                        child: Text("BooK Apponitment",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold
+                                // fontFamily: 'Salsa',
+                                )),
+                      ),
+                    ),
+                   
                   ],
                 ),
               ),
