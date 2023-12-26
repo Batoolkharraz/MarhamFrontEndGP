@@ -4,12 +4,12 @@ import 'package:flutter_application_4/Auth/signup/signuppost.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-void onPressed(BuildContext context, String username, String email,
+void onPressed(BuildContext context, String username, String email,address,
     String phone, String password) async {
   try {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-    String loginSuccessful = await addPOST(username, email, phone, password);
+    String loginSuccessful = await addPOST(username, email,address ,phone, password);
 
     if (loginSuccessful == "false1") {
       ScaffoldMessenger.of(context).showSnackBar(
