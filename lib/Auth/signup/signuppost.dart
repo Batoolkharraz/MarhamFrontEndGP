@@ -2,7 +2,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-Future<String> addPOST(String username, String email, String phone, String password) async {
+Future<String> addPOST(String username, String email, address,String phone, String password) async {
   try {
     
     final url = Uri.parse("https://marham-backend.onrender.com/signup/user");
@@ -12,6 +12,7 @@ Future<String> addPOST(String username, String email, String phone, String passw
     }, body: jsonEncode({
       "username": username,
       "email": email,
+      "address":address,
       "phone": phone,
       "password": password,
     }));

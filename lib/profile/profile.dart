@@ -361,22 +361,22 @@ class _profileState extends State<profile> {
                                             const SizedBox(
                                               height: 15,
                                             ),
-                                            const Row(
+                                             Row(
                                               children: [
-                                                SizedBox(
+                                                const SizedBox(
                                                   width: 25,
                                                 ),
-                                                FaIcon(
+                                                const FaIcon(
                                                   FontAwesomeIcons.locationDot,
                                                   color: Colors.blue,
                                                   size: 30.0,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   width: 10,
                                                 ),
                                                 Text(
-                                                  'nablus',
-                                                  style: TextStyle(
+                                                  User['address'] ?? 'not found',
+                                                  style: const TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 26,
                                                     fontFamily: 'salsa',
