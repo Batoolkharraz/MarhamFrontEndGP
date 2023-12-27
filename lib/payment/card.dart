@@ -12,8 +12,13 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 class SecondScreen extends StatefulWidget {
   final String bookId;
   final String docId;
+  final String price;
 
-  const SecondScreen({super.key, required this.bookId, required this.docId});
+  const SecondScreen(
+      {super.key,
+      required this.bookId,
+      required this.docId,
+      required this.price});
   @override
   State<SecondScreen> createState() => _SecondScreenState();
 }
@@ -27,7 +32,12 @@ class _SecondScreenState extends State<SecondScreen> {
   final TextEditingController cardCvvController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final storage = const FlutterSecureStorage();
-
+  String point = '';
+  int p = 0;
+  String discount = '';
+  double d = 0;
+  String finalP = '';
+  double f = 0;
   Future<String> getTokenFromStorage() async {
     final token = await storage.read(key: 'jwt');
     if (token != null) {
@@ -52,13 +62,20 @@ class _SecondScreenState extends State<SecondScreen> {
   }
 
   void payment() async {
+    String finalPrice = (p == 0 ? widget.price : finalP);
+    print(finalPrice);
     String id = await getTokenFromStorage();
+    final pay = {
+      "payMethod": "card",
+      "price": finalPrice,
+    };
     final response = await http.post(
       Uri.parse(
           'https://marham-backend.onrender.com/payment/$id/${widget.bookId}'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
+      body: jsonEncode(pay),
     );
     if (response.statusCode == 201 || response.statusCode == 200) {
       // Show a success message
@@ -87,7 +104,7 @@ class _SecondScreenState extends State<SecondScreen> {
         'Content-Type': 'application/json; charset=UTF-8',
       },
     );
-
+    print(response.body);
     if (response.statusCode == 200) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -131,6 +148,38 @@ class _SecondScreenState extends State<SecondScreen> {
     }
   }
 
+  Future getPrice() async {
+    String id = await getTokenFromStorage();
+    var url =
+        "https://marham-backend.onrender.com/payment/points/$id/${widget.bookId}";
+
+    try {
+      var response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        var responseBody = response.body.toString();
+        responseBody = responseBody.trim();
+        var app = jsonDecode(responseBody);
+
+        print(response.body);
+        print(app);
+        if (app != null && app is Map<String, dynamic>) {
+          setState(() {
+            p = app['point'];
+            point = p.toString();
+            calcPrice();
+          });
+        } else {
+          print('Unexpected response structure: $app');
+        }
+      } else {
+        print('Failed to fetch data. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error during network request: $error');
+    }
+  }
+
   bool isDateExpired(String date) {
     // Split the date string into month and year parts
     if (date.isEmpty) {
@@ -153,15 +202,165 @@ class _SecondScreenState extends State<SecondScreen> {
         (year == currentDate.year && month < currentDate.month);
   }
 
+  String calcPrice() {
+    int Number = int.parse(widget.price);
+    d = (((p / 100) * Number) / 100);
+    f = Number - (((p / 100) * Number) / 100);
+    print(d);
+    discount = d.toString();
+    finalP = f.toString();
+    return discount;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getPrice();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(80.0),
+          child: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: Colors.white,
+            elevation: 0,
+            centerTitle: true,
+            toolbarHeight: 90,
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.grey, // Set the color to grey
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
+        ),
         body: SingleChildScrollView(
-            child: Center(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 230),
-            child: Container(
+            child: Column(
+          children: [
+            Container(
+              child: Padding(
+                padding:
+                    const EdgeInsets.only( right: 40.0, left: 40),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "your final step for booing! ",
+                        style: TextStyle(
+                            fontFamily: 'salsa',
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Row(
+                        
+                    crossAxisAlignment: CrossAxisAlignment.spaceBetween,
+                        children: [
+                      Text(
+                        "Appointment price: ",
+                        style: TextStyle(
+                            fontFamily: 'salsa',
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                         widget.price,
+                        style: TextStyle(
+                            fontFamily: 'salsa',
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold),
+                      ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "your Points: ",
+                            style: TextStyle(
+                                fontFamily: 'salsa',
+                                fontSize: 35,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            (point.isEmpty ? "0" : point),
+                            style: TextStyle(
+                                fontFamily: 'salsa',
+                                fontSize: 35,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Row(
+                        
+                        children: [
+                      Text(
+                        "Discount: ",
+                        style: TextStyle(
+                            fontFamily: 'salsa',
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                         (point.isEmpty ? "0" : discount),
+                        style: TextStyle(
+                            fontFamily: 'salsa',
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold),
+                      ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Divider(
+                        color:
+                            Colors.grey, // You can change the color of the line
+                        thickness:
+                            2, // You can adjust the thickness of the line
+                      ),
+                      Row(
+                        
+                        children: [
+                      Text(
+                            (point.isEmpty ? widget.price : finalP),
+                        style: TextStyle(
+                            fontFamily: 'salsa',
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "Final price: ",
+                        style: TextStyle(
+                            fontFamily: 'salsa',
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold),
+                      ),
+                        ],
+                      ),
+                    ]),
+              ),
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            Container(
               width: 530.0,
               height: 600.0,
               decoration: BoxDecoration(
@@ -428,13 +627,13 @@ class _SecondScreenState extends State<SecondScreen> {
                                 });
                               }
 */
-                              
+
                               bool isExpired =
                                   isDateExpired(cardExpiryDateController.text);
 
                               if (cardNumberController.text.length != 19 ||
                                   cardCvvController.text.length != 3 ||
-                                  isExpired||
+                                  isExpired ||
                                   cardNumberController.text.isEmpty ||
                                   cardCvvController.text.isEmpty ||
                                   cardExpiryDateController.text.isEmpty ||
@@ -464,7 +663,7 @@ class _SecondScreenState extends State<SecondScreen> {
                 ),
               ),
             ),
-          ),
+          ],
         )));
   }
 }

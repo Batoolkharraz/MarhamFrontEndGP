@@ -14,6 +14,7 @@ class schedual extends StatelessWidget {
   final String userName;
   final String date;
   final String time;
+  final String doctorId;
 
   const schedual({super.key, 
     required this.bookId,
@@ -21,6 +22,7 @@ class schedual extends StatelessWidget {
     required this.userName,
     required this.date,
     required this.time,
+    required this.doctorId,
   });
 
   @override
@@ -53,9 +55,8 @@ class schedual extends StatelessWidget {
     Future<void> cancelAppointment(String bookId, String userId) async {
       try {
         // String doctorId = await getTokenFromStorage();
-        String doctorId = '651c58f32cd651e7a27ac12f';
         var url = Uri.parse(
-            'https://marham-backend.onrender.com/schedule/cancel/$userId/$bookId/$doctorId');
+            'https://marham-backend.onrender.com/schedule/cancelByDoc/$userId/$bookId/$doctorId');
 
         var response = await http.patch(
           url,
