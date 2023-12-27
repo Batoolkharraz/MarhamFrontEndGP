@@ -254,7 +254,7 @@ class _SecondScreenState extends State<SecondScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "your final step for booing! ",
+                        "your final step for booking! ",
                         style: TextStyle(
                             fontFamily: 'salsa',
                             fontSize: 35,
@@ -264,21 +264,20 @@ class _SecondScreenState extends State<SecondScreen> {
                         height: 40,
                       ),
                       Row(
-                        
-                    crossAxisAlignment: CrossAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                       Text(
                         "Appointment price: ",
                         style: TextStyle(
                             fontFamily: 'salsa',
-                            fontSize: 35,
+                            fontSize: 28,
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
                          widget.price,
                         style: TextStyle(
                             fontFamily: 'salsa',
-                            fontSize: 35,
+                            fontSize: 28,
                             fontWeight: FontWeight.bold),
                       ),
                         ],
@@ -287,19 +286,20 @@ class _SecondScreenState extends State<SecondScreen> {
                         height: 25,
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             "your Points: ",
                             style: TextStyle(
                                 fontFamily: 'salsa',
-                                fontSize: 35,
+                                fontSize: 28,
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
                             (point.isEmpty ? "0" : point),
                             style: TextStyle(
                                 fontFamily: 'salsa',
-                                fontSize: 35,
+                                fontSize: 28,
                                 fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -308,20 +308,20 @@ class _SecondScreenState extends State<SecondScreen> {
                         height: 25,
                       ),
                       Row(
-                        
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                       Text(
                         "Discount: ",
                         style: TextStyle(
                             fontFamily: 'salsa',
-                            fontSize: 35,
+                            fontSize: 28,
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
-                         (point.isEmpty ? "0" : discount),
+                         (point.isEmpty ? "0" :"- "+ discount),
                         style: TextStyle(
                             fontFamily: 'salsa',
-                            fontSize: 35,
+                            fontSize: 28,
                             fontWeight: FontWeight.bold),
                       ),
                         ],
@@ -336,20 +336,20 @@ class _SecondScreenState extends State<SecondScreen> {
                             2, // You can adjust the thickness of the line
                       ),
                       Row(
-                        
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                      Text(
-                            (point.isEmpty ? widget.price : finalP),
-                        style: TextStyle(
-                            fontFamily: 'salsa',
-                            fontSize: 35,
-                            fontWeight: FontWeight.bold),
-                      ),
                       Text(
                         "Final price: ",
                         style: TextStyle(
                             fontFamily: 'salsa',
-                            fontSize: 35,
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                            (point.isEmpty ? widget.price : finalP),
+                        style: TextStyle(
+                            fontFamily: 'salsa',
+                            fontSize: 28,
                             fontWeight: FontWeight.bold),
                       ),
                         ],

@@ -21,12 +21,15 @@ class _profileState extends State<profile> {
   Map<String, dynamic> User = {};
   final storage = const FlutterSecureStorage();
   String userId = '';
+  String point = '';
+  int p = 0;
 
   @override
   void initState() {
     super.initState();
     getPrescription();
     getUserInfo();
+    getPrice();
   }
 
   Future<String> getTokenFromStorage() async {
@@ -84,7 +87,6 @@ class _profileState extends State<profile> {
           setState(() {
             prescriptions.clear();
             prescriptions.addAll(pre);
-            print(prescriptions);
           });
         }
       }
@@ -154,11 +156,42 @@ class _profileState extends State<profile> {
         prescription['dateTo'] = fromFormat
             .format(DateFormat('MM/dd/yyyy').parse(prescription['dateTo']));
       }
+      if (mounted) {
+        setState(() {
+          prescriptions.clear();
+          prescriptions.addAll(pre);
+        });
+      }
+    }
+  }
 
-      setState(() {
-        prescriptions.clear();
-        prescriptions.addAll(pre);
-      });
+  Future getPrice() async {
+    String id = await getTokenFromStorage();
+    var url = "https://marham-backend.onrender.com/payment/points/$id/12";
+
+    try {
+      var response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        var responseBody = response.body.toString();
+        responseBody = responseBody.trim();
+        var app = jsonDecode(responseBody);
+
+        print(response.body);
+        print(app);
+        if (app != null && app is Map<String, dynamic>) {
+          setState(() {
+            p = app['point'];
+            point = p.toString();
+          });
+        } else {
+          print('Unexpected response structure: $app');
+        }
+      } else {
+        print('Failed to fetch data. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error during network request: $error');
     }
   }
 
@@ -192,7 +225,7 @@ class _profileState extends State<profile> {
         ),
         body: SingleChildScrollView(
             child: Center(
-          child: Container( 
+          child: Container(
             child: Column(children: [
               User.isEmpty
                   ? const SizedBox(
@@ -210,11 +243,10 @@ class _profileState extends State<profile> {
                                 180, // Width and height to accommodate the border
                             height: 180,
                             decoration: BoxDecoration(
-                              
                               shape: BoxShape.circle,
                               border: Border.all(
-                                color:
-                                    const Color(0xFF0561DD), // Blue border color
+                                color: const Color(
+                                    0xFF0561DD), // Blue border color
                                 width: 3, // Adjust the border width as needed
                               ),
                               boxShadow: [
@@ -229,8 +261,8 @@ class _profileState extends State<profile> {
                             child: User['image'] != null
                                 ? CircleAvatar(
                                     backgroundColor: Colors.transparent,
-                                    backgroundImage:
-                                        NetworkImage(User['image']['secure_url']),
+                                    backgroundImage: NetworkImage(
+                                        User['image']['secure_url']),
                                     radius: 90,
                                   )
                                 : const CircleAvatar(
@@ -265,7 +297,7 @@ class _profileState extends State<profile> {
                         ],
                       ),
                     ),
-          
+
               ///////////////////////////////////////////info
               Padding(
                 padding: const EdgeInsets.only(top: 25.0),
@@ -284,7 +316,7 @@ class _profileState extends State<profile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Title
-          
+
                         const Text(
                           'Personal Information',
                           style: TextStyle(
@@ -293,42 +325,43 @@ class _profileState extends State<profile> {
                             fontFamily: 'salsa',
                           ),
                         ),
-          
+
                         const SizedBox(
                           height: 10,
                         ),
-          
+
                         // Appointment
-          
+
                         User.isEmpty
                             ? const SizedBox(
-                                height: 270,
+                                height: 250,
                                 child: Center(
                                   child: CircularProgressIndicator(),
                                 ),
                               )
                             : SizedBox(
                                 height:
-                                    210, // Set a fixed height or use a different value based on your design
-          
+                                    250, // Set a fixed height or use a different value based on your design
+
                                 child: ListView.builder(
                                   physics: const BouncingScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount: 1,
                                   itemBuilder: (context, index) {
                                     //  final appointment = appointmentList[index];
-          
+
                                     return Padding(
                                       padding: const EdgeInsets.only(top: 10),
                                       child: Container(
-                                        height: 200,
+                                        height: 230,
                                         decoration: BoxDecoration(
                                           color: Colors.white,
                                           border: Border.all(
                                             width: 2,
                                             color: const Color(0xFF0561DD),
                                           ),
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                         ),
                                         child: Column(
                                           children: [
@@ -349,7 +382,8 @@ class _profileState extends State<profile> {
                                                   width: 10,
                                                 ),
                                                 Text(
-                                                  User['username'] ?? 'not found',
+                                                  User['username'] ??
+                                                      'not found',
                                                   style: const TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 26,
@@ -361,7 +395,7 @@ class _profileState extends State<profile> {
                                             const SizedBox(
                                               height: 15,
                                             ),
-                                             Row(
+                                            Row(
                                               children: [
                                                 const SizedBox(
                                                   width: 25,
@@ -375,7 +409,8 @@ class _profileState extends State<profile> {
                                                   width: 10,
                                                 ),
                                                 Text(
-                                                  User['address'] ?? 'not found',
+                                                  User['address'] ??
+                                                      'not found',
                                                   style: const TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 26,
@@ -410,6 +445,32 @@ class _profileState extends State<profile> {
                                                 ),
                                               ],
                                             ),
+                                            const SizedBox(
+                                              height: 15,
+                                            ),
+                                            Row(
+                                              children: [
+                                                const SizedBox(
+                                                  width: 25,
+                                                ),
+                                                const FaIcon(
+                                                  FontAwesomeIcons.coins,
+                                                  color: Colors.blue,
+                                                  size: 30.0,
+                                                ),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                  point.isEmpty ? '0' : point,
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 26,
+                                                    fontFamily: 'salsa',
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -422,108 +483,102 @@ class _profileState extends State<profile> {
                   ),
                 ),
               ),
-          /////////////////////////////////////med
-          
-             Container(color: Colors.white,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      //title
-          
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Your medicine',
-                            style: TextStyle(
-                              color: Color(0xFF0561DD),
-                              fontSize: 30,
-                              fontFamily: 'salsa',
-                            ),
+              /////////////////////////////////////med
+
+              Container(
+                color: Colors.white,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    //title
+
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Your medicine',
+                          style: TextStyle(
+                            color: Color(0xFF0561DD),
+                            fontSize: 30,
+                            fontFamily: 'salsa',
                           ),
-                          Text(
-                            'see all',
-                            style: TextStyle(
-                              color: Color(0xFF0561DD),
-                              fontSize: 20,
-                              fontFamily: 'salsa',
-                            ),
+                        ),
+                        Text(
+                          'see all',
+                          style: TextStyle(
+                            color: Color(0xFF0561DD),
+                            fontSize: 20,
+                            fontFamily: 'salsa',
                           ),
-                        ],
-                      ),
-          
-                      prescriptions.isEmpty
-                          ? Center(
-                              child: Column(
-                                children: [
-                                  Container(
-                                    child: Image.asset('assets/medicine.png'),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    'No Prescription written for You Yet!',
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                      fontFamily: 'salsa',
-                                      fontSize: 25,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          : SizedBox(
-                              height: 250,
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: prescriptions.length,
-                                itemBuilder: (context, index) {
-                                  return FutureBuilder(
-                                    future: getDoctor(
-                                        '${prescriptions[index]['writtenBy']}'),
-                                    builder: (context, categorySnapshot) {
-                                      if (categorySnapshot.hasError) {
-                                        return Text(
-                                            'Error: ${categorySnapshot.error}');
-                                      } else {
-                                        return Container(
-                                          child: medicineList(
-                                            diagnosis: prescriptions[index]
-                                                ['diagnosis'],
-                                            from: prescriptions[index]
-                                                ['dateFrom'],
-                                            to: prescriptions[index]['dateTo'],
-                                            writtenBy:
-                                                categorySnapshot.data.toString(),
-                                            onTap: () {
-                                              Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      medicineSchedule(
-                                                    medicines:
-                                                        prescriptions[index]
-                                                            ['medicines'],
-                                                  ),
+                        ),
+                      ],
+                    ),
+
+                    prescriptions.isEmpty
+                        ? Center(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 250,
+                                  child: Image.asset('assets/medicine.png'),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            ),
+                          )
+                        : SizedBox(
+                            height: 260,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: prescriptions.length,
+                              itemBuilder: (context, index) {
+                                return FutureBuilder(
+                                  future: getDoctor(
+                                      '${prescriptions[index]['writtenBy']}'),
+                                  builder: (context, categorySnapshot) {
+                                    if (categorySnapshot.hasError) {
+                                      return Text(
+                                          'Error: ${categorySnapshot.error}');
+                                    } else {
+                                      return Container(
+                                        child: medicineList(
+                                          diagnosis: prescriptions[index]
+                                              ['diagnosis'],
+                                          from: prescriptions[index]
+                                              ['dateFrom'],
+                                          to: prescriptions[index]['dateTo'],
+                                          writtenBy:
+                                              categorySnapshot.data.toString(),
+                                          onTap: () {
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    medicineSchedule(
+                                                  medicines:
+                                                      prescriptions[index]
+                                                          ['medicines'],
                                                 ),
-                                              );
-                                            },
-                                          ),
-                                        );
-                                      }
-                                    },
-                                  );
-                                },
-                                physics: const BouncingScrollPhysics(),
-                              ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    }
+                                  },
+                                );
+                              },
+                              physics: const BouncingScrollPhysics(),
                             ),
-                    ],
-                  ),
-                  padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+                          ),
+                  ],
                 ),
-              
-          //////////////////////////////
+                padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+              ),
+
+              //////////////////////////////
             ]),
           ),
         )));
