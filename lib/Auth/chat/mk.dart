@@ -251,13 +251,7 @@ class MessageLine extends StatelessWidget {
         crossAxisAlignment:
             isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 13.0),
-            child: Text(
-              '$sender',
-              style: const TextStyle(fontSize: 19),
-            ),
-          ),
+         
           Material(
             borderRadius: isSender
                 ? const BorderRadius.only(
