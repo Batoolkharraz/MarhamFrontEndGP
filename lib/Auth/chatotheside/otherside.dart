@@ -62,86 +62,89 @@ String getChatRoomId() {
 }
  
   @override
-  Widget build(BuildContext context) {
+   Widget build(BuildContext context) {
     String chatRoomId = getChatRoomId();
-     print("from mm+ ${chatRoomId}");
+    print("chat room id:" + chatRoomId);
     return Scaffold(
-      // appBar: AppBar(
-         
-      //   toolbarHeight: 120,
-      //   backgroundColor: Colors.white,
-      //  leading: null,
-      //   title:
-      // ),
-      body: Column(
+     
+      body:Stack(
+        fit: StackFit.expand,
+              
+        children: [
+          Image.asset(
+            "assets/Screenshot 2023-12-28 003020.png",
+            height: MediaQuery.of(context).size.height,
+            fit: BoxFit.cover,
+          ),
+       Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            padding: EdgeInsets.only(top:35,left:25,bottom: 20),
+            padding: EdgeInsets.only(top: 35, left: 25, bottom: 20),
             decoration: const BoxDecoration(
-                                    shape: BoxShape.rectangle, // This makes the container circular
-                                  color: Color.fromARGB(203, 255, 255, 255),
-                                   border: Border(
-        bottom: BorderSide(
-          color: Colors.blue,  // Choose the color you want
-          width: 5.0,           // Choose the border width
-        ),
-                                   )
-                                  
-                                    // You can change the background color
-                                  ),
-          child: Row(
-            children: [
-              
-               Padding(
-                 padding: const EdgeInsets.only(right:20.0),
-                 child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.blue, width: 3),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF0561DD).withOpacity(0.3),
-                        offset: const Offset(0, 4),
-                        blurRadius: 15,
-                      ),
-                    ],
+                shape: BoxShape.rectangle, // This makes the container circular
+                color: Color.fromARGB(203, 255, 255, 255),
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.blue, // Choose the color you want
+                    width: 5.0, // Choose the border width
                   ),
-                  child: widget.image != null
-                              ? CircleAvatar(
-                                  backgroundColor: Colors.transparent,
-                                  backgroundImage:
-                                      NetworkImage(widget.image),
-                                  radius: 33,
-                                )
-                              : const CircleAvatar(
-                                  backgroundImage:
-                                      AssetImage('assets/5bbc3519d674c.jpg'),
-                                  radius: 33,
-                                ),
-                             ),
+                )
+
+                // You can change the background color
+                ),
+            child: Row(
+              children: [
+               InkWell(child: Icon(Icons.arrow_back,size: 30,color: Colors.blue,),
+               onTap:(){
+                   Navigator.pop(context);
+               },
                ),
-              Container(
-                width: 380,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 30),
-                  child: Text(
-                    widget.name,
-                    style: const TextStyle(
-                      fontSize: 28,
-                      color: Color(0xFF0561DD),
-                      fontFamily: 'Salsa',
+                Padding(
+                  padding: const EdgeInsets.only(right: 20.0,left:15),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.blue, width: 3),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF0561DD).withOpacity(0.3),
+                          offset: const Offset(0, 4),
+                          blurRadius: 15,
+                        ),
+                      ],
+                    ),
+                    child: widget.image != null
+                        ? CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: NetworkImage(widget.image),
+                            radius: 33,
+                          )
+                        : const CircleAvatar(
+                            backgroundImage:
+                                AssetImage('assets/5bbc3519d674c.jpg'),
+                            radius: 33,
+                          ),
+                  ),
+                ),
+                Container(
+                  width: 380,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 30),
+                    child: Text(
+                      widget.name,
+                      style: const TextStyle(
+                        fontSize: 28,
+                        color: Color(0xFF0561DD),
+                        fontFamily: 'Salsa',
+                      ),
                     ),
                   ),
                 ),
-              ),
-              
-             
-            ],
+              ],
+            ),
           ),
-        ),
-       
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
               stream: firestore
@@ -162,14 +165,14 @@ String getChatRoomId() {
                 final messages = snapshot.data!.docs;
                 for (var item in messages) {
                   final textm = item.get('text');
-                  final send = item.get('emailsender'); 
-          
-   
-                // timestamp = item.get('timestamp');
-                  final messageWidget =
-                      MessageLine(textm: textm, sender: send,
-                      isSender:signedinuser.email==send ,
-                      );
+                  final send = item.get('emailsender');
+
+                  // timestamp = item.get('timestamp');
+                  final messageWidget = MessageLine(
+                    textm: textm,
+                    sender: send,
+                    isSender: signedinuser.email == send,
+                  );
                   messageWidgets.add(messageWidget);
                 }
                 return ListView(
@@ -209,14 +212,13 @@ String getChatRoomId() {
                   child: Container(
                     width: 50,
                     padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: const FaIcon(
-                      FontAwesomeIcons.arrowRight,
-                      size: 30,
+                    child:Icon(
+                      Icons.send
+                      ,size: 35,
                       color: Colors.blue,
-                    ),
+                    )
                   ),
                   onTap: () {
-                    
                     if (messagetext != null && messagetext!.isNotEmpty) {
                       firestore
                           .collection('messages')
@@ -225,18 +227,13 @@ String getChatRoomId() {
                           .add({
                         'emailsender': signedinuser.email,
                         'text': messagetext,
-                        'reciver':_email,
+                        'reciver': _email,
                         'timestamp': FieldValue.serverTimestamp(),
+                      });
+                      var m = _email;
+                      storage.write(key: 'email', value: m);
 
-                      }
-                      
-                      );
-                      var m=_email;
-   storage.write(key: 'email', value: m);
-   
-  add(signedinuser.email);
-                     
-                     
+                      add(signedinuser.email);
                     }
                     messageController.clear();
                   },
@@ -246,14 +243,14 @@ String getChatRoomId() {
           ),
         ],
       ),
+      ]),
     );
   }
- 
-
 }
 
 class MessageLine extends StatelessWidget {
-  const MessageLine({this.textm, this.sender,required this.isSender,Key? key}) : super(key: key);
+  const MessageLine({this.textm, this.sender, required this.isSender, Key? key})
+      : super(key: key);
   final String? textm;
   final String? sender;
   final bool isSender;
@@ -262,34 +259,27 @@ class MessageLine extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
-         crossAxisAlignment: isSender
-            ? CrossAxisAlignment.end
-            : CrossAxisAlignment.start,
+        crossAxisAlignment:
+            isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-    
-          Padding(
-            padding: const EdgeInsets.only(right:13.0),
-            child: Text(
-              '$sender',
-              style: const TextStyle(fontSize: 19),
-            ),
-          ),
+         
           Material(
-            borderRadius: isSender?
-             const BorderRadius.only(
-          topLeft: Radius.circular(30),
-          bottomRight:Radius.circular(30),
-          bottomLeft: Radius.circular(30), 
-            ):
-             const BorderRadius.only(
-          topRight: Radius.circular(30),
-          bottomRight:Radius.circular(30),
-          bottomLeft: Radius.circular(30), 
-            ),
-            color: isSender ? Colors.blue : const Color.fromARGB(197, 158, 158, 158),
-           
+            borderRadius: isSender
+                ? const BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                  )
+                : const BorderRadius.only(
+                    topRight: Radius.circular(30),
+                    bottomRight: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                  ),
+            color: isSender
+                ? Colors.blue
+                : const Color.fromARGB(197, 158, 158, 158),
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical:14, horizontal: 20),
+              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
               child: Text(
                 '$textm',
                 style: const TextStyle(
@@ -301,7 +291,5 @@ class MessageLine extends StatelessWidget {
         ],
       ),
     );
-    
   }
-  
 }
