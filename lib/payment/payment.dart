@@ -3,7 +3,7 @@ import 'package:flutter_application_4/payment/card.dart';
 import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-void showpaymentalertt(BuildContext context,String book,String doc) {
+void showpaymentalertt(BuildContext context,String book,String doc,String price) {
   showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -79,7 +79,8 @@ void showpaymentalertt(BuildContext context,String book,String doc) {
                             MaterialPageRoute(
                                 builder: (context) =>SecondScreen(
                                   bookId: book,
-                                  docId:doc)),
+                                  docId:doc,
+                                  price:price)),
                           );
                       },
                     )

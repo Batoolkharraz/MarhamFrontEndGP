@@ -18,6 +18,7 @@ class appointment extends StatefulWidget {
 
 class _appointmentState extends State<appointment> {
   List apps = [];
+  String price='' ;
   List<String> appointmentDates = [];
   Map<String, List<Map<String, dynamic>>> dateToTimeSlots = {};
   Future getApps() async {
@@ -66,10 +67,38 @@ class _appointmentState extends State<appointment> {
     }
   }
 
+Future getPrice() async {
+  var url = "https://marham-backend.onrender.com/price/${widget.doctor['_id']}";
+  
+  try {
+    var response = await http.get(Uri.parse(url));
+    
+    if (response.statusCode == 200) {
+      var responseBody = response.body.toString();
+      responseBody = responseBody.trim();
+      var app = jsonDecode(responseBody);
+
+      if (app != null && app is Map<String, dynamic>) {
+        setState(() {
+          price = app['price'];
+        });
+      } else {
+        print('Unexpected response structure: $app');
+      }
+    } else {
+      print('Failed to fetch data. Status code: ${response.statusCode}');
+    }
+  } catch (error) {
+    print('Error during network request: $error');
+  }
+}
+
+
   @override
   void initState() {
     super.initState();
     getApps();
+    getPrice();
   }
 
   @override
@@ -164,7 +193,7 @@ class _appointmentState extends State<appointment> {
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Text("70sh ",
+                                Text(price+' sh',
                                     style: const TextStyle(
                                         color: Color.fromRGBO(58, 58, 58, 1),
                                         fontSize: 25,
@@ -257,16 +286,17 @@ class _appointmentState extends State<appointment> {
                       onTap: () => {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => ChatScreen(
-                                ruseremail: widget.doctor['email'],
-                                image: widget.doctor['image']['secure_url'],
-                                name:widget.doctor['name'],)))
+                                  ruseremail: widget.doctor['email'],
+                                  image: widget.doctor['image']['secure_url'],
+                                  name: widget.doctor['name'],
+                                )))
                       },
                     ),
                     const Padding(
                       padding: EdgeInsets.only(left: 20, bottom: 5, top: 15),
                       child: SizedBox(
                         width: 600,
-                        child: Text("BooK Apponitment",
+                        child: Text("Book Apponitment",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 30,
@@ -322,6 +352,7 @@ class _appointmentState extends State<appointment> {
                                         docId: apps[0]['writtenBy'],
                                         date: selectedDate,
                                         timeSlots: timeSlots,
+                                        price: price,
                                       ),
                                     ),
                                   );

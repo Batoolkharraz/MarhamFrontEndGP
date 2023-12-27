@@ -24,7 +24,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
   List cancelAppointment = [];
   List todayAppointment = [];
   List appointment = [];
-
+  String docid='';
   Future<String> getTokenFromStorage() async {
     final token = await storage.read(key: 'jwt');
     if (token != null) {
@@ -61,8 +61,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
 
   Future<void> getAllAppointment() async {
     try {
-      String Id = await getDoctorId();
-      var url = "https://marham-backend.onrender.com/schedule/byDoctor/all/$Id";
+      docid = await getDoctorId();
+      var url = "https://marham-backend.onrender.com/schedule/byDoctor/all/$docid";
 
       var response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -85,9 +85,9 @@ class _AppointmentPageState extends State<AppointmentPage> {
 
   Future<void> getDoneAppointment() async {
     try {
-      String Id = await getDoctorId();
+      docid = await getDoctorId();
       var url =
-          "https://marham-backend.onrender.com/schedule/byDoctor/done/$Id";
+          "https://marham-backend.onrender.com/schedule/byDoctor/done/$docid";
 
       var response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -110,9 +110,9 @@ class _AppointmentPageState extends State<AppointmentPage> {
 
   Future<void> getcancelAppointment() async {
     try {
-      String Id = await getDoctorId();
+      docid = await getDoctorId();
       var url =
-          "https://marham-backend.onrender.com/schedule/byDoctor/cancel/$Id";
+          "https://marham-backend.onrender.com/schedule/byDoctor/cancel/$docid";
 
       var response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -135,9 +135,9 @@ class _AppointmentPageState extends State<AppointmentPage> {
 
   Future<void> getTodayAppointment() async {
     try {
-      String Id = await getDoctorId();
+      docid = await getDoctorId();
       var url =
-          "https://marham-backend.onrender.com/schedule/byDoctor/today/$Id";
+          "https://marham-backend.onrender.com/schedule/byDoctor/today/$docid";
 
       var response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -485,6 +485,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                               userName: userName,
                                               date: date,
                                               time: time,
+                                              doctorId:docid,
                                             );
                                           } else if (snapshot.connectionState ==
                                               ConnectionState.waiting) {

@@ -8,13 +8,15 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 class appTime extends StatefulWidget {
   final String docId;
   final String date;
+  final String price;
   final List<Map<String, dynamic>> timeSlots;
 
   const appTime(
       {super.key,
       required this.timeSlots,
       required this.date,
-      required this.docId});
+      required this.docId,
+      required this.price});
 
   @override
   State<appTime> createState() => _appTimeState();
@@ -174,8 +176,13 @@ class _appTimeState extends State<appTime> {
                           ),
                         );
                       } else {
-                        print(slot);
-                        showpaymentalertt(context, slot['_id'],widget.docId);
+                        print( slot['_id']);
+                        print(widget.docId);
+                        showpaymentalertt(
+                          context, 
+                          slot['_id'],
+                          widget.docId,
+                          widget.price);
                         //bookedApp(slot['_id']);
                       }
                     },

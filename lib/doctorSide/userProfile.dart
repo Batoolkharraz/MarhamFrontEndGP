@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/doctorSide/maindoctor.dart';
 import 'package:flutter_application_4/doctorSide/writePrescription.dart';
 import 'package:flutter_application_4/medicine/medicineSchedule.dart';
 import 'package:flutter_application_4/unit/patientRec.dart';
@@ -86,7 +87,7 @@ class _userProfileState extends State<userProfile> {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const doctorHome(),
+                    builder: (context) => const mainDoctorpage(),
                   ),
                 );
               },
