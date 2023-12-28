@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Home/userdaily.dart';
 import 'package:flutter_application_4/Home/home.dart';
+import 'package:flutter_application_4/payment/wallet/points.dart';
 import 'package:flutter_application_4/profile/profile.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -12,7 +13,7 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> {
-  List<Widget> page = [const home(), const profile(), const UserDaily()];
+  List<Widget> page = [const home(), const profile(), const UserDaily(),coinspage()];
   int selectedIndex = 0;
 
   void navigateBottomBar(int index) {
@@ -62,7 +63,14 @@ class _homePageState extends State<homePage> {
                         fontSize: 20, fontFamily: 'Salsa', color: Colors.white),
                     iconSize: 35,
                     text: ("Appointments")),
+                    GButton(
+                    icon: Icons.money,
+                    textStyle: TextStyle(
+                        fontSize: 20, fontFamily: 'Salsa', color: Colors.white),
+                    iconSize: 35,
+                    text: ("Wallet")),
               ]),
+              
         ),
       ),
       

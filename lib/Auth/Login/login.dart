@@ -85,6 +85,7 @@ class _LoginState extends State<Login> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TextFormField(
+
                             controller: _usernameController,
                             validator: (text) {
                               if (text == null || text.isEmpty) {
@@ -94,6 +95,7 @@ class _LoginState extends State<Login> {
                             },
                             style: const TextStyle(fontSize: 25),
                             decoration: const InputDecoration(
+                               
                               labelText: 'Email',
                               labelStyle: TextStyle(fontSize: 25),
                             ),

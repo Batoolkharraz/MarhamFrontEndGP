@@ -64,14 +64,17 @@ class _ChatScreenState extends State<ChatScreen> {
     String chatRoomId = getChatRoomId();
     print("chat room id:" + chatRoomId);
     return Scaffold(
-      // appBar: AppBar(
-
-      //   toolbarHeight: 120,
-      //   backgroundColor: Colors.white,
-      //  leading: null,
-      //   title:
-      // ),
-      body: Column(
+     
+      body:Stack(
+        fit: StackFit.expand,
+              
+        children: [
+          Image.asset(
+            "assets/Screenshot 2023-12-28 003020.png",
+            height: MediaQuery.of(context).size.height,
+            fit: BoxFit.cover,
+          ),
+       Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -91,8 +94,13 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
             child: Row(
               children: [
+               InkWell(child: Icon(Icons.arrow_back,size: 30,color: Colors.blue,),
+               onTap:(){
+                   Navigator.pop(context);
+               },
+               ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 20.0),
+                  padding: const EdgeInsets.only(right: 20.0,left:15),
                   child: Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
@@ -202,11 +210,11 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: Container(
                     width: 50,
                     padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: const FaIcon(
-                      FontAwesomeIcons.arrowRight,
-                      size: 30,
+                    child:Icon(
+                      Icons.send
+                      ,size: 35,
                       color: Colors.blue,
-                    ),
+                    )
                   ),
                   onTap: () {
                     if (messagetext != null && messagetext!.isNotEmpty) {
@@ -233,6 +241,7 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ],
       ),
+      ]),
     );
   }
 }
@@ -251,13 +260,7 @@ class MessageLine extends StatelessWidget {
         crossAxisAlignment:
             isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 13.0),
-            child: Text(
-              '$sender',
-              style: const TextStyle(fontSize: 19),
-            ),
-          ),
+         
           Material(
             borderRadius: isSender
                 ? const BorderRadius.only(

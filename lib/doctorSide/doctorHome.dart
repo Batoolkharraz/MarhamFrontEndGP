@@ -273,23 +273,7 @@ Padding(
   
                         SizedBox(
   
-                          height:
-  
-                              210, // Set a fixed height or use a different value based on your design
-  
-                          child: ListView.builder(
-  
-                            physics: const BouncingScrollPhysics(),
-  
-                            shrinkWrap: true,
-  
-                            itemCount: 1,
-  
-                            itemBuilder: (context, index) {
-  
-                              //  final appointment = appointmentList[index];
-  
-                              return Padding(
+                          child: Padding(
   
                                 padding: const EdgeInsets.only(top: 10),
   
@@ -297,7 +281,7 @@ Padding(
   
                                   
   
-                                  height: 200,
+                                   height: 300,
   
                                   decoration: BoxDecoration(
   
@@ -320,24 +304,23 @@ Padding(
                                     children: [
   
                                       const SizedBox(height: 25,),
-  
-                                      Row(
+   Row(
   
                                         children: [
   
                                           const SizedBox(width: 25,),
   
-                                          const FaIcon(FontAwesomeIcons.message,
+                                          const FaIcon(FontAwesomeIcons.userDoctor,
   
                                     color: Colors.blue, size: 30.0),
   
                                      const SizedBox(width: 10,),
   
-                                    Text(Doctor['email']?? 'not found',
+                                    Text(Doctor['name'] ?? 'not found',
   
                                     style: const TextStyle(
   
-                                 color: Colors.black,
+                                  color: Colors.black,
   
                                   fontSize: 26,
   
@@ -350,8 +333,39 @@ Padding(
                                         ],
   
                                       ),
+  const SizedBox(height:25,),
+                                      Row(
   
-                                       const SizedBox(height:15,),
+                                        children: [
+  
+                                          const SizedBox(width: 25,),
+  
+                                          const FaIcon(FontAwesomeIcons.message,
+  
+                                    color: Colors.blue, size: 30.0),
+  
+                                     const SizedBox(width: 10,),
+  InkWell(child:
+                                    Text(Doctor['email']?? 'not found',
+  
+                                    style: const TextStyle(
+  
+                                 color: Colors.black,
+  
+                                  fontSize: 26,
+  
+                                  fontFamily: 'salsa',
+  
+                                ),
+  
+                                    ),
+  )
+  
+                                        ],
+  
+                                      ),
+  
+                                       const SizedBox(height:25,),
   
                                        Row(
   
@@ -383,7 +397,7 @@ Padding(
   
                                       ),
   
-                                       const SizedBox(height:15,),
+                                       const SizedBox(height:25,),
   
                                       Row(
   
@@ -423,11 +437,9 @@ Padding(
   
                                 )
   
-                              );
+                              )
   
-                            },
-  
-                          ),
+                           
   
                         ),
   

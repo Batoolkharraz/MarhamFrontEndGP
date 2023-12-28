@@ -58,6 +58,8 @@ dependencies:
   rxdart: ^0.27.7
   flutter_credit_card: ^3.0.6
   flutter_paypal_checkout: ^1.0.1
+  flutter_paypal: ^0.2.0
+  hovering: ^1.0.4
   
 
 dev_dependencies:

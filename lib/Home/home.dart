@@ -111,6 +111,7 @@ class _homeState extends State<home> {
           //print(getCategory(doc[0]['categoryId']));
           doctors.addAll(doc);
         });
+        
       }
     } catch (error) {
       print("Error fetching today appointments: $error");
