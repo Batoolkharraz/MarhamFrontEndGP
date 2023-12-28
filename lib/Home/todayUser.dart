@@ -93,7 +93,7 @@ class _todayUserState extends State<todayUser> {
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Salsa')),
                         const SizedBox(
-                          width: 25,
+                          width: 100,
                         ),
                         const FaIcon(
                           FontAwesomeIcons.clock,
@@ -114,6 +114,7 @@ class _todayUserState extends State<todayUser> {
                   )
                 ],
               )
+            
             ],
           ),
         ),

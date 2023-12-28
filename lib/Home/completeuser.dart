@@ -50,17 +50,7 @@ class _completeuserState extends State<completeuser> {
                             fontSize: 30,
                             fontWeight: FontWeight.w500,
                             fontFamily: 'Salsa')),
-                   
-                    InkWell(
-                      child: const FaIcon(
-                        FontAwesomeIcons.circleCheck,
-                        size: 26.0,
-                        color: Colors.green,
-                      ),
-                      onTap: () {
-                        print(widget.id);
-                      },
-                    )
+                    
                   ],
                 ),
               ),
@@ -104,7 +94,7 @@ class _completeuserState extends State<completeuser> {
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Salsa')),
                         const SizedBox(
-                          width: 25,
+                          width: 100,
                         ),
                         const FaIcon(
                           FontAwesomeIcons.clock,
@@ -125,6 +115,7 @@ class _completeuserState extends State<completeuser> {
                   )
                 ],
               )
+            
             ],
           ),
         ),

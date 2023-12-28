@@ -186,7 +186,7 @@ class schedualupcomplete extends StatelessWidget {
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Salsa')),
                         const SizedBox(
-                          width: 25,
+                          width: 100,
                         ),
                         const FaIcon(
                           FontAwesomeIcons.clock,
@@ -207,6 +207,7 @@ class schedualupcomplete extends StatelessWidget {
                   )
                 ],
               )
+            
             ],
           ),
         ),

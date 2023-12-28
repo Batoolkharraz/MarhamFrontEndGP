@@ -58,52 +58,60 @@ class cancleuser extends StatelessWidget {
                   const SizedBox(
                     width: 22,
                   ),
-                 Container(
-                  decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          color:  const Color.fromARGB(255, 228, 235, 248),
-          border: Border.all(
-            color: const Color.fromARGB(255, 194, 186, 186), // Set the border color here
-            width: 2.0, // Set the border width
-          ),
-        ),
-                  
-                  width: 450,
-                  height: 70,
-                  child: Row(
-                    children: [
-                      const SizedBox(width: 15,),
-                      const FaIcon(
-                                      FontAwesomeIcons.calendar,
-                                      size: 26.0,
-                                      color: Color(0xFF0561DD),
-                                    ),
-                                    const SizedBox(width: 10,),
-                      Text(date,
-                      style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Salsa')),
-                          const SizedBox(width:25,),
-                           const FaIcon(
-                                      FontAwesomeIcons.clock,
-                                      size: 26.0,
-                                      color: Color(0xFF0561DD),
-                                    ),
-                                    const SizedBox(width:10,),
-                                    Text(time,
-                      style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Salsa')),
-
-                    ],
-                  ),
-                 )
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: const Color.fromARGB(255, 228, 235, 248),
+                      border: Border.all(
+                        color: const Color.fromARGB(
+                            255, 194, 186, 186), // Set the border color here
+                        width: 2.0, // Set the border width
+                      ),
+                    ),
+                    width: 450,
+                    height: 70,
+                    child: Row(
+                      children: [
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        const FaIcon(
+                          FontAwesomeIcons.calendar,
+                          size: 26.0,
+                          color: Color(0xFF0561DD),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(date,
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 25,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Salsa')),
+                        const SizedBox(
+                          width: 100,
+                        ),
+                        const FaIcon(
+                          FontAwesomeIcons.clock,
+                          size: 26.0,
+                          color: Color(0xFF0561DD),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(time,
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 25,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Salsa')),
+                      ],
+                    ),
+                  )
                 ],
               )
+            
             ],
           ),
         ),

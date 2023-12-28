@@ -8,7 +8,8 @@ class complete extends StatelessWidget {
   final String date;
   final String time;
 
-  const complete({super.key, 
+  const complete({
+    super.key,
     required this.Id,
     required this.userName,
     required this.date,
@@ -33,36 +34,8 @@ class complete extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10),
           child: Column(
             children: [
-              Row(
-                children: [
-                  const SizedBox(
-                    width: 25,
-                  ),
-                  const Text("Dr Name Family",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 30,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Salsa')),
-                           const SizedBox(
-                    width: 230,
-                  ),
-                  InkWell(
-                    child: const FaIcon(
-                      
-                                      FontAwesomeIcons.circleCheck,
-                                      size: 26.0,
-                                      color: Colors.green,
-                                    ), 
-                                    onTap: () {
-                                      print("cancle the appointment");
-                                    }, 
-                  ) 
-                ],
-              ),
-              const SizedBox(height: 10,),
               Padding(
-                padding: const EdgeInsets.only(left: 25,right: 25),
+                padding: const EdgeInsets.only(left: 25, right: 25),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -72,15 +45,7 @@ class complete extends StatelessWidget {
                             fontSize: 30,
                             fontWeight: FontWeight.w500,
                             fontFamily: 'Salsa')),
-                    InkWell(
-                      child: const FaIcon(
-                        FontAwesomeIcons.circleCheck,
-                        size: 26.0,
-                        color: Colors.green,
-                      ),
-                      onTap: () {
-                      },
-                    )
+                    
                   ],
                 ),
               ),
@@ -92,50 +57,6 @@ class complete extends StatelessWidget {
                   const SizedBox(
                     width: 22,
                   ),
-                 Container(
-                  decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          color:  const Color.fromARGB(255, 228, 235, 248),
-          border: Border.all(
-            color: const Color.fromARGB(255, 194, 186, 186), // Set the border color here
-            width: 2.0, // Set the border width
-          ),
-        ),
-                  
-                  width: 450,
-                  height: 70,
-                  child: const Row(
-                    children: [
-                      SizedBox(width: 15,),
-                      FaIcon(
-                                      FontAwesomeIcons.calendar,
-                                      size: 26.0,
-                                      color: Color(0xFF0561DD),
-                                    ),
-                                    SizedBox(width: 10,),
-                      Text("Sat,11/28/2023",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Salsa')),
-                          SizedBox(width:25,),
-                           FaIcon(
-                                      FontAwesomeIcons.clock,
-                                      size: 26.0,
-                                      color: Color(0xFF0561DD),
-                                    ),
-                                    SizedBox(width:10,),
-                                    Text("2:30 PM",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Salsa')),
-
-                    ],
-                  ),
-                 ),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),

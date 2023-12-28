@@ -27,34 +27,9 @@ class schedual extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const storage = FlutterSecureStorage();
-
-    String getUserIdFromToken(String token) {
-      try {
-        final Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-        final String userId = decodedToken['id'];
-        return userId;
-      } catch (e) {
-        print('Error decoding token: $e');
-        return '';
-      }
-    }
-
-    Future<String> getTokenFromStorage() async {
-      final token = await storage.read(key: 'jwt');
-      if (token != null) {
-        final String userId = getUserIdFromToken(token);
-        await Future.delayed(const Duration(seconds: 2));
-        return userId;
-      } else {
-        print('Token not found in local storage.');
-        return '';
-      }
-    }
 
     Future<void> cancelAppointment(String bookId, String userId) async {
       try {
-        // String doctorId = await getTokenFromStorage();
         var url = Uri.parse(
             'https://marham-backend.onrender.com/schedule/cancelByDoc/$userId/$bookId/$doctorId');
 
@@ -114,8 +89,6 @@ class schedual extends StatelessWidget {
 
     Future<void> doneAppointment(String bookId, String userId) async {
       try {
-        // String doctorId = await getTokenFromStorage();
-        String doctorId = '651c58f32cd651e7a27ac12f';
         var url = Uri.parse(
             'https://marham-backend.onrender.com/schedule/done/$userId/$bookId/$doctorId');
 
