@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/payment/wallet/sales.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class coinspage extends StatefulWidget {
   const coinspage({super.key});
@@ -10,6 +15,73 @@ class coinspage extends StatefulWidget {
 }
 
 class _coinspageState extends State<coinspage> {
+  
+  String point = '';
+  int p = 0;
+
+  final storage = const FlutterSecureStorage();
+
+  Future<String> getTokenFromStorage() async {
+    final token = await storage.read(key: 'jwt');
+    if (token != null) {
+      final String userId = getUserIdFromToken(token);
+      await Future.delayed(const Duration(seconds: 2));
+      return userId;
+    } else {
+      print('Token not found in local storage.');
+      return '';
+    }
+  }
+
+  String getUserIdFromToken(String token) {
+    try {
+      final Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+      final String userId = decodedToken['id'];
+      return userId;
+    } catch (e) {
+      print('Error decoding token: $e');
+      return '';
+    }
+  }
+
+  Future getPoint() async {
+    String id = await getTokenFromStorage();
+    var url = "https://marham-backend.onrender.com/payment/points/$id/12";
+
+    try {
+      var response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        var responseBody = response.body.toString();
+        responseBody = responseBody.trim();
+        var app = jsonDecode(responseBody);
+
+        print(response.body);
+        print(app);
+        if (app != null && app is Map<String, dynamic>) {
+          if(mounted){
+          setState(() {
+            p = app['point'];
+            point = p.toString();
+          });
+          }
+        } else {
+          print('Unexpected response structure: $app');
+        }
+      } else {
+        print('Failed to fetch data. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error during network request: $error');
+    }
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    getPoint();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor: Colors.white,
@@ -88,7 +160,7 @@ class _coinspageState extends State<coinspage> {
                       child: Container(
                         width: 420,
                         child: Text(
-                          "200",
+                          point.isEmpty ? '0' : point,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 40,

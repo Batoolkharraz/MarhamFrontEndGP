@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/Auth/chat/chatpage.dart';
-import 'package:flutter_application_4/doctorappointment/doctorapp.dart' as appointment;
+import 'package:flutter_application_4/doctorappointment/doctorapp.dart'
+    as appointment;
 import 'package:flutter_application_4/doctors/doctorsfF.dart';
 import 'package:flutter_application_4/search/searchDoctor.dart';
 import 'package:flutter_application_4/unit/category.dart';
@@ -12,7 +13,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
-  late User signedinuser;
+
+late User signedinuser;
 
 class home extends StatefulWidget {
   const home({super.key});
@@ -48,6 +50,7 @@ class _homeState extends State<home> {
       return '';
     }
   }
+
   Future<void> getCategories() async {
     var url = "https://marham-backend.onrender.com/category/";
 
@@ -59,9 +62,11 @@ class _homeState extends State<home> {
         responceBody = responceBody.trim();
         responceBody = responceBody.substring(14, responceBody.length - 1);
         var cat = jsonDecode(responceBody);
-        setState(() {
-          categories.addAll(cat);
-        });
+        if (mounted) {
+          setState(() {
+            categories.addAll(cat);
+          });
+        }
       } else {
         // Handle the error when the HTTP request fails
         print('Error: ${response.statusCode}');
@@ -86,9 +91,8 @@ class _homeState extends State<home> {
 
         if (cat.containsKey('name')) {
           return cat['name'];
-        }
-        else{
-           return "";
+        } else {
+          return "";
         }
       }
     }
@@ -106,12 +110,12 @@ class _homeState extends State<home> {
         var responceBody = response.body.toString();
         responceBody = responceBody.trim();
         var doc = jsonDecode(responceBody);
-
-        setState(() {
-          //print(getCategory(doc[0]['categoryId']));
-          doctors.addAll(doc);
-        });
-        
+        if (mounted) {
+          setState(() {
+            //print(getCategory(doc[0]['categoryId']));
+            doctors.addAll(doc);
+          });
+        }
       }
     } catch (error) {
       print("Error fetching today appointments: $error");
@@ -127,21 +131,20 @@ class _homeState extends State<home> {
     );
   }
 
-Future<void> getcurrentUser() async {
+  Future<void> getcurrentUser() async {
     try {
       var user = FirebaseAuth.instance.currentUser;
       if (user != null) {
-        setState(() {
-          signedinuser = user;
-       
-        });
+        if (mounted) {
+          setState(() {
+            signedinuser = user;
+          });
+        }
       }
     } catch (e) {
       print(e);
     }
   }
-
-
 
 // Future<void> getcurrentUser() async {
 //     try {
@@ -149,7 +152,7 @@ Future<void> getcurrentUser() async {
 //       if (user != null) {
 //         setState(() {
 //           signedinuser = user;
-          
+
 //         });
 //       }
 //     } catch (e) {
@@ -162,17 +165,13 @@ Future<void> getcurrentUser() async {
     // TODO: implement initState
     getCategories();
     getDoctor();
-  
+
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-     
     return Scaffold(
-      
       body: SingleChildScrollView(
         child: Container(
           child: Column(
@@ -226,13 +225,13 @@ Future<void> getcurrentUser() async {
                               size: 30.0,
                             ),
                             onPressed: () {
-                               Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) {
-              return const ChatPage(); // Navigate to the home page
-            },
-          ),
-        );
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return const ChatPage(); // Navigate to the home page
+                                  },
+                                ),
+                              );
                             },
                           ),
                         ],
@@ -360,8 +359,8 @@ Future<void> getcurrentUser() async {
                                 onTap: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          appointment.appointment(doctor: doctors[index]),
+                                      builder: (context) => appointment
+                                          .appointment(doctor: doctors[index]),
                                     ),
                                   );
                                 });
