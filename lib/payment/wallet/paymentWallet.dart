@@ -1,8 +1,52 @@
+import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/payment/card.dart';
 import 'package:flutter_application_4/payment/wallet/cardWallet.dart';
 import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:http/http.dart' as http;
+
+final storage = const FlutterSecureStorage();
+String point = '';
+int p = 0;
+Future<String> getTokenFromStorage() async {
+  final token = await storage.read(key: 'jwt');
+  if (token != null) {
+    final String userId = getUserIdFromToken(token);
+    await Future.delayed(const Duration(seconds: 2));
+    return userId;
+  } else {
+    print('Token not found in local storage.');
+    return '';
+  }
+}
+
+String getUserIdFromToken(String token) {
+  try {
+    final Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+    final String userId = decodedToken['id'];
+    return userId;
+  } catch (e) {
+    print('Error decoding token: $e');
+    return '';
+  }
+}
+
+void buyPoint(String price) async {
+  String id = await getTokenFromStorage();
+  final pay = {"price": price};
+  final response = await http.post(
+    Uri.parse('https://marham-backend.onrender.com/payment/buyPoints/$id/123'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(pay),
+  );
+  if (response.statusCode == 201 || response.statusCode == 200) {
+  } else {}
+}
 
 void showpaymentalertWallet(BuildContext buildContext, String price) {
   showDialog(
@@ -19,7 +63,7 @@ void showpaymentalertWallet(BuildContext buildContext, String price) {
                   child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left:100.0),
+                    padding: const EdgeInsets.only(left: 100.0),
                     child: Row(
                       children: [
                         const FaIcon(
@@ -28,8 +72,8 @@ void showpaymentalertWallet(BuildContext buildContext, String price) {
                           size: 40.0,
                         ),
                         const SizedBox(
-                            width: 15,
-                          ),
+                          width: 15,
+                        ),
                         Container(
                           child: Text(
                             "price: " + price,
@@ -154,6 +198,7 @@ void showpaymentalertWallet(BuildContext buildContext, String price) {
                               size: 30.0,
                             ),
                             onTap: () async {
+                              String p = price;
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (BuildContext context) =>
                                     PaypalCheckout(
@@ -164,13 +209,13 @@ void showpaymentalertWallet(BuildContext buildContext, String price) {
                                       "EJ85V6XMLZcNxef_6ydNeEklpHcKp5UVFCC_TgivllICQBTZitXgyLJ6bfJm5UTcw7-DWx7iG1H86Z1T",
                                   returnURL: "success.snippetcoder.com",
                                   cancelURL: "cancel.snippetcoder.com",
-                                  transactions: const [
+                                  transactions: [
                                     {
                                       "amount": {
-                                        "total": '70',
+                                        "total": p,
                                         "currency": "USD",
                                         "details": {
-                                          "subtotal": '70',
+                                          "subtotal": p,
                                           "shipping": '0',
                                           "shipping_discount": 0
                                         }
@@ -184,17 +229,11 @@ void showpaymentalertWallet(BuildContext buildContext, String price) {
                                       "item_list": {
                                         "items": [
                                           {
-                                            "name": "Apple",
-                                            "quantity": 4,
-                                            "price": '5',
+                                            "name": "Points Price",
+                                            "quantity": 1,
+                                            "price": p,
                                             "currency": "USD"
                                           },
-                                          {
-                                            "name": "Pineapple",
-                                            "quantity": 5,
-                                            "price": '10',
-                                            "currency": "USD"
-                                          }
                                         ],
 
                                         // shipping address is not required though
@@ -215,6 +254,7 @@ void showpaymentalertWallet(BuildContext buildContext, String price) {
                                       "Contact us for any questions on your order.",
                                   onSuccess: (Map params) async {
                                     print("onSuccess: $params");
+                                    buyPoint(price);
                                   },
                                   onError: (error) {
                                     print("onError: $error");
