@@ -38,6 +38,7 @@ class _SecondScreenState extends State<SecondScreen> {
   double d = 0;
   String finalP = '';
   double f = 0;
+  
   Future<String> getTokenFromStorage() async {
     final token = await storage.read(key: 'jwt');
     if (token != null) {
@@ -203,12 +204,19 @@ class _SecondScreenState extends State<SecondScreen> {
   }
 
   String calcPrice() {
-    int Number = int.parse(widget.price);
-    d = (((p / 100) * Number) / 100);
-    f = Number - (((p / 100) * Number) / 100);
-    print(d);
+    double Number = double.parse(widget.price);
+    if(p<500){
+      d=0.0;
+      f=Number;
     discount = d.toString();
     finalP = f.toString();
+    }
+    else{
+    d = (((p / 100) * Number) / 100);
+    f = Number - (((p / 100) * Number) / 100);
+    discount = d.toString();
+    finalP = f.toString();
+    }
     return discount;
   }
 

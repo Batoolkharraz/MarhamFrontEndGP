@@ -15,7 +15,6 @@ class coinspage extends StatefulWidget {
 }
 
 class _coinspageState extends State<coinspage> {
-  
   String point = '';
   int p = 0;
 
@@ -55,15 +54,12 @@ class _coinspageState extends State<coinspage> {
         var responseBody = response.body.toString();
         responseBody = responseBody.trim();
         var app = jsonDecode(responseBody);
-
-        print(response.body);
-        print(app);
         if (app != null && app is Map<String, dynamic>) {
-          if(mounted){
-          setState(() {
-            p = app['point'];
-            point = p.toString();
-          });
+          if (mounted) {
+            setState(() {
+              p = app['point'];
+              point = p.toString();
+            });
           }
         } else {
           print('Unexpected response structure: $app');
@@ -76,16 +72,18 @@ class _coinspageState extends State<coinspage> {
     }
   }
 
-
   @override
   void initState() {
     super.initState();
     getPoint();
   }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.white,
-    appBar: AppBar(   toolbarHeight: 90,
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        toolbarHeight: 90,
         backgroundColor: const Color(0xFF0561DD),
         elevation: 1,
         title: Center(
@@ -102,19 +100,15 @@ class _coinspageState extends State<coinspage> {
                 ),
               ),
               SizedBox(width: 100),
-             
             ],
           ),
         ),
       ),
       body: SingleChildScrollView(
-      
         child: Padding(
           padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
           child: Column(
             children: [
-            
-              
               Container(
                 height: 200,
                 width: 600,
@@ -189,31 +183,32 @@ class _coinspageState extends State<coinspage> {
                   child: Column(children: [
                     Container(
                       width: 600,
-                      child: Text("Coins Shopping",
-                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 30,
-                                          fontFamily: 'salsa',
-                                                                      ),),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top:40),
-                      child: Container(
-                        
-                      height: 500, // Set a specific height or adjust as needed
-                      child: ListView(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                       children: [
-                        coinssales(context),
-                        coins2(context),
-                        coins3(context),
-                        coins4(context),
-                       ],
+                      child: Text(
+                        "Coins Shopping",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 30,
+                          fontFamily: 'salsa',
+                        ),
                       ),
                     ),
-                    )
-,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 40),
+                      child: Container(
+                        height:
+                            500, // Set a specific height or adjust as needed
+                        child: ListView(
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            coinssales(context),
+                            coins2(context),
+                            coins3(context),
+                            coins4(context),
+                          ],
+                        ),
+                      ),
+                    ),
                   ]),
                 ),
               )

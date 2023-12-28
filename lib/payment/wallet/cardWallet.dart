@@ -12,9 +12,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 class SecondScreenWallet extends StatefulWidget {
   final String price;
 
-  const SecondScreenWallet(
-      {super.key,
-      required this.price});
+  const SecondScreenWallet({super.key, required this.price});
   @override
   State<SecondScreenWallet> createState() => _SecondScreenState();
 }
@@ -30,10 +28,6 @@ class _SecondScreenState extends State<SecondScreenWallet> {
   final storage = const FlutterSecureStorage();
   String point = '';
   int p = 0;
-  String discount = '';
-  double d = 0;
-  String finalP = '';
-  double f = 0;
   Future<String> getTokenFromStorage() async {
     final token = await storage.read(key: 'jwt');
     if (token != null) {
@@ -56,71 +50,45 @@ class _SecondScreenState extends State<SecondScreenWallet> {
       return '';
     }
   }
-
-  void payment() async {
-    String finalPrice = (p == 0 ? widget.price : finalP);
-    print(finalPrice);
-    String id = await getTokenFromStorage();
-    final pay = {
-      "payMethod": "card",
-      "price": finalPrice,
-    };
-    final response = await http.post(
-      Uri.parse(
-          'https://marham-backend.onrender.com/payment/$id/12'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(pay),
+void buyPoint() async {
+  String id = await getTokenFromStorage();
+  final pay = {"price": widget.price};
+  final response = await http.post(
+    Uri.parse('https://marham-backend.onrender.com/payment/buyPoints/$id/123'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(pay),
+  );
+  if (response.statusCode == 201 || response.statusCode == 200) {
+    // Show a success message
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.green,
+          content: Center(
+            child: Text(
+              "congrats, your coins are in your wallet now!",
+              style: TextStyle(
+                fontFamily: 'salsa',
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          duration: Duration(seconds: 1), // The duration it will be displayed
+        ),
+      );
+    }
+  } else {
+    // Handle the error when the HTTP request fails
+    showDialog(
+      context: context,
+      builder: (context) => const CardNotAlertDialog(),
     );
-    if (response.statusCode == 201 || response.statusCode == 200) {
-      // Show a success message
-      print('Data sent successfully');
-      showDialog(
-        context: context,
-        builder: (context) => const CardAlertDialog(),
-      );
-    } else {
-      // Handle the error when the HTTP request fails
-      print('Error in sending data');
-      showDialog(
-        context: context,
-        builder: (context) => const CardNotAlertDialog(),
-      );
-    }
   }
-
-  Future getPrice() async {
-    String id = await getTokenFromStorage();
-    var url =
-        "https://marham-backend.onrender.com/payment/points/$id/12";
-
-    try {
-      var response = await http.get(Uri.parse(url));
-
-      if (response.statusCode == 200) {
-        var responseBody = response.body.toString();
-        responseBody = responseBody.trim();
-        var app = jsonDecode(responseBody);
-
-        print(response.body);
-        print(app);
-        if (app != null && app is Map<String, dynamic>) {
-          setState(() {
-            p = app['point'];
-            point = p.toString();
-            calcPrice();
-          });
-        } else {
-          print('Unexpected response structure: $app');
-        }
-      } else {
-        print('Failed to fetch data. Status code: ${response.statusCode}');
-      }
-    } catch (error) {
-      print('Error during network request: $error');
-    }
-  }
+}
 
   bool isDateExpired(String date) {
     // Split the date string into month and year parts
@@ -144,20 +112,9 @@ class _SecondScreenState extends State<SecondScreenWallet> {
         (year == currentDate.year && month < currentDate.month);
   }
 
-  String calcPrice() {
-    int Number = int.parse(widget.price);
-    d = (((p / 100) * Number) / 100);
-    f = Number - (((p / 100) * Number) / 100);
-    print(d);
-    discount = d.toString();
-    finalP = f.toString();
-    return discount;
-  }
-
   @override
   void initState() {
     super.initState();
-    getPrice();
   }
 
   @override
@@ -189,8 +146,7 @@ class _SecondScreenState extends State<SecondScreenWallet> {
           children: [
             Container(
               child: Padding(
-                padding:
-                    const EdgeInsets.only( right: 40.0, left: 40),
+                padding: const EdgeInsets.only(right: 40.0, left: 40),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -208,20 +164,20 @@ class _SecondScreenState extends State<SecondScreenWallet> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                      Text(
-                        "Final price: ",
-                        style: TextStyle(
-                            fontFamily: 'salsa',
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Text(
+                          Text(
+                            "Final price: ",
+                            style: TextStyle(
+                                fontFamily: 'salsa',
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
                             (widget.price),
-                        style: TextStyle(
-                            fontFamily: 'salsa',
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold),
-                      ),
+                            style: TextStyle(
+                                fontFamily: 'salsa',
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ],
                       ),
                     ]),
@@ -514,7 +470,11 @@ class _SecondScreenState extends State<SecondScreenWallet> {
                                       const CardNotAlertDialog(),
                                 );
                               } else {
-                                payment();
+                                showDialog(
+        context: context,
+        builder: (context) => const CardAlertDialog(),
+      );
+                                buyPoint();
                               }
                             },
                             child: Text(
