@@ -15,7 +15,6 @@ String discount = '';
 double d = 0;
 String finalP = '';
 double f = 0;
-
 Future<String> getTokenFromStorage() async {
   final token = await storage.read(key: 'jwt');
   if (token != null) {
@@ -270,7 +269,7 @@ void showpaymentalertt(
                                         "total": finalP,
                                         "currency": "USD",
                                         "details": {
-                                          "subtotal": p,
+                                          "subtotal":finalP,
                                           "shipping": '0',
                                           "shipping_discount": 0
                                         }
@@ -286,7 +285,7 @@ void showpaymentalertt(
                                           {
                                             "name": "Appointment price",
                                             "quantity": 1,
-                                            "price": price,
+                                            "price": p,
                                             "currency": "USD"
                                           },
                                           {
@@ -296,18 +295,6 @@ void showpaymentalertt(
                                             "currency": "USD"
                                           }
                                         ],
-
-                                        // shipping address is not required though
-                                        //   "shipping_address": {
-                                        //     "recipient_name": "Raman Singh",
-                                        //     "line1": "Delhi",
-                                        //     "line2": "",
-                                        //     "city": "Delhi",
-                                        //     "country_code": "IN",
-                                        //     "postal_code": "11001",
-                                        //     "phone": "+00000000",
-                                        //     "state": "Texas"
-                                        //  },
                                       }
                                     }
                                   ],
@@ -315,7 +302,8 @@ void showpaymentalertt(
                                       "Contact us for any questions on your order.",
                                   onSuccess: (Map params) async {
                                     print("onSuccess: ");
-                                    payment(price, book, doc);
+                                      payment(price, book, doc);
+                                    
                                   },
                                   onError: (error) {
                                     print("onError: $error");
