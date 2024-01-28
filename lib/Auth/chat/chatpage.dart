@@ -115,7 +115,7 @@ class _ChatPageState extends State<ChatPage> {
                   return Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   // Handle errors
-                  return Text('Error: ${snapshot.error}');
+                  return Text('');
                 } else {
                   var doctorInfo = snapshot.data!;
                   // If data is successfully fetched, build the PersonChat

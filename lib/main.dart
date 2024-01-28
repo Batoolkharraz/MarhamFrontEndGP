@@ -6,6 +6,8 @@ import 'package:flutter_application_4/notification/local_notifications.dart';
 import 'package:flutter_application_4/payment/wallet/points.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import 'splashScreen.dart';
+
 
     void  main() async {
  
@@ -47,7 +49,7 @@ class MyApp extends StatelessWidget {
 // printing();
     return MaterialApp(
       debugShowCheckedModeBanner: false,//عند الدراور
-      home:Login(),
+      home:splashScreen(),
     );
 }
 

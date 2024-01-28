@@ -180,11 +180,11 @@ class _profileState extends State<profile> {
         print(response.body);
         print(app);
         if (app != null && app is Map<String, dynamic>) {
-          if(mounted){
-          setState(() {
-            p = app['point'];
-            point = p.toString();
-          });
+          if (mounted) {
+            setState(() {
+              p = app['point'];
+              point = p.toString();
+            });
           }
         } else {
           print('Unexpected response structure: $app');
@@ -412,7 +412,7 @@ class _profileState extends State<profile> {
                                                 ),
                                                 Text(
                                                   User['address'] ??
-                                                      'not found',
+                                                      'Nablus',
                                                   style: const TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 26,

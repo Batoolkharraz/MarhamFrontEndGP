@@ -93,7 +93,6 @@ Future getPrice() async {
   }
 }
 
-
   @override
   void initState() {
     super.initState();

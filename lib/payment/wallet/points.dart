@@ -89,7 +89,7 @@ class _coinspageState extends State<coinspage> {
         title: Center(
           child: Row(
             children: [
-              SizedBox(width: 160),
+              SizedBox(width: 130),
               Text(
                 "Electroic Wallet",
                 style: TextStyle(

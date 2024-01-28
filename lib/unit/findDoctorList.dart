@@ -44,10 +44,6 @@ class findDoctorList extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
-                    Text(
-                      doctorCat,
-                      style: TextStyle(color: Colors.grey[500],fontSize: 15),
-                    )
                   ],
                 ),
               ],

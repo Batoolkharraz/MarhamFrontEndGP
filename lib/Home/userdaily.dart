@@ -242,7 +242,7 @@ class _UserDailyState extends State<UserDaily> {
                   fontFamily: 'Salsa',
                 ),
               ),
-              SizedBox(width: 100),
+              SizedBox(width: 70),
               Center(
                 child: InkWell(
                   child: FaIcon(FontAwesomeIcons.bell,

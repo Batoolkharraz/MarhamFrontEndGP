@@ -5,8 +5,8 @@ import 'package:flutter_application_4/unit/patientRec.dart';
 //import 'package:flutter/scheduler.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'doctorHome.dart';
 
+import 'maindoctor.dart';
 class patientRecord extends StatefulWidget {
   const patientRecord({super.key});
 
@@ -111,7 +111,7 @@ class _patientRecordState extends State<patientRecord> {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const doctorHome(),
+                    builder: (context) => const mainDoctorpage() ,
                   ),
                 );
               },

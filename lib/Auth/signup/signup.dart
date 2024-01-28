@@ -3,6 +3,7 @@ import 'package:flutter_application_4/Auth/Login/ValidateForm.dart';
 import 'package:flutter_application_4/Auth/Login/login.dart';
 import 'package:flutter_application_4/Auth/signup/onPressed.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);
 
@@ -12,16 +13,23 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   final GlobalKey<FormState> signstate = GlobalKey<FormState>();
- List<String> list = <String>['Nablus', 'Ramallah', 'Tulkarm', 'Jenin','Betlahem','Hebron','Jericho'];
+  List<String> list = <String>[
+    'Nablus',
+    'Ramallah',
+    'Tulkarm',
+    'Jenin',
+    'Betlahem',
+    'Hebron',
+    'Jericho'
+  ];
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   var username, phone, email, password, cpassword;
- late String dropdownValue=list.first; 
-late String address;
+  late String dropdownValue = list.first;
+  late String address;
   @override
- 
   Widget build(BuildContext context) {
-   
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -144,36 +152,37 @@ late String address;
                               fontSize: 25,
                             ),
                           ),
-                        Container(
-    padding: EdgeInsets.only(top: 10),
-    width: 500, 
-    height: 90,
-    // Set the width as needed
-    child: DropdownButton<String>(
-      value: dropdownValue,
-      elevation: 16,
-      style: const TextStyle(color: Colors.grey,fontSize: 25),
-      underline: Container(
-        height: 2,
-        color: Color.fromARGB(255, 180, 178, 178),
-      ),
-      onChanged: (String? value) {
-        print("value $value");
-        // This is called when the user selects an item.
-        setState(() {
-          address= value!;
-          dropdownValue=value;
-         
-        });
-      },
-      items: list.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    ),
-  ),
+                          Container(
+                            padding: EdgeInsets.only(top: 10),
+                            width: 500,
+                            height: 90,
+                            // Set the width as needed
+                            child: DropdownButton<String>(
+                              value: dropdownValue,
+                              elevation: 16,
+                              style: const TextStyle(
+                                  color: Colors.grey, fontSize: 25),
+                              underline: Container(
+                                height: 2,
+                                color: Color.fromARGB(255, 180, 178, 178),
+                              ),
+                              onChanged: (String? value) {
+                                print("value $value");
+                                // This is called when the user selects an item.
+                                setState(() {
+                                  address = value!;
+                                  dropdownValue = value;
+                                });
+                              },
+                              items: list.map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                          ),
                           // const SizedBox(height: 16),
                           TextFormField(
                             onSaved: (text) {
@@ -182,7 +191,6 @@ late String address;
                             validator: (text) {
                               if (text == null || text.isEmpty) {
                                 return "please fill all information";
-                             
                               }
                               return null;
                             },
@@ -264,14 +272,13 @@ late String address;
                             ),
                           ),
                           const SizedBox(height: 40.0),
-                          
+
                           ElevatedButton(
                             onPressed: () {
-                            
                               if (validateForm(signstate)) {
-                                  print("address $address");
-                                onPressed(
-                                    context, username, email,address, phone, password);
+                                print("address $address");
+                                onPressed(context, username, email, address,
+                                    phone, password);
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
@@ -321,7 +328,7 @@ late String address;
 //   Widget listdorp(BuildContext context) {
 //   return Container(
 //     padding: EdgeInsets.only(top: 10),
-//     width: 500, 
+//     width: 500,
 //     height: 90,
 //     // Set the width as needed
 //     child: DropdownButton<String>(
@@ -336,7 +343,7 @@ late String address;
 //         // This is called when the user selects an item.
 //         setState(() {
 //           dropdownValue = value!;
-         
+
 //         });
 //       },
 //       items: list.map<DropdownMenuItem<String>>((String value) {
@@ -348,7 +355,4 @@ late String address;
 //     ),
 //   );
 // }
-
 }
-
-
